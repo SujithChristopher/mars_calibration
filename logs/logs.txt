@@ -1054,3 +1054,24 @@ Timestamp: 2025-07-09 09:09:47
 ============================================================
 SESSION END: 2025-07-09 09:13:50
 ============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 05:46:27
+============================================================
+[2025-07-23 05:46:27.128] [STEP] Application started
+[2025-07-23 05:46:27.128] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 05:46:27.128] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 05:46:27.128] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_calibration.ino
+[2025-07-23 05:46:27.202] [INFO] Refreshing serial ports
+[2025-07-23 05:46:27.218] [INFO] Found 4 serial ports
+[2025-07-23 05:46:27.219] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 05:46:27.220] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 05:46:27.220] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 05:46:27.220] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 05:46:27.220] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 05:50:33.631] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 05:50:33
+============================================================
