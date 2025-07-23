@@ -2,18 +2,15 @@
   IMU Calibration Program for Arduino Nano 33 BLE
   
   This program reads accelerometer data from the LSM9DS1 sensor
-  and calculates yaw, pitch, and roll angles. It also provides
-  calibration functionality to find and set zero offsets.
+  and calculates yaw, pitch, and roll angles. It provides
+  calibration functionality to find zero offsets.
   
   Commands:
   - 'c': Start calibration (place device flat and still)
   - 'r': Reset offsets to zero
-  - 's': Save current offsets to EEPROM
-  - 'l': Load offsets from EEPROM
 */
 
 #include <Arduino_LSM9DS1.h>
-#include <EEPROM.h>
 
 // Calibration data structure
 struct CalibrationData {
@@ -23,8 +20,6 @@ struct CalibrationData {
   bool valid;
 };
 
-// EEPROM address for calibration data
-const int EEPROM_ADDRESS = 0;
 
 // Calibration variables
 CalibrationData calibration;
@@ -63,14 +58,15 @@ void setup() {
   Serial.println(" Hz");
   Serial.println();
   
-  // Load calibration from EEPROM
-  loadCalibration();
+  // Initialize calibration data
+  calibration.accel_offset_x = 0.0;
+  calibration.accel_offset_y = 0.0;
+  calibration.accel_offset_z = 0.0;
+  calibration.valid = false;
   
   Serial.println("Commands:");
   Serial.println("  'c' - Start calibration (place device flat and level)");
   Serial.println("  'r' - Reset offsets to zero");
-  Serial.println("  's' - Save current offsets to EEPROM");
-  Serial.println("  'l' - Load offsets from EEPROM");
   Serial.println();
   Serial.println("Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z");
   Serial.println();
@@ -171,13 +167,6 @@ void handleSerialCommands() {
         resetCalibration();
         break;
         
-      case 's':
-        saveCalibration();
-        break;
-        
-      case 'l':
-        loadCalibration();
-        break;
         
       default:
         // Ignore other characters
@@ -233,7 +222,7 @@ void processCalibration(float ax, float ay, float az) {
     Serial.println(calibration.accel_offset_y, 6);
     Serial.print("Z offset: ");
     Serial.println(calibration.accel_offset_z, 6);
-    Serial.println("Send 's' to save these offsets to EEPROM");
+    Serial.println("*** Use these offsets in your firmware ***");
     Serial.println();
   }
 }
@@ -247,39 +236,3 @@ void resetCalibration() {
   Serial.println("Calibration offsets reset to zero");
 }
 
-void saveCalibration() {
-  if (!calibration.valid) {
-    Serial.println("No valid calibration data to save. Run calibration first.");
-    return;
-  }
-  
-  EEPROM.put(EEPROM_ADDRESS, calibration);
-  Serial.println("Calibration data saved to EEPROM");
-}
-
-void loadCalibration() {
-  CalibrationData loaded;
-  EEPROM.get(EEPROM_ADDRESS, loaded);
-  
-  // Check if loaded data is valid
-  if (loaded.valid && 
-      abs(loaded.accel_offset_x) < 2.0 && 
-      abs(loaded.accel_offset_y) < 2.0 && 
-      abs(loaded.accel_offset_z) < 2.0) {
-    
-    calibration = loaded;
-    Serial.println("Calibration data loaded from EEPROM:");
-    Serial.print("X offset: ");
-    Serial.println(calibration.accel_offset_x, 6);
-    Serial.print("Y offset: ");
-    Serial.println(calibration.accel_offset_y, 6);
-    Serial.print("Z offset: ");
-    Serial.println(calibration.accel_offset_z, 6);
-  } else {
-    Serial.println("No valid calibration data found in EEPROM");
-    calibration.accel_offset_x = 0.0;
-    calibration.accel_offset_y = 0.0;
-    calibration.accel_offset_z = 0.0;
-    calibration.valid = false;
-  }
-}

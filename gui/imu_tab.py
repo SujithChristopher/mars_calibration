@@ -46,13 +46,16 @@ def setup_imu_tab(main_window):
     imu_board_layout.addWidget(QLabel("Board:"))
     main_window.imu_board_combo = QComboBox()
     main_window.imu_board_combo.addItems([
+        "teensy:avr:teensy41",
+        "auto-detect",
         "arduino:mbed_nano:nano33ble",
+        "arduino:samd:nano_33_iot",
         "arduino:avr:uno", 
         "arduino:avr:nano", 
         "arduino:mbed_nano:nanorp2040connect"
     ])
-    # Set Nano 33 BLE as default
-    main_window.imu_board_combo.setCurrentText("arduino:mbed_nano:nano33ble")
+    # Set Teensy 4.1 as default
+    main_window.imu_board_combo.setCurrentText("teensy:avr:teensy41")
     imu_board_layout.addWidget(main_window.imu_board_combo)
     imu_connection_layout.addLayout(imu_board_layout)
     
@@ -65,8 +68,8 @@ def setup_imu_tab(main_window):
     # IMU File display
     imu_file_layout = QHBoxLayout()
     imu_file_layout.addWidget(QLabel("File:"))
-    main_window.imu_file_label = QLabel(main_window.imu_file)
-    main_window.imu_file_label.setStyleSheet("QLabel { background: #f0f0f0; padding: 5px; border: 1px solid #ccc; }")
+    main_window.imu_file_label = QLabel("imu_program_teensy.ino (Simulation)")
+    main_window.imu_file_label.setStyleSheet("QLabel { background: #f0f0f0; padding: 5px; border: 1px solid #ccc; color: #2196F3; font-weight: bold; }")
     imu_file_layout.addWidget(main_window.imu_file_label)
     imu_upload_layout.addLayout(imu_file_layout)
     
@@ -99,15 +102,15 @@ def setup_imu_tab(main_window):
     main_window.reset_imu_offsets_button.setEnabled(False)
     imu_buttons_layout.addWidget(main_window.reset_imu_offsets_button, 0, 1)
     
-    main_window.save_imu_cal_button = QPushButton("Save to EEPROM (s)")
-    main_window.save_imu_cal_button.clicked.connect(main_window.save_imu_calibration)
-    main_window.save_imu_cal_button.setEnabled(False)
-    imu_buttons_layout.addWidget(main_window.save_imu_cal_button, 1, 0)
+    main_window.update_firmware_button = QPushButton("Update Firmware with Offsets")
+    main_window.update_firmware_button.clicked.connect(main_window.update_firmware_with_offsets)
+    main_window.update_firmware_button.setEnabled(False)
+    imu_buttons_layout.addWidget(main_window.update_firmware_button, 1, 0)
     
-    main_window.load_imu_cal_button = QPushButton("Load from EEPROM (l)")
-    main_window.load_imu_cal_button.clicked.connect(main_window.load_imu_calibration)
-    main_window.load_imu_cal_button.setEnabled(False)
-    imu_buttons_layout.addWidget(main_window.load_imu_cal_button, 1, 1)
+    main_window.upload_firmware_button = QPushButton("Upload Updated Firmware")
+    main_window.upload_firmware_button.clicked.connect(main_window.upload_updated_firmware)
+    main_window.upload_firmware_button.setEnabled(False)
+    imu_buttons_layout.addWidget(main_window.upload_firmware_button, 1, 1)
     
     imu_control_layout.addLayout(imu_buttons_layout)
     

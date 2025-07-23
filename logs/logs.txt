@@ -1096,3 +1096,593 @@ Timestamp: 2025-07-23 06:05:58
 ============================================================
 SESSION END: 2025-07-23 06:06:10
 ============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 08:18:10
+============================================================
+[2025-07-23 08:18:10.338] [STEP] Application started
+[2025-07-23 08:18:10.338] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 08:18:10.338] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 08:18:10.339] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:18:10.402] [INFO] Refreshing serial ports
+[2025-07-23 08:18:10.418] [INFO] Found 5 serial ports
+[2025-07-23 08:18:10.421] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:18:10.422] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:18:10.423] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:18:10.423] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:18:10.423] [INFO]   COM3 - USB Serial Device (COM3) (Microsoft)
+[2025-07-23 08:18:10.423] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:18:13.898] [INFO] Refreshing serial ports
+[2025-07-23 08:18:13.907] [INFO] Found 5 serial ports
+[2025-07-23 08:18:13.907] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:18:13.907] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:18:13.908] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:18:13.908] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:18:13.908] [INFO]   COM3 - USB Serial Device (COM3) (Microsoft)
+[2025-07-23 08:18:13.909] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:18:15.068] [IMU] Starting IMU code upload
+[2025-07-23 08:18:15.069] [IMU] IMU upload parameters - Port: COM6, Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:18:15.069] [IMU] Starting IMU upload to COM6
+[2025-07-23 08:18:15.072] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:18:15.073] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:18:15.073] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:18:15.074] [UPLOAD]   Port: COM6
+[2025-07-23 08:18:15.074] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-23 08:18:22.632] [UPLOAD] Arduino Nano core installation check complete
+[2025-07-23 08:18:22.633] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:18:25.027] [ERROR] Imu compilation failed: E:\homer\mars_loadcell\imu_program\imu_program.ino:15:10: fatal error: Arduino_LSM9DS1.h: No such file or directory
+ #include <Arduino_LSM9DS1.h>
+          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.
+Error during build: exit status 1
+
+[2025-07-23 08:19:39.335] [INFO] Refreshing serial ports
+[2025-07-23 08:19:39.339] [INFO] Found 5 serial ports
+[2025-07-23 08:19:39.339] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:19:39.340] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:19:39.340] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:19:39.340] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:19:39.340] [INFO]   COM3 - USB Serial Device (COM3) (Microsoft)
+[2025-07-23 08:19:39.341] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:19:40.209] [IMU] Starting IMU code upload
+[2025-07-23 08:19:40.210] [IMU] IMU upload parameters - Port: COM6, Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:19:40.210] [IMU] Starting IMU upload to COM6
+[2025-07-23 08:19:40.212] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:19:40.212] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:19:40.213] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:19:40.213] [UPLOAD]   Port: COM6
+[2025-07-23 08:19:40.214] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-23 08:19:45.379] [UPLOAD] Arduino Nano core installation check complete
+[2025-07-23 08:19:45.379] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:19:48.185] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 08:19:48
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 08:32:08
+============================================================
+[2025-07-23 08:32:08.264] [STEP] Application started
+[2025-07-23 08:32:08.264] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 08:32:08.264] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 08:32:08.264] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:32:08.279] [INFO] Refreshing serial ports
+[2025-07-23 08:32:08.283] [INFO] Found 5 serial ports
+[2025-07-23 08:32:08.284] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:32:08.284] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:32:08.284] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:32:08.284] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:32:08.284] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:32:08.284] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:32:13.374] [IMU] Starting IMU code upload
+[2025-07-23 08:32:13.375] [IMU] IMU upload parameters - Port: COM6, Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:32:13.376] [IMU] Starting IMU upload to COM6
+[2025-07-23 08:32:13.378] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:32:13.378] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:32:13.379] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:32:13.379] [UPLOAD]   Port: COM6
+[2025-07-23 08:32:13.380] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-23 08:32:18.999] [UPLOAD] Arduino Nano core installation check complete
+[2025-07-23 08:32:18.999] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:32:35.967] [SUCCESS] Imu compilation successful!
+[2025-07-23 08:32:35.967] [UPLOAD] Uploading IMU to COM6...
+[2025-07-23 08:32:48.618] [INFO] Refreshing serial ports
+[2025-07-23 08:32:48.628] [INFO] Found 5 serial ports
+[2025-07-23 08:32:48.629] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:32:48.629] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:32:48.630] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:32:48.630] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:32:48.631] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:32:48.631] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:32:48.780] [INFO] Refreshing serial ports
+[2025-07-23 08:32:48.788] [INFO] Found 5 serial ports
+[2025-07-23 08:32:48.789] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:32:48.789] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:32:48.790] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:32:48.790] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:32:48.791] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:32:48.791] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:32:48.916] [INFO] Refreshing serial ports
+[2025-07-23 08:32:48.924] [INFO] Found 5 serial ports
+[2025-07-23 08:32:48.925] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:32:48.926] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:32:48.926] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:32:48.927] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:32:48.927] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:32:48.928] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:32:50.628] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 08:32:50
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 08:33:21
+============================================================
+[2025-07-23 08:33:21.275] [STEP] Application started
+[2025-07-23 08:33:21.275] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 08:33:21.275] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 08:33:21.276] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:33:21.293] [INFO] Refreshing serial ports
+[2025-07-23 08:33:21.298] [INFO] Found 5 serial ports
+[2025-07-23 08:33:21.299] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:33:21.300] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:33:21.300] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:33:21.300] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:33:21.300] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:33:21.301] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:33:23.317] [IMU] Starting IMU code upload
+[2025-07-23 08:33:23.318] [IMU] IMU upload parameters - Port: COM6, Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:33:23.318] [IMU] Starting IMU upload to COM6
+[2025-07-23 08:33:23.321] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:33:23.321] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:33:23.321] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:33:23.322] [UPLOAD]   Port: COM6
+[2025-07-23 08:33:23.322] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-23 08:33:28.765] [UPLOAD] Arduino Nano core installation check complete
+[2025-07-23 08:33:28.765] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:33:34.913] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 08:33:34
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 08:33:56
+============================================================
+[2025-07-23 08:33:56.737] [STEP] Application started
+[2025-07-23 08:33:56.737] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 08:33:56.737] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 08:33:56.737] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:33:56.751] [INFO] Refreshing serial ports
+[2025-07-23 08:33:56.755] [INFO] Found 5 serial ports
+[2025-07-23 08:33:56.756] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:33:56.756] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:33:56.756] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:33:56.756] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:33:56.756] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:33:56.756] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:33:58.853] [IMU] Starting IMU code upload
+[2025-07-23 08:33:58.854] [IMU] IMU upload parameters - Port: COM6, Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:33:58.855] [IMU] Starting IMU upload to COM6
+[2025-07-23 08:33:58.858] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:33:58.858] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:33:58.859] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:33:58.859] [UPLOAD]   Port: COM6
+[2025-07-23 08:33:58.860] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-23 08:34:03.975] [UPLOAD] Arduino Nano core installation check complete
+[2025-07-23 08:34:03.976] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:34:04.327] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 08:34:04
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 08:36:25
+============================================================
+[2025-07-23 08:36:25.472] [STEP] Application started
+[2025-07-23 08:36:25.472] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 08:36:25.472] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 08:36:25.473] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:36:25.488] [INFO] Refreshing serial ports
+[2025-07-23 08:36:25.494] [INFO] Found 5 serial ports
+[2025-07-23 08:36:25.495] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:36:25.495] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:36:25.495] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:36:25.496] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:36:25.496] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:36:25.496] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:36:27.568] [IMU] Starting IMU code upload
+[2025-07-23 08:36:27.569] [IMU] IMU upload parameters - Port: COM6, Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:36:27.569] [IMU] Starting IMU upload to COM6
+[2025-07-23 08:36:27.570] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:36:27.570] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:36:27.570] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:36:27.570] [UPLOAD]   Port: COM6
+[2025-07-23 08:36:27.570] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-23 08:36:27.571] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-23 08:36:32.896] [UPLOAD] Arduino Nano core installation check complete
+[2025-07-23 08:36:32.896] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:36:40.679] [SUCCESS] Imu compilation successful!
+[2025-07-23 08:36:40.679] [UPLOAD] Uploading IMU to COM6...
+[2025-07-23 08:37:08.295] [ERROR] Imu upload failed: No device found on COM6
+Failed uploading: uploading error: exit status 1
+
+[2025-07-23 08:37:08.295] [WARNING] Note: Make sure to double-press the reset button on Nano 33 BLE to enter bootloader mode
+[2025-07-23 08:39:23.853] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 08:39:23
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 08:49:21
+============================================================
+[2025-07-23 08:49:21.830] [STEP] Application started
+[2025-07-23 08:49:21.830] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 08:49:21.830] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 08:49:21.830] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:49:21.844] [INFO] Refreshing serial ports
+[2025-07-23 08:49:21.848] [INFO] Found 5 serial ports
+[2025-07-23 08:49:21.849] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:49:21.850] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:49:21.850] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:49:21.850] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:49:21.850] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:49:21.850] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:49:27.537] [INFO] Refreshing serial ports
+[2025-07-23 08:49:27.542] [INFO] Found 5 serial ports
+[2025-07-23 08:49:27.543] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:49:27.543] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:49:27.543] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:49:27.544] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:49:27.544] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:49:27.544] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:49:28.013] [INFO] Refreshing serial ports
+[2025-07-23 08:49:28.023] [INFO] Found 5 serial ports
+[2025-07-23 08:49:28.024] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:49:28.024] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:49:28.025] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:49:28.025] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:49:28.026] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:49:28.027] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:49:28.235] [INFO] Refreshing serial ports
+[2025-07-23 08:49:28.238] [INFO] Found 5 serial ports
+[2025-07-23 08:49:28.239] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:49:28.239] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:49:28.239] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:49:28.240] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:49:28.240] [INFO]   COM3 - Arduino NANO 33 IoT (COM3) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:49:28.240] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:49:36.345] [IMU] Starting IMU code upload
+[2025-07-23 08:49:36.346] [IMU] IMU upload parameters - Port: COM3, Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:49:36.347] [IMU] Starting IMU upload to COM3
+[2025-07-23 08:49:36.348] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:49:36.349] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:49:36.349] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:49:36.350] [UPLOAD]   Port: COM3
+[2025-07-23 08:49:36.350] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-23 08:49:36.351] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-23 08:49:41.531] [UPLOAD] Arduino Nano core installation check complete
+[2025-07-23 08:49:41.531] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:49:55.280] [SUCCESS] Imu compilation successful!
+[2025-07-23 08:49:55.281] [UPLOAD] Uploading IMU to COM3...
+[2025-07-23 08:49:59.688] [ERROR] Imu upload failed: 
+Flash erase failed
+Failed uploading: uploading error: exit status 1
+
+[2025-07-23 08:49:59.689] [WARNING] Note: Make sure to double-press the reset button on Nano 33 BLE to enter bootloader mode
+[2025-07-23 08:50:11.430] [IMU] Starting IMU code upload
+[2025-07-23 08:50:11.431] [IMU] IMU upload parameters - Port: COM3, Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:50:11.431] [IMU] Starting IMU upload to COM3
+[2025-07-23 08:50:11.431] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:50:11.432] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:50:11.432] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-23 08:50:11.432] [UPLOAD]   Port: COM3
+[2025-07-23 08:50:11.432] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-23 08:50:11.432] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-23 08:50:16.660] [UPLOAD] Arduino Nano core installation check complete
+[2025-07-23 08:50:16.661] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:50:18.401] [INFO] Refreshing serial ports
+[2025-07-23 08:50:18.405] [INFO] Found 5 serial ports
+[2025-07-23 08:50:18.406] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:18.406] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:18.406] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:18.406] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:18.407] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:18.407] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:20.690] [INFO] Refreshing serial ports
+[2025-07-23 08:50:20.693] [INFO] Found 5 serial ports
+[2025-07-23 08:50:20.694] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:20.694] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:20.694] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:20.695] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:20.695] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:20.695] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:20.994] [INFO] Refreshing serial ports
+[2025-07-23 08:50:20.997] [INFO] Found 5 serial ports
+[2025-07-23 08:50:20.998] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:20.998] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:20.998] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:20.999] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:20.999] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:20.999] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:22.624] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 08:50:22
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 08:50:25
+============================================================
+[2025-07-23 08:50:25.498] [STEP] Application started
+[2025-07-23 08:50:25.498] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 08:50:25.498] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 08:50:25.498] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:50:25.516] [INFO] Refreshing serial ports
+[2025-07-23 08:50:25.521] [INFO] Found 5 serial ports
+[2025-07-23 08:50:25.522] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:25.522] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:25.523] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:25.523] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:25.523] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:25.523] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:27.684] [INFO] Refreshing serial ports
+[2025-07-23 08:50:27.693] [INFO] Found 5 serial ports
+[2025-07-23 08:50:27.694] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:27.694] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:27.694] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:27.695] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:27.695] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:27.695] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:27.821] [INFO] Refreshing serial ports
+[2025-07-23 08:50:27.830] [INFO] Found 5 serial ports
+[2025-07-23 08:50:27.831] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:27.832] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:27.832] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:27.833] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:27.833] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:27.834] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:27.965] [INFO] Refreshing serial ports
+[2025-07-23 08:50:27.974] [INFO] Found 5 serial ports
+[2025-07-23 08:50:27.976] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:27.976] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:27.977] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:27.977] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:27.978] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:27.978] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:28.677] [IMU] Starting IMU code upload
+[2025-07-23 08:50:28.678] [IMU] IMU upload parameters - Port: COM6, Board: auto-detect
+[2025-07-23 08:50:28.678] [IMU] Starting IMU upload to COM6
+[2025-07-23 08:50:31.507] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:50:31.507] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:50:31.508] [UPLOAD]   Board: Unknown
+[2025-07-23 08:50:31.508] [UPLOAD]   Port: COM6
+[2025-07-23 08:50:31.508] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:50:33.253] [ERROR] Imu compilation failed: Error during build: Invalid FQBN: not an FQBN: Unknown
+
+[2025-07-23 08:50:36.323] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 08:50:36
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 08:50:37
+============================================================
+[2025-07-23 08:50:37.549] [STEP] Application started
+[2025-07-23 08:50:37.549] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 08:50:37.549] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 08:50:37.549] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:50:37.564] [INFO] Refreshing serial ports
+[2025-07-23 08:50:37.569] [INFO] Found 5 serial ports
+[2025-07-23 08:50:37.570] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:37.570] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:37.570] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:37.570] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:37.571] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:37.571] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:47.162] [INFO] Refreshing serial ports
+[2025-07-23 08:50:47.166] [INFO] Found 5 serial ports
+[2025-07-23 08:50:47.167] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:47.167] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:47.168] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:47.168] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:47.168] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:47.168] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:47.305] [INFO] Refreshing serial ports
+[2025-07-23 08:50:47.309] [INFO] Found 5 serial ports
+[2025-07-23 08:50:47.309] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:47.309] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:47.310] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:47.310] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:47.310] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:47.310] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:47.433] [INFO] Refreshing serial ports
+[2025-07-23 08:50:47.438] [INFO] Found 5 serial ports
+[2025-07-23 08:50:47.439] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:47.439] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:47.439] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:47.439] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:47.440] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:47.440] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:47.561] [INFO] Refreshing serial ports
+[2025-07-23 08:50:47.565] [INFO] Found 5 serial ports
+[2025-07-23 08:50:47.566] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:47.566] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:47.566] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:47.567] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:47.567] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:47.567] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:47.696] [INFO] Refreshing serial ports
+[2025-07-23 08:50:47.699] [INFO] Found 5 serial ports
+[2025-07-23 08:50:47.700] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:47.700] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:47.700] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:47.701] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:47.701] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:47.701] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:47.809] [INFO] Refreshing serial ports
+[2025-07-23 08:50:47.812] [INFO] Found 5 serial ports
+[2025-07-23 08:50:47.813] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:47.813] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:47.813] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:47.813] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:47.814] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:47.814] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:50:58.981] [INFO] Refreshing serial ports
+[2025-07-23 08:50:58.985] [INFO] Found 5 serial ports
+[2025-07-23 08:50:58.985] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 08:50:58.986] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 08:50:58.986] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 08:50:58.986] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 08:50:58.987] [INFO]   COM4 - Arduino NANO 33 IoT bootloader (COM4) (Arduino AG (www.arduino.cc))
+[2025-07-23 08:50:58.987] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-23 08:51:18.634] [IMU] Starting IMU code upload
+[2025-07-23 08:51:18.635] [IMU] IMU upload parameters - Port: COM4, Board: auto-detect
+[2025-07-23 08:51:18.636] [IMU] Starting IMU upload to COM4
+[2025-07-23 08:51:21.529] [UPLOAD] Imu Upload parameters:
+[2025-07-23 08:51:21.529] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program\imu_program.ino
+[2025-07-23 08:51:21.529] [UPLOAD]   Board: (USB)
+[2025-07-23 08:51:21.529] [UPLOAD]   Port: COM4
+[2025-07-23 08:51:21.529] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 08:51:23.248] [ERROR] Imu compilation failed: Error during build: Invalid FQBN: not an FQBN: (USB)
+
+[2025-07-23 08:52:51.236] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-23 08:52:51
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 09:03:46
+============================================================
+[2025-07-23 09:03:46.525] [STEP] Application started
+[2025-07-23 09:03:46.525] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 09:03:46.525] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 09:03:46.525] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-23 09:03:46.542] [INFO] Refreshing serial ports
+[2025-07-23 09:03:46.547] [INFO] Found 5 serial ports
+[2025-07-23 09:03:46.548] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 09:03:46.548] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 09:03:46.548] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 09:03:46.549] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 09:03:46.549] [SUCCESS]   COM11 - USB Serial Device (COM11) (Microsoft) [TEENSY DETECTED]
+[2025-07-23 09:03:46.549] [SUCCESS] Auto-selected Teensy port: COM11
+[2025-07-23 09:03:50.214] [IMU] Starting IMU code upload
+[2025-07-23 09:03:50.215] [IMU] IMU upload parameters - Port: COM11, Board: teensy:avr:teensy41
+[2025-07-23 09:03:50.215] [IMU] Starting IMU upload to COM11
+[2025-07-23 09:03:50.217] [UPLOAD] Imu Upload parameters:
+[2025-07-23 09:03:50.217] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-23 09:03:50.218] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-23 09:03:50.218] [UPLOAD]   Port: COM11
+[2025-07-23 09:03:50.218] [UPLOAD] Checking Teensy core installation...
+[2025-07-23 09:03:50.218] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-23 09:03:55.502] [UPLOAD] Teensy core installation check complete
+[2025-07-23 09:03:55.502] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 09:04:00.525] [SUCCESS] Imu compilation successful!
+[2025-07-23 09:04:00.525] [UPLOAD] Uploading IMU to COM11...
+[2025-07-23 09:04:05.374] [SUCCESS] Imu upload successful!
+[2025-07-23 09:04:27.885] [IMU] Attempting IMU connection to COM11 at 115200 baud
+[2025-07-23 09:04:27.888] [SUCCESS] Connected to IMU at COM11
+[2025-07-23 09:04:34.371] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-23 09:04:34.373] [IMU] *** STARTING IMU CALIBRATION (SIMULATED) ***
+[2025-07-23 09:04:34.373] [IMU] Simulating device placed on a flat, level surface...
+[2025-07-23 09:04:34.374] [IMU] Calibration will take about 10 seconds...
+[2025-07-23 09:04:36.372] [IMU] Calibration started... Simulating stable readings!
+[2025-07-23 09:04:36.562] [IMU] Calibration progress: 20%
+[2025-07-23 09:04:36.762] [IMU] Calibration progress: 40%
+[2025-07-23 09:04:36.962] [IMU] Calibration progress: 60%
+[2025-07-23 09:04:37.162] [IMU] Calibration progress: 80%
+[2025-07-23 09:04:37.362] [IMU] Calibration progress: 100%
+[2025-07-23 09:04:37.372] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-23 09:04:37.373] [IMU] X offset: 0.049692
+[2025-07-23 09:04:37.375] [IMU] Y offset: -0.029856
+[2025-07-23 09:04:37.376] [IMU] Z offset: 0.079761
+[2025-07-23 09:04:37.376] [IMU] *** Use these offsets in your firmware ***
+[2025-07-23 09:04:41.323] [IMU] Updated firmware with offsets: X=0.0497, Y=-0.0299, Z=0.0798
+[2025-07-23 09:05:16.441] [STEP] Application closing
+[2025-07-23 09:05:16.441] [IMU] Disconnecting from IMU port
+[2025-07-23 09:05:16.443] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-23 09:05:16
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-23 09:28:14
+============================================================
+[2025-07-23 09:28:14.561] [STEP] Application started
+[2025-07-23 09:28:14.561] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-23 09:28:14.561] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-23 09:28:14.561] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-23 09:28:14.580] [INFO] Refreshing serial ports
+[2025-07-23 09:28:14.587] [INFO] Found 5 serial ports
+[2025-07-23 09:28:14.587] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 09:28:14.587] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 09:28:14.588] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 09:28:14.588] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 09:28:14.588] [SUCCESS]   COM11 - USB Serial Device (COM11) (Microsoft) [TEENSY DETECTED]
+[2025-07-23 09:28:14.588] [SUCCESS] Auto-selected Teensy port: COM11
+[2025-07-23 09:28:17.885] [INFO] Refreshing serial ports
+[2025-07-23 09:28:17.892] [INFO] Found 5 serial ports
+[2025-07-23 09:28:17.893] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-23 09:28:17.893] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-23 09:28:17.894] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-23 09:28:17.894] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-23 09:28:17.894] [SUCCESS]   COM11 - USB Serial Device (COM11) (Microsoft) [TEENSY DETECTED]
+[2025-07-23 09:28:17.894] [SUCCESS] Auto-selected Teensy port: COM11
+[2025-07-23 09:28:19.748] [IMU] Starting IMU code upload
+[2025-07-23 09:28:19.751] [IMU] IMU upload parameters - Port: COM11, Board: teensy:avr:teensy41
+[2025-07-23 09:28:19.752] [IMU] Starting IMU upload to COM11
+[2025-07-23 09:28:19.754] [UPLOAD] Imu Upload parameters:
+[2025-07-23 09:28:19.755] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-23 09:28:19.755] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-23 09:28:19.756] [UPLOAD]   Port: COM11
+[2025-07-23 09:28:19.756] [UPLOAD] Checking Teensy core installation...
+[2025-07-23 09:28:19.757] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-23 09:28:26.152] [UPLOAD] Teensy core installation check complete
+[2025-07-23 09:28:26.152] [UPLOAD] Compiling IMU sketch...
+[2025-07-23 09:28:33.246] [SUCCESS] Imu compilation successful!
+[2025-07-23 09:28:33.247] [UPLOAD] Uploading IMU to COM11...
+[2025-07-23 09:28:38.624] [SUCCESS] Imu upload successful!
+[2025-07-23 09:28:53.564] [IMU] Attempting IMU connection to COM11 at 115200 baud
+[2025-07-23 09:28:53.567] [SUCCESS] Connected to IMU at COM11
+[2025-07-23 09:29:10.619] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-23 09:29:10.625] [IMU] *** STARTING IMU CALIBRATION (SIMULATED) ***
+[2025-07-23 09:29:10.625] [IMU] Simulating device placed on a flat, level surface...
+[2025-07-23 09:29:10.627] [IMU] Calibration will take about 10 seconds...
+[2025-07-23 09:29:12.625] [IMU] Calibration started... Simulating stable readings!
+[2025-07-23 09:29:12.815] [IMU] Calibration progress: 20%
+[2025-07-23 09:29:13.014] [IMU] Calibration progress: 40%
+[2025-07-23 09:29:13.215] [IMU] Calibration progress: 60%
+[2025-07-23 09:29:13.415] [IMU] Calibration progress: 80%
+[2025-07-23 09:29:13.615] [IMU] Calibration progress: 100%
+[2025-07-23 09:29:13.625] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-23 09:29:13.626] [IMU] X offset: 0.050075
+[2025-07-23 09:29:13.627] [IMU] Y offset: -0.029808
+[2025-07-23 09:29:13.627] [IMU] Z offset: 0.080221
+[2025-07-23 09:29:13.629] [IMU] *** Use these offsets in your firmware ***
+[2025-07-23 09:29:22.500] [IMU] Updated firmware with offsets: X=0.0501, Y=-0.0298, Z=0.0802
+[2025-07-23 09:29:25.714] [STEP] Uploading updated firmware to COM11 using teensy:avr:teensy41
+[2025-07-23 09:29:25.718] [ERROR] Upload failed: No module named 'pyduinocli'
+[2025-07-23 09:29:31.650] [STEP] Application closing
+[2025-07-23 09:29:31.650] [IMU] Disconnecting from IMU port
+[2025-07-23 09:29:31.651] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-23 09:29:31
+============================================================

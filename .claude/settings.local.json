@@ -3,7 +3,13 @@
     "allow": [
       "Bash(mkdir:*)",
       "Bash(python:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(arduino-cli.exe board:*)",
+      "Bash(arduino-cli.exe core:*)",
+      "Bash(arduino-cli.exe compile:*)",
+      "Bash(arduino-cli.exe upload:*)",
+      "Bash(timeout 30 arduino-cli.exe monitor:*)",
+      "Bash(move:*)"
     ],
     "deny": []
   }
