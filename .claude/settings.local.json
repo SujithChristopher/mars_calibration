@@ -9,7 +9,13 @@
       "Bash(arduino-cli.exe compile:*)",
       "Bash(arduino-cli.exe upload:*)",
       "Bash(timeout 30 arduino-cli.exe monitor:*)",
-      "Bash(move:*)"
+      "Bash(move:*)",
+      "Bash(touch:*)",
+      "Bash(git rm:*)",
+      "Bash(find:*)",
+      "Bash(rmdir:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }

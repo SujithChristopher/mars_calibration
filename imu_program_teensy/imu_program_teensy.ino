@@ -1,20 +1,37 @@
 /*
-  IMU Simulation Program for Teensy 4.1
+  3-IMU Sequential Calibration Program for Teensy 4.1
   
-  This program simulates LSM9DS1 accelerometer data and provides
-  calibration functionality to find zero offsets.
+  This program calibrates 3 sequential MPU6050 IMU sensors connected to I2C pins 18/19.
+  Used for sequential calibration of 3 different IMUs:
+  - IMU 1: Pitch + Roll offsets (angle_offset1, angle_offset2)
+  - IMU 2: Pitch + Roll offsets (angle_offset3, angle_offset4)  
+  - IMU 3: Roll only offset (angle_offset5)
+  
+  Hardware:
+  - Teensy 4.1
+  - MPU6050 sensors connected to I2C: Pin 18 (SDA), Pin 19 (SCL)
   
   Commands:
-  - 'c': Start calibration (simulates device placed flat and still)
+  - 'c': Start calibration (place device flat and still)
   - 'r': Reset offsets to zero
+  - 'RESET': Software reset command
 */
 
-// Simulation parameters
-float sim_noise_level = 0.02;        // Noise amplitude
-float sim_base_offset_x = 0.05;      // Simulated X offset
-float sim_base_offset_y = -0.03;     // Simulated Y offset
-float sim_base_offset_z = 0.08;      // Simulated Z offset (relative to 1g)
-unsigned long sim_seed;
+#include "Wire.h"
+#include <MPU6050_light.h>
+#include <math.h>
+
+const float RAD2DEG = 180.0f / PI;
+
+// I2C Configuration for Teensy 4.1
+#define SDA_PIN 18
+#define SCL_PIN 19
+
+// Alternative: Try default I2C pins if custom pins don't work
+// Default Teensy 4.1 I2C: SDA=18, SCL=19 (Wire) or SDA=17, SCL=16 (Wire1)
+
+MPU6050 mpu(Wire);
+bool imuConnected = false;
 
 // Calibration data structure
 struct CalibrationData {
@@ -39,28 +56,24 @@ const unsigned long printInterval = 100; // Print every 100ms
 float filteredAccel[3] = {0, 0, 0};
 const float filterAlpha = 0.8; // Low-pass filter coefficient
 
-// Simulation state
-float sim_tilt_x = 0.0;  // Simulated tilt angles
-float sim_tilt_y = 0.0;
-float sim_tilt_z = 0.0;
-unsigned long lastTiltUpdate = 0;
-
 void setup() {
   Serial.begin(115200);
   while (!Serial && millis() < 3000); // Wait up to 3 seconds for serial
   
   delay(1000);
   
-  Serial.println("=== IMU Simulation Program ===");
-  Serial.println("Teensy 4.1 - Simulated LSM9DS1 Sensor");
+  Serial.println("=== 3-IMU Sequential Calibration Program ===");
+  Serial.println("Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19");
   Serial.println();
   
-  // Initialize random seed
-  sim_seed = analogRead(A0) * millis();
-  randomSeed(sim_seed);
+  // Initialize IMU using working template
+  imuSetup();
   
-  Serial.println("Simulated IMU initialized successfully!");
-  Serial.println("Sample rate = 104 Hz (simulated)");
+  Serial.println();
+  Serial.println("3-IMU Sequential Calibration Workflow:");
+  Serial.println("  1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2");
+  Serial.println("  2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4");
+  Serial.println("  3. Connect IMU 3, calibrate roll only -> angle_offset5");
   Serial.println();
   
   // Initialize calibration data
@@ -70,28 +83,161 @@ void setup() {
   calibration.valid = false;
   
   Serial.println("Commands:");
-  Serial.println("  'c' - Start calibration (simulates device flat and level)");
+  Serial.println("  'c' - Start calibration (place device flat and level)");
   Serial.println("  'r' - Reset offsets to zero");
+  Serial.println("  'RESET' - Software reset Teensy for IMU switching");
   Serial.println();
   Serial.println("Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z");
-  Serial.println();
-  Serial.println("Simulation: Device will slowly drift and tilt to demonstrate IMU behavior");
   Serial.println();
   
   // Wait a bit before starting
   delay(2000);
 }
 
+void imuSetup() {
+  Serial.println("=== Trying I2C Configuration 1: Custom Pins 18/19 ===");
+  
+  // Try custom pins first
+  Wire.setSDA(SDA_PIN);
+  Wire.setSCL(SCL_PIN);
+  Wire.begin();
+  Wire.setClock(100000); // Start with slower 100kHz speed for better reliability
+  
+  Serial.println("I2C initialized on pins 18(SDA) and 19(SCL)");
+  Serial.println("Scanning I2C bus for devices...");
+  
+  // Scan I2C bus to find devices
+  scanI2C();
+  
+  // Try to connect with custom pins
+  if (tryMPU6050Connection()) {
+    return; // Success!
+  }
+  
+  Serial.println("=== Trying I2C Configuration 2: Default Pins ===");
+  
+  // Try default I2C pins
+  Wire.end(); // End current I2C
+  Wire.begin(); // Use default pins
+  Wire.setClock(100000);
+  
+  Serial.println("I2C initialized with default pins");
+  Serial.println("Scanning I2C bus for devices...");
+  
+  // Scan again with default pins
+  scanI2C();
+  
+  // Try to connect with default pins
+  if (tryMPU6050Connection()) {
+    return; // Success!
+  }
+  
+  Serial.println("*** ERROR: Could not connect to MPU6050 with any configuration! ***");
+  Serial.println("Check wiring and power:");
+  Serial.println("  VCC -> 3.3V (NOT 5V!)");
+  Serial.println("  GND -> GND");
+  Serial.println("  SDA -> Pin 18 (or try Pin 17)");
+  Serial.println("  SCL -> Pin 19 (or try Pin 16)");
+  Serial.println("  Pull-up resistors: 4.7kΩ on SDA and SCL lines");
+  imuConnected = false;
+}
+
+bool tryMPU6050Connection() {
+  Serial.println("Trying to connect to MPU6050...");
+  
+  // Try different addresses
+  uint8_t addresses[] = {0x68, 0x69}; // MPU6050 can be at 0x68 or 0x69
+  
+  for (int i = 0; i < 2; i++) {
+    Serial.print("Trying address 0x");
+    Serial.print(addresses[i], HEX);
+    Serial.println("...");
+    
+    mpu.setAddress(addresses[i]);
+    byte status = mpu.begin();
+    
+    if (status == 0) {
+      Serial.print("MPU6050 connected successfully at address 0x");
+      Serial.print(addresses[i], HEX);
+      Serial.println("!");
+      imuConnected = true;
+      
+      // Calculate offsets (calibration for gyroscope)
+      Serial.println("Calculating gyroscope offsets, do not move MPU6050");
+      delay(1000);
+      mpu.calcOffsets(); // This will calibrate gyroscope and accelerometer offsets
+      Serial.println("MPU6050 ready for use!");
+      return true;
+    } else {
+      Serial.print("Failed at 0x");
+      Serial.print(addresses[i], HEX);
+      Serial.print(" (status: ");
+      Serial.print(status);
+      Serial.println(")");
+    }
+  }
+  
+  return false;
+}
+
+void scanI2C() {
+  int deviceCount = 0;
+  Serial.println("Scanning I2C addresses from 0x01 to 0x7F...");
+  
+  for (uint8_t address = 1; address < 127; address++) {
+    Wire.beginTransmission(address);
+    uint8_t error = Wire.endTransmission();
+    
+    if (error == 0) {
+      Serial.print("I2C device found at address 0x");
+      if (address < 16) Serial.print("0");
+      Serial.print(address, HEX);
+      
+      // Identify common devices
+      if (address == 0x68 || address == 0x69) {
+        Serial.print(" (likely MPU6050/MPU9250)");
+      } else if (address == 0x1E) {
+        Serial.print(" (likely HMC5883L magnetometer)");
+      } else if (address == 0x77) {
+        Serial.print(" (likely BMP180/BMP280)");
+      }
+      Serial.println();
+      deviceCount++;
+    }
+  }
+  
+  if (deviceCount == 0) {
+    Serial.println("No I2C devices found!");
+    Serial.println("Check wiring and power connections.");
+  } else {
+    Serial.print("Found ");
+    Serial.print(deviceCount);
+    Serial.println(" I2C device(s).");
+  }
+  Serial.println();
+}
+
 void loop() {
   // Handle serial commands
   handleSerialCommands();
   
-  // Update simulation
-  updateSimulation();
+  // Only proceed if IMU is connected
+  if (!imuConnected) {
+    delay(1000);
+    return;
+  }
   
-  // Read simulated accelerometer data
-  float ax, ay, az;
-  readSimulatedAcceleration(&ax, &ay, &az);
+  updateImu();
+}
+
+void updateImu() {
+  // Update MPU6050 data
+  mpu.update();
+  
+  // Get raw accelerometer data (in g units)
+  float ax = mpu.getAccX();
+  float ay = mpu.getAccY(); 
+  float az = mpu.getAccZ();
   
   // Apply low-pass filter for smoothing
   filteredAccel[0] = filterAlpha * filteredAccel[0] + (1 - filterAlpha) * ax;
@@ -103,17 +249,17 @@ void loop() {
   float calibrated_ay = filteredAccel[1] - calibration.accel_offset_y;
   float calibrated_az = filteredAccel[2] - calibration.accel_offset_z;
   
-  // Calculate angles (in degrees)
-  float roll = calculateRoll(calibrated_ax, calibrated_ay, calibrated_az);
-  float pitch = calculatePitch(calibrated_ax, calibrated_ay, calibrated_az);
-  float yaw = calculateYaw(calibrated_ax, calibrated_ay, calibrated_az);
+  // Calculate angles (in degrees) using MPU6050_light library functions
+  float roll = mpu.getAngleX();  // Roll angle from library
+  float pitch = mpu.getAngleY(); // Pitch angle from library  
+  float yaw = mpu.getAngleZ();   // Yaw angle from library
   
-  // Handle calibration process
+  // Handle calibration process (use raw unfiltered data for calibration)
   if (isCalibrating) {
     processCalibration(ax, ay, az);
   }
   
-  // Print data at regular intervals
+  // Print data at regular intervals - ALWAYS print data
   if (millis() - lastPrintTime >= printInterval) {
     // Format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
     Serial.print(calibrated_ax, 4);
@@ -136,91 +282,63 @@ void loop() {
     Serial.println();
     
     lastPrintTime = millis();
+    
+    // Debug info during calibration
+    if (isCalibrating) {
+      Serial.print("CAL: Sample ");
+      Serial.print(calibrationSamples);
+      Serial.print("/");
+      Serial.print(MAX_CALIBRATION_SAMPLES);
+      Serial.print(" Raw: ");
+      Serial.print(ax, 4);
+      Serial.print(",");
+      Serial.print(ay, 4);
+      Serial.print(",");
+      Serial.print(az, 4);
+      Serial.println();
+    }
   }
   
   delay(10); // Small delay to prevent overwhelming the serial
 }
 
-void updateSimulation() {
-  // Update simulated tilts slowly over time
-  if (millis() - lastTiltUpdate >= 2000) { // Update every 2 seconds
-    sim_tilt_x += random(-5, 6) * 0.01;    // Small random changes
-    sim_tilt_y += random(-5, 6) * 0.01;
-    sim_tilt_z += random(-3, 4) * 0.01;
-    
-    // Limit tilt ranges
-    sim_tilt_x = constrain(sim_tilt_x, -0.3, 0.3);
-    sim_tilt_y = constrain(sim_tilt_y, -0.3, 0.3);
-    sim_tilt_z = constrain(sim_tilt_z, -0.2, 0.2);
-    
-    lastTiltUpdate = millis();
-  }
-}
-
-void readSimulatedAcceleration(float* ax, float* ay, float* az) {
-  // Generate noise
-  float noise_x = (random(-1000, 1001) / 1000.0) * sim_noise_level;
-  float noise_y = (random(-1000, 1001) / 1000.0) * sim_noise_level;
-  float noise_z = (random(-1000, 1001) / 1000.0) * sim_noise_level;
-  
-  // Simulate accelerometer readings with tilt and offsets
-  *ax = sim_base_offset_x + sim_tilt_x + noise_x;
-  *ay = sim_base_offset_y + sim_tilt_y + noise_y;
-  *az = 1.0 + sim_base_offset_z + sim_tilt_z + noise_z;  // 1g + offset + tilt
-  
-  // During calibration, simulate device being held still
-  if (isCalibrating) {
-    *ax = sim_base_offset_x + noise_x * 0.2;  // Reduced noise when still
-    *ay = sim_base_offset_y + noise_y * 0.2;
-    *az = 1.0 + sim_base_offset_z + noise_z * 0.2;
-  }
-}
-
-float calculateRoll(float ax, float ay, float az) {
-  // Roll calculation using accelerometer
-  return atan2(ay, sqrt(ax * ax + az * az)) * 180.0 / PI;
-}
-
-float calculatePitch(float ax, float ay, float az) {
-  // Pitch calculation using accelerometer
-  return atan2(-ax, sqrt(ay * ay + az * az)) * 180.0 / PI;
-}
-
-float calculateYaw(float ax, float ay, float az) {
-  // Note: True yaw cannot be determined from accelerometer alone
-  // This provides a rough estimate based on tilt
-  // For accurate yaw, magnetometer or gyroscope integration is needed
-  float magnitude = sqrt(ax * ax + ay * ay + az * az);
-  if (magnitude > 0.5) { // Avoid division by zero
-    return atan2(ax, ay) * 180.0 / PI;
-  }
-  return 0.0;
-}
 
 void handleSerialCommands() {
   if (Serial.available() > 0) {
-    char command = Serial.read();
+    String input = Serial.readString();
+    input.trim();
     
-    switch (command) {
-      case 'c':
-        startCalibration();
-        break;
-        
-      case 'r':
-        resetCalibration();
-        break;
-        
-      default:
-        // Ignore other characters
-        break;
+    if (input == "c") {
+      startCalibration();
+    }
+    else if (input == "r") {
+      resetCalibration();
+    }
+    else if (input == "RESET") {
+      handleSoftwareReset();
+    }
+    else {
+      // Check for single character commands for backwards compatibility
+      if (input.length() == 1) {
+        char command = input.charAt(0);
+        switch (command) {
+          case 'c':
+            startCalibration();
+            break;
+          case 'r':
+            resetCalibration();
+            break;
+        }
+      }
     }
   }
 }
 
 void startCalibration() {
-  Serial.println("*** STARTING IMU CALIBRATION (SIMULATED) ***");
-  Serial.println("Simulating device placed on a flat, level surface...");
+  Serial.println("*** STARTING REAL IMU CALIBRATION ***");
+  Serial.println("Place the device on a flat, level surface and keep it still.");
   Serial.println("Calibration will take about 10 seconds...");
+  Serial.println("Calibration started... Keep device perfectly still!");
   
   isCalibrating = true;
   calibrationSamples = 0;
@@ -228,8 +346,7 @@ void startCalibration() {
   calibrationSum[1] = 0;
   calibrationSum[2] = 0;
   
-  delay(2000); // Simulate user positioning time
-  Serial.println("Calibration started... Simulating stable readings!");
+  // No delay here - let the main loop continue processing
 }
 
 void processCalibration(float ax, float ay, float az) {
@@ -275,4 +392,22 @@ void resetCalibration() {
   calibration.valid = false;
   
   Serial.println("Calibration offsets reset to zero");
+}
+
+void handleSoftwareReset() {
+  Serial.println("*** SOFTWARE RESET REQUESTED ***");
+  Serial.println("Teensy will restart in 2 seconds...");
+  Serial.println("Please wait for reconnection.");
+  Serial.flush();
+  
+  delay(2000);
+  
+  // For Teensy 4.1, use the built-in reset function
+  #if defined(__IMXRT1062__)  // Teensy 4.x
+    SCB_AIRCR = 0x05FA0004;  // Request system reset
+  #else
+    // For other Teensy models, jump to reset vector
+    void (*resetFunc)(void) = 0;
+    resetFunc();
+  #endif
 }

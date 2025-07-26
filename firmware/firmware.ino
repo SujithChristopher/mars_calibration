@@ -7,10 +7,12 @@ HX711 scale;
 
 float calibration_factor = -8029.94; // Adjust this as per your setup
 
-// IMU calibration offsets (to be updated after IMU calibration)
-float accel_offset_x = 0.050100;
-float accel_offset_y = -0.029800;
-float accel_offset_z = 0.080200;
+// 3-IMU system angle offsets (to be updated after sequential IMU calibration)
+float angle_offset1 = 0.0;  // IMU 1 pitch offset
+float angle_offset2 = 0.0;  // IMU 1 roll offset  
+float angle_offset3 = 0.0;  // IMU 2 pitch offset
+float angle_offset4 = 0.0;  // IMU 2 roll offset
+float angle_offset5 = 0.0;  // IMU 3 roll offset
 
 // Simulated IMU variables for Teensy (no physical IMU attached)
 bool imu_simulation_enabled = true;
@@ -36,10 +38,12 @@ void setup() {
   
   if (imu_simulation_enabled) {
     Serial.println("IMU: Simulation mode enabled (no physical sensor)");
-    Serial.println("IMU offsets applied from calibration:");
-    Serial.print("  X offset: "); Serial.println(accel_offset_x, 6);
-    Serial.print("  Y offset: "); Serial.println(accel_offset_y, 6);
-    Serial.print("  Z offset: "); Serial.println(accel_offset_z, 6);
+    Serial.println("3-IMU angle offsets applied from calibration:");
+    Serial.print("  IMU 1 Pitch: "); Serial.println(angle_offset1, 6);
+    Serial.print("  IMU 1 Roll: "); Serial.println(angle_offset2, 6);
+    Serial.print("  IMU 2 Pitch: "); Serial.println(angle_offset3, 6);
+    Serial.print("  IMU 2 Roll: "); Serial.println(angle_offset4, 6);
+    Serial.print("  IMU 3 Roll: "); Serial.println(angle_offset5, 6);
   } else {
     Serial.println("IMU: Physical sensor mode (not implemented)");
   }
@@ -65,15 +69,16 @@ void loop() {
     float ax, ay, az;
     getSimulatedAcceleration(&ax, &ay, &az);
     
-    // Apply calibration offsets
-    float calibrated_ax = ax - accel_offset_x;
-    float calibrated_ay = ay - accel_offset_y;
-    float calibrated_az = az - accel_offset_z;
+    // Calculate raw angles (in degrees) 
+    float raw_roll = calculateRoll(ax, ay, az);
+    float raw_pitch = calculatePitch(ax, ay, az);
+    float raw_yaw = calculateYaw(ax, ay, az);
     
-    // Calculate angles (in degrees)
-    roll = calculateRoll(calibrated_ax, calibrated_ay, calibrated_az);
-    pitch = calculatePitch(calibrated_ax, calibrated_ay, calibrated_az);
-    yaw = calculateYaw(calibrated_ax, calibrated_ay, calibrated_az);
+    // Apply 3-IMU angle offsets (simulated - would need actual IMU selection logic)
+    // For simulation, apply average offsets from all IMUs
+    pitch = raw_pitch - ((angle_offset1 + angle_offset3) / 2.0);  // Average of IMU1&2 pitch offsets
+    roll = raw_roll - ((angle_offset2 + angle_offset4 + angle_offset5) / 3.0);  // Average of all roll offsets
+    yaw = raw_yaw;  // Yaw typically doesn't need offset correction from accelerometer
   }
   
   // Output data in CSV format: WEIGHT,PITCH,ROLL,YAW

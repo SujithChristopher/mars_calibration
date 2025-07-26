@@ -1686,3 +1686,352 @@ Timestamp: 2025-07-23 09:28:14
 ============================================================
 SESSION END: 2025-07-23 09:29:31
 ============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-26 16:49:52
+============================================================
+[2025-07-26 16:49:52.492] [STEP] Application started
+[2025-07-26 16:49:52.492] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-26 16:49:52.493] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-26 16:49:52.493] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 16:49:52.556] [INFO] Refreshing serial ports
+[2025-07-26 16:49:52.565] [INFO] Found 4 serial ports
+[2025-07-26 16:49:52.567] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-26 16:49:52.567] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-26 16:49:52.567] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-26 16:49:52.568] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-26 16:49:52.568] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-26 16:50:14.572] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-26 16:50:14
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-26 16:58:40
+============================================================
+[2025-07-26 16:58:40.739] [STEP] Application started
+[2025-07-26 16:58:40.740] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-26 16:58:40.740] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-26 16:58:40.740] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 16:58:40.763] [INFO] Refreshing serial ports
+[2025-07-26 16:58:40.771] [INFO] Found 5 serial ports
+[2025-07-26 16:58:40.772] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-26 16:58:40.772] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-26 16:58:40.772] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-26 16:58:40.772] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-26 16:58:40.773] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-26 16:58:40.773] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-26 16:58:45.802] [IMU] Starting IMU code upload
+[2025-07-26 16:58:45.805] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-26 16:58:45.805] [IMU] Starting IMU upload to COM12
+[2025-07-26 16:58:45.807] [UPLOAD] Imu Upload parameters:
+[2025-07-26 16:58:45.807] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 16:58:45.807] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-26 16:58:45.807] [UPLOAD]   Port: COM12
+[2025-07-26 16:58:45.808] [UPLOAD] Checking Teensy core installation...
+[2025-07-26 16:58:45.808] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-26 16:58:56.488] [UPLOAD] Teensy core installation check complete
+[2025-07-26 16:58:56.488] [UPLOAD] Compiling IMU sketch...
+[2025-07-26 16:59:11.438] [SUCCESS] Imu compilation successful!
+[2025-07-26 16:59:11.438] [UPLOAD] Uploading IMU to COM12...
+[2025-07-26 16:59:18.791] [SUCCESS] Imu upload successful!
+[2025-07-26 16:59:24.546] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-26 16:59:24.548] [SUCCESS] Connected to IMU at COM12
+[2025-07-26 16:59:47.579] [STEP] Application closing
+[2025-07-26 16:59:47.579] [IMU] Disconnecting from IMU port
+[2025-07-26 16:59:47.581] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-26 16:59:47
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-26 17:06:38
+============================================================
+[2025-07-26 17:06:38.879] [STEP] Application started
+[2025-07-26 17:06:38.879] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-26 17:06:38.879] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-26 17:06:38.879] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 17:06:38.926] [INFO] Refreshing serial ports
+[2025-07-26 17:06:38.932] [INFO] Found 5 serial ports
+[2025-07-26 17:06:38.933] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-26 17:06:38.933] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-26 17:06:38.935] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-26 17:06:38.935] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-26 17:06:38.935] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-26 17:06:38.935] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-26 17:06:45.405] [IMU] Starting IMU code upload
+[2025-07-26 17:06:45.405] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-26 17:06:45.405] [IMU] Starting IMU upload to COM12
+[2025-07-26 17:06:45.406] [UPLOAD] Imu Upload parameters:
+[2025-07-26 17:06:45.406] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 17:06:45.406] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-26 17:06:45.406] [UPLOAD]   Port: COM12
+[2025-07-26 17:06:45.406] [UPLOAD] Checking Teensy core installation...
+[2025-07-26 17:06:45.407] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-26 17:06:55.067] [UPLOAD] Teensy core installation check complete
+[2025-07-26 17:06:55.067] [UPLOAD] Compiling IMU sketch...
+[2025-07-26 17:07:05.065] [SUCCESS] Imu compilation successful!
+[2025-07-26 17:07:05.065] [UPLOAD] Uploading IMU to COM12...
+[2025-07-26 17:07:10.839] [SUCCESS] Imu upload successful!
+[2025-07-26 17:07:12.547] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-26 17:07:12.548] [SUCCESS] Connected to IMU at COM12
+[2025-07-26 17:07:13.376] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-26 17:07:13.379] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-26 17:07:13.379] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-26 17:07:13.380] [IMU] Connecting to MPU6050...
+[2025-07-26 17:07:13.380] [IMU] *** ERROR: Could not connect to MPU6050! ***
+[2025-07-26 17:07:13.381] [IMU] Check wiring: SDA->Pin18, SCL->Pin19, VCC->3.3V, GND->GND
+[2025-07-26 17:07:13.381] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-26 17:07:13.385] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-26 17:07:13.386] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-26 17:07:13.386] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-26 17:07:13.387] [IMU] Commands:
+[2025-07-26 17:07:13.387] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-26 17:07:13.388] [IMU] 'r' - Reset offsets to zero
+[2025-07-26 17:07:13.389] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-26 17:07:13.389] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-26 17:08:20.450] [IMU] Disconnecting from IMU port
+[2025-07-26 17:08:20.452] [INFO] Disconnected from IMU
+[2025-07-26 17:08:21.139] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-26 17:08:21.139] [SUCCESS] Connected to IMU at COM12
+[2025-07-26 17:08:25.971] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-26 17:08:27.376] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-26 17:08:27.379] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-26 17:08:27.380] [IMU] Calibration will take about 10 seconds...
+[2025-07-26 17:08:29.376] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-26 17:11:15.708] [STEP] Application closing
+[2025-07-26 17:11:15.708] [IMU] Disconnecting from IMU port
+[2025-07-26 17:11:15.710] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-26 17:11:15
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-26 17:12:16
+============================================================
+[2025-07-26 17:12:16.933] [STEP] Application started
+[2025-07-26 17:12:16.933] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-26 17:12:16.935] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-26 17:12:16.935] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 17:12:16.958] [INFO] Refreshing serial ports
+[2025-07-26 17:12:16.965] [INFO] Found 5 serial ports
+[2025-07-26 17:12:16.966] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-26 17:12:16.966] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-26 17:12:16.967] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-26 17:12:16.967] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-26 17:12:16.967] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-26 17:12:16.967] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-26 17:13:03.895] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-26 17:13:03
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-26 17:14:07
+============================================================
+[2025-07-26 17:14:07.304] [STEP] Application started
+[2025-07-26 17:14:07.304] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-26 17:14:07.304] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-26 17:14:07.304] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 17:14:07.329] [INFO] Refreshing serial ports
+[2025-07-26 17:14:07.336] [INFO] Found 5 serial ports
+[2025-07-26 17:14:07.336] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-26 17:14:07.337] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-26 17:14:07.337] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-26 17:14:07.337] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-26 17:14:07.338] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-26 17:14:07.338] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-26 17:14:10.396] [IMU] Starting IMU code upload
+[2025-07-26 17:14:10.397] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-26 17:14:10.397] [IMU] Starting IMU upload to COM12
+[2025-07-26 17:14:10.398] [UPLOAD] Imu Upload parameters:
+[2025-07-26 17:14:10.398] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 17:14:10.398] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-26 17:14:10.398] [UPLOAD]   Port: COM12
+[2025-07-26 17:14:10.398] [UPLOAD] Checking Teensy core installation...
+[2025-07-26 17:14:10.399] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-26 17:14:19.917] [UPLOAD] Teensy core installation check complete
+[2025-07-26 17:14:19.917] [UPLOAD] Compiling IMU sketch...
+[2025-07-26 17:14:28.564] [SUCCESS] Imu compilation successful!
+[2025-07-26 17:14:28.564] [UPLOAD] Uploading IMU to COM12...
+[2025-07-26 17:14:34.295] [SUCCESS] Imu upload successful!
+[2025-07-26 17:14:34.962] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-26 17:14:34.964] [SUCCESS] Connected to IMU at COM12
+[2025-07-26 17:14:35.981] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-26 17:14:35.985] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-26 17:14:35.986] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-26 17:14:35.986] [IMU] Connecting to MPU6050...
+[2025-07-26 17:14:35.987] [IMU] *** ERROR: Could not connect to MPU6050! ***
+[2025-07-26 17:14:35.987] [IMU] Check wiring: SDA->Pin18, SCL->Pin19, VCC->3.3V, GND->GND
+[2025-07-26 17:14:35.988] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-26 17:14:35.988] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-26 17:14:35.991] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-26 17:14:35.992] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-26 17:14:35.992] [IMU] Commands:
+[2025-07-26 17:14:35.992] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-26 17:14:35.993] [IMU] 'r' - Reset offsets to zero
+[2025-07-26 17:14:35.994] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-26 17:14:35.995] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-26 17:16:25.304] [STEP] Application closing
+[2025-07-26 17:16:25.304] [IMU] Disconnecting from IMU port
+[2025-07-26 17:16:25.307] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-26 17:16:25
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-26 17:16:25
+============================================================
+[2025-07-26 17:16:25.848] [STEP] Application started
+[2025-07-26 17:16:25.848] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-26 17:16:25.849] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-26 17:16:25.849] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 17:16:25.871] [INFO] Refreshing serial ports
+[2025-07-26 17:16:25.880] [INFO] Found 5 serial ports
+[2025-07-26 17:16:25.881] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-26 17:16:25.881] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-26 17:16:25.882] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-26 17:16:25.882] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-26 17:16:25.882] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-26 17:16:25.882] [SUCCESS] Auto-selected Teensy port: COM12
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-26 17:16:31
+============================================================
+[2025-07-26 17:16:31.061] [STEP] Application started
+[2025-07-26 17:16:31.062] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-26 17:16:31.062] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-26 17:16:31.062] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 17:16:31.085] [INFO] Refreshing serial ports
+[2025-07-26 17:16:31.091] [INFO] Found 5 serial ports
+[2025-07-26 17:16:31.091] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-26 17:16:31.091] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-26 17:16:31.093] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-26 17:16:31.093] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-26 17:16:31.093] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-26 17:16:31.093] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-26 17:16:33.472] [IMU] Starting IMU code upload
+[2025-07-26 17:16:33.473] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-26 17:16:33.473] [IMU] Starting IMU upload to COM12
+[2025-07-26 17:16:33.474] [UPLOAD] Imu Upload parameters:
+[2025-07-26 17:16:33.474] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-26 17:16:33.475] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-26 17:16:33.475] [UPLOAD]   Port: COM12
+[2025-07-26 17:16:33.476] [UPLOAD] Checking Teensy core installation...
+[2025-07-26 17:16:33.476] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-26 17:16:42.890] [UPLOAD] Teensy core installation check complete
+[2025-07-26 17:16:42.891] [UPLOAD] Compiling IMU sketch...
+[2025-07-26 17:16:51.552] [SUCCESS] Imu compilation successful!
+[2025-07-26 17:16:51.553] [UPLOAD] Uploading IMU to COM12...
+[2025-07-26 17:16:57.213] [SUCCESS] Imu upload successful!
+[2025-07-26 17:16:57.830] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-26 17:16:57.831] [SUCCESS] Connected to IMU at COM12
+[2025-07-26 17:16:58.852] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-26 17:16:58.853] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-26 17:16:58.855] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-26 17:16:58.855] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-26 17:16:58.856] [IMU] Scanning I2C bus for devices...
+[2025-07-26 17:16:58.856] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-26 17:16:58.865] [IMU] No I2C devices found!
+[2025-07-26 17:16:58.867] [IMU] Check wiring and power connections.
+[2025-07-26 17:16:58.867] [IMU] Trying to connect to MPU6050...
+[2025-07-26 17:16:58.868] [IMU] Trying address 0x68...
+[2025-07-26 17:16:58.869] [IMU] Failed at 0x68 (status: 2)
+[2025-07-26 17:16:58.869] [IMU] Trying address 0x69...
+[2025-07-26 17:16:58.870] [IMU] Failed at 0x69 (status: 2)
+[2025-07-26 17:16:58.871] [IMU] === Trying I2C Configuration 2: Default Pins ===
+[2025-07-26 17:16:58.874] [IMU] I2C initialized with default pins
+[2025-07-26 17:16:58.875] [IMU] Scanning I2C bus for devices...
+[2025-07-26 17:16:58.876] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-26 17:16:58.880] [IMU] No I2C devices found!
+[2025-07-26 17:16:58.883] [IMU] Check wiring and power connections.
+[2025-07-26 17:16:58.884] [IMU] Trying to connect to MPU6050...
+[2025-07-26 17:16:58.884] [IMU] Trying address 0x68...
+[2025-07-26 17:16:58.885] [IMU] Failed at 0x68 (status: 2)
+[2025-07-26 17:16:58.885] [IMU] Trying address 0x69...
+[2025-07-26 17:16:58.886] [IMU] Failed at 0x69 (status: 2)
+[2025-07-26 17:16:58.886] [IMU] *** ERROR: Could not connect to MPU6050 with any configuration! ***
+[2025-07-26 17:16:58.887] [IMU] Check wiring and power:
+[2025-07-26 17:16:58.888] [IMU] VCC -> 3.3V (NOT 5V!)
+[2025-07-26 17:16:58.888] [IMU] GND -> GND
+[2025-07-26 17:16:58.889] [IMU] SDA -> Pin 18 (or try Pin 17)
+[2025-07-26 17:16:58.889] [IMU] SCL -> Pin 19 (or try Pin 16)
+[2025-07-26 17:16:58.892] [IMU] Pull-up resistors: 4.7kΩ on SDA and SCL lines
+[2025-07-26 17:16:58.895] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-26 17:16:58.895] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-26 17:16:58.896] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-26 17:16:58.896] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-26 17:16:58.897] [IMU] Commands:
+[2025-07-26 17:16:58.897] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-26 17:16:58.898] [IMU] 'r' - Reset offsets to zero
+[2025-07-26 17:16:58.902] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-26 17:16:58.902] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-26 17:17:15.834] [INFO] IMU output cleared by user
+[2025-07-26 17:17:16.587] [IMU] Disconnecting from IMU port
+[2025-07-26 17:17:16.590] [INFO] Disconnected from IMU
+[2025-07-26 17:17:17.213] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-26 17:17:17.214] [SUCCESS] Connected to IMU at COM12
+[2025-07-26 17:17:21.549] [ERROR] IMU connection lost
+[2025-07-26 17:17:21.549] [IMU] Disconnecting from IMU port
+[2025-07-26 17:17:21.558] [INFO] Disconnected from IMU
+[2025-07-26 17:17:26.002] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-26 17:17:26.003] [SUCCESS] Connected to IMU at COM12
+[2025-07-26 17:17:27.023] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-26 17:17:27.025] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-26 17:17:27.026] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-26 17:17:27.026] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-26 17:17:27.027] [IMU] Scanning I2C bus for devices...
+[2025-07-26 17:17:27.029] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-26 17:17:27.037] [IMU] No I2C devices found!
+[2025-07-26 17:17:27.038] [IMU] Check wiring and power connections.
+[2025-07-26 17:17:27.039] [IMU] Trying to connect to MPU6050...
+[2025-07-26 17:17:27.040] [IMU] Trying address 0x68...
+[2025-07-26 17:17:27.041] [IMU] Failed at 0x68 (status: 2)
+[2025-07-26 17:17:27.042] [IMU] Trying address 0x69...
+[2025-07-26 17:17:27.042] [IMU] Failed at 0x69 (status: 2)
+[2025-07-26 17:17:27.044] [IMU] === Trying I2C Configuration 2: Default Pins ===
+[2025-07-26 17:17:27.045] [IMU] I2C initialized with default pins
+[2025-07-26 17:17:27.045] [IMU] Scanning I2C bus for devices...
+[2025-07-26 17:17:27.046] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-26 17:17:27.052] [IMU] No I2C devices found!
+[2025-07-26 17:17:27.053] [IMU] Check wiring and power connections.
+[2025-07-26 17:17:27.056] [IMU] Trying to connect to MPU6050...
+[2025-07-26 17:17:27.056] [IMU] Trying address 0x68...
+[2025-07-26 17:17:27.057] [IMU] Failed at 0x68 (status: 2)
+[2025-07-26 17:17:27.058] [IMU] Trying address 0x69...
+[2025-07-26 17:17:27.058] [IMU] Failed at 0x69 (status: 2)
+[2025-07-26 17:17:27.059] [IMU] *** ERROR: Could not connect to MPU6050 with any configuration! ***
+[2025-07-26 17:17:27.059] [IMU] Check wiring and power:
+[2025-07-26 17:17:27.060] [IMU] VCC -> 3.3V (NOT 5V!)
+[2025-07-26 17:17:27.061] [IMU] GND -> GND
+[2025-07-26 17:17:27.061] [IMU] SDA -> Pin 18 (or try Pin 17)
+[2025-07-26 17:17:27.062] [IMU] SCL -> Pin 19 (or try Pin 16)
+[2025-07-26 17:17:27.062] [IMU] Pull-up resistors: 4.7kΩ on SDA and SCL lines
+[2025-07-26 17:17:27.062] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-26 17:17:27.065] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-26 17:17:27.066] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-26 17:17:27.067] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-26 17:17:27.067] [IMU] Commands:
+[2025-07-26 17:17:27.068] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-26 17:17:27.068] [IMU] 'r' - Reset offsets to zero
+[2025-07-26 17:17:27.068] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-26 17:17:27.068] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-26 17:17:53.562] [IMU] Disconnecting from IMU port
+[2025-07-26 17:17:53.565] [INFO] Disconnected from IMU
+[2025-07-26 17:25:37.541] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-26 17:25:37
+============================================================

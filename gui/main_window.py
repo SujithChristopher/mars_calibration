@@ -50,6 +50,16 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.current_offset_y = 0.0
         self.current_offset_z = 0.0
         
+        # 3-IMU system variables
+        self.current_imu_index = 0  # 0=IMU1, 1=IMU2, 2=IMU3
+        
+        # Saved angle offsets for all 3 IMUs
+        self.angle_offset1 = 0.0  # IMU 1 pitch
+        self.angle_offset2 = 0.0  # IMU 1 roll  
+        self.angle_offset3 = 0.0  # IMU 2 pitch
+        self.angle_offset4 = 0.0  # IMU 2 roll
+        self.angle_offset5 = 0.0  # IMU 3 roll only
+        
         # Step tracking
         self.current_step = 1
         
@@ -849,16 +859,18 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.log_imu_message_to_ui("Sent: r (reset IMU offsets)")
             
     def update_firmware_with_offsets(self):
-        """Update firmware.ino file with current IMU offsets"""
+        """Update firmware.ino file with all 5 angle offsets from 3 IMUs"""
         try:
             # Read current firmware file
             with open(self.firmware_file, 'r') as f:
                 firmware_content = f.read()
             
-            # Update offset values
-            firmware_content = self.update_offset_in_firmware(firmware_content, 'accel_offset_x', self.current_offset_x)
-            firmware_content = self.update_offset_in_firmware(firmware_content, 'accel_offset_y', self.current_offset_y)
-            firmware_content = self.update_offset_in_firmware(firmware_content, 'accel_offset_z', self.current_offset_z)
+            # Update all 5 angle offset values
+            firmware_content = self.update_offset_in_firmware(firmware_content, 'angle_offset1', self.angle_offset1)
+            firmware_content = self.update_offset_in_firmware(firmware_content, 'angle_offset2', self.angle_offset2)
+            firmware_content = self.update_offset_in_firmware(firmware_content, 'angle_offset3', self.angle_offset3)
+            firmware_content = self.update_offset_in_firmware(firmware_content, 'angle_offset4', self.angle_offset4)
+            firmware_content = self.update_offset_in_firmware(firmware_content, 'angle_offset5', self.angle_offset5)
             
             # Write updated firmware file
             with open(self.firmware_file, 'w') as f:
@@ -867,9 +879,12 @@ class LoadCellCalibrationGUI(QMainWindow):
             # Enable upload button
             self.upload_firmware_button.setEnabled(True)
             
-            ui_message = self.logger.log_imu(f"Updated firmware with offsets: X={self.current_offset_x:.4f}, Y={self.current_offset_y:.4f}, Z={self.current_offset_z:.4f}")
+            ui_message = self.logger.log_imu(f"Updated firmware with 3-IMU angle offsets:")
             self.log_imu_message_to_ui(ui_message)
-            QMessageBox.information(self, "Success", "Firmware updated with IMU offsets!")
+            self.log_imu_message_to_ui(f"  IMU1: Pitch={self.angle_offset1:.4f}, Roll={self.angle_offset2:.4f}")
+            self.log_imu_message_to_ui(f"  IMU2: Pitch={self.angle_offset3:.4f}, Roll={self.angle_offset4:.4f}")
+            self.log_imu_message_to_ui(f"  IMU3: Roll={self.angle_offset5:.4f}")
+            QMessageBox.information(self, "Success", "Firmware updated with all 3-IMU angle offsets!")
             
         except Exception as e:
             error_msg = f"Failed to update firmware: {str(e)}"
@@ -932,6 +947,111 @@ class LoadCellCalibrationGUI(QMainWindow):
         """Clear IMU serial output"""
         self.logger.log("IMU output cleared by user")
         self.imu_serial_output.clear()
+        
+    # 3-IMU System Methods
+    def on_imu_selection_changed(self, text):
+        """Handle IMU selection change"""
+        if "IMU 1" in text:
+            self.current_imu_index = 0
+        elif "IMU 2" in text:
+            self.current_imu_index = 1
+        elif "IMU 3" in text:
+            self.current_imu_index = 2
+            
+        imu_name = text.split(" (")[0]  # Extract just "IMU 1", "IMU 2", etc.
+        ui_message = self.logger.log_imu(f"Selected {imu_name} for calibration")
+        self.log_imu_message_to_ui(ui_message)
+        
+        # Update UI to show current IMU capabilities
+        if self.current_imu_index == 2:  # IMU 3 - roll only
+            self.log_imu_message_to_ui("Note: IMU 3 calibrates ROLL only")
+        else:
+            self.log_imu_message_to_ui("Note: This IMU calibrates PITCH and ROLL")
+            
+    def save_current_imu_offsets(self):
+        """Save current IMU calibration as angle offsets"""
+        if not self.current_imu_data:
+            QMessageBox.warning(self, "Warning", "No IMU data available. Please connect and calibrate first.")
+            return
+            
+        # Calculate current pitch and roll from live data
+        current_pitch = self.current_imu_data.get('pitch', 0.0)
+        current_roll = self.current_imu_data.get('roll', 0.0)
+        
+        imu_names = ["IMU 1", "IMU 2", "IMU 3"]
+        current_imu_name = imu_names[self.current_imu_index]
+        
+        if self.current_imu_index == 0:  # IMU 1
+            self.angle_offset1 = current_pitch
+            self.angle_offset2 = current_roll
+            self.angle_offset1_label.setText(f"{self.angle_offset1:.4f}")
+            self.angle_offset2_label.setText(f"{self.angle_offset2:.4f}")
+            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offsets: Pitch={self.angle_offset1:.4f}, Roll={self.angle_offset2:.4f}")
+            
+        elif self.current_imu_index == 1:  # IMU 2
+            self.angle_offset3 = current_pitch
+            self.angle_offset4 = current_roll
+            self.angle_offset3_label.setText(f"{self.angle_offset3:.4f}")
+            self.angle_offset4_label.setText(f"{self.angle_offset4:.4f}")
+            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offsets: Pitch={self.angle_offset3:.4f}, Roll={self.angle_offset4:.4f}")
+            
+        elif self.current_imu_index == 2:  # IMU 3 - roll only
+            self.angle_offset5 = current_roll
+            self.angle_offset5_label.setText(f"{self.angle_offset5:.4f}")
+            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offset: Roll={self.angle_offset5:.4f}")
+            
+        self.log_imu_message_to_ui(ui_message)
+        
+        # Check if all IMUs are calibrated
+        self.check_all_imus_calibrated()
+        
+        QMessageBox.information(self, "Success", f"{current_imu_name} angle offsets saved successfully!")
+        
+    def check_all_imus_calibrated(self):
+        """Check if all IMU offsets have been saved and enable firmware update"""
+        if (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and 
+            self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0 and 
+            self.angle_offset5 != 0.0):
+            self.update_firmware_button.setEnabled(True)
+            ui_message = self.logger.log_imu("All 3 IMUs calibrated! Ready to update firmware.")
+            self.log_imu_message_to_ui(ui_message)
+            
+    def software_reset_teensy(self):
+        """Send software reset command to Teensy"""
+        if self.imu_worker:
+            # Send a reset command - most Arduino boards respond to specific characters
+            # For Teensy, we can send a break signal or reset character
+            try:
+                self.imu_worker.send_data("RESET")
+                ui_message = self.logger.log_imu("Sent software reset command to Teensy")
+                self.log_imu_message_to_ui(ui_message)
+                
+                # Give some time for reset and reconnection
+                QTimer.singleShot(2000, self.reconnect_after_reset)
+                
+            except Exception as e:
+                error_msg = f"Software reset failed: {str(e)}"
+                self.logger.log_error(error_msg)
+                self.log_imu_message_to_ui(error_msg)
+        else:
+            QMessageBox.warning(self, "Warning", "No IMU connection to reset!")
+            
+    def reconnect_after_reset(self):
+        """Reconnect to IMU after software reset"""
+        try:
+            if self.is_imu_connected:
+                self.disconnect_imu_serial()
+                
+            # Wait a bit more, then reconnect
+            QTimer.singleShot(1000, self.connect_imu_serial)
+            
+            ui_message = self.logger.log_imu("Attempting to reconnect after reset...")
+            self.log_imu_message_to_ui(ui_message)
+            
+        except Exception as e:
+            error_msg = f"Reconnection after reset failed: {str(e)}"
+            self.logger.log_error(error_msg)
+            self.log_imu_message_to_ui(error_msg)
         
     def closeEvent(self, event):
         """Handle application close"""
