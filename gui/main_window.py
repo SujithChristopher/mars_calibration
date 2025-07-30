@@ -14,16 +14,19 @@ from datetime import datetime
 import toml
 import glob
 
-from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget, QMessageBox, QLabel
+from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget, QMessageBox, QLabel, QDialog
 from PySide6.QtCore import QTimer, Signal, QThread, QObject, Qt
 from PySide6.QtGui import QFont, QTextCursor
 
 from utils.logger import Logger
+from utils.user_data import UserDataManager
+from utils.arduino_manager import ArduinoManager
 from gui.workers.serial_worker import SerialWorker
 from gui.workers.imu_worker import IMUDataWorker
 from gui.load_cell_tab import setup_load_cell_tab
 from gui.imu_tab import setup_imu_tab
 from gui.upload_firmware_tab import setup_upload_firmware_tab
+from gui.setup_dialog import SetupDialog
 
 
 class LoadCellCalibrationGUI(QMainWindow):
@@ -73,20 +76,27 @@ class LoadCellCalibrationGUI(QMainWindow):
         # Step tracking
         self.current_step = 1
         
-        # Initialize logger
-        log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "logs", "logs.txt")
-        self.logger = Logger(log_file_path)
+        # Initialize user data management
+        self.user_data = UserDataManager()
+        
+        # Initialize logger with proper user data path
+        self.logger = Logger(str(self.user_data.get_log_file_path()))
         self.logger.log_step("Application started")
         
-        # Default file paths
-        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.calibration_file = os.path.join(base_path, "calibration", "calibration.ino")
-        self.firmware_file = os.path.join(base_path, "firmware", "firmware.ino")
-        self.imu_file = os.path.join(base_path, "imu_program_teensy", "imu_program_teensy.ino")
-        self.calibrations_dir = os.path.join(base_path, "calibrations")
+        # Initialize Arduino manager
+        self.arduino_manager = ArduinoManager(str(self.user_data.get_directory('root')))
         
-        # Create calibrations directory if it doesn't exist
-        os.makedirs(self.calibrations_dir, exist_ok=True)
+        # Setup Arduino sketches (copy from bundle if needed)
+        sketches_dir = self.user_data.copy_arduino_sketches()
+        
+        # Arduino sketch file paths
+        self.calibration_file = str(sketches_dir / "calibration" / "calibration.ino")
+        self.firmware_file = str(sketches_dir / "firmware" / "firmware.ino")
+        self.imu_file = str(sketches_dir / "imu_program" / "imu_program.ino")
+        self.calibrations_dir = str(self.user_data.get_directory('calibrations'))
+        
+        # Show setup dialog on first run
+        self.show_setup_dialog_if_needed()
         
         self.logger.log(f"Calibration file path: {self.calibration_file}")
         self.logger.log(f"Firmware file path: {self.firmware_file}")
@@ -104,6 +114,25 @@ class LoadCellCalibrationGUI(QMainWindow):
         # Timer for periodic updates
         self.update_timer = QTimer()
         self.update_timer.timeout.connect(self.update_display)
+    
+    def show_setup_dialog_if_needed(self):
+        """Show setup dialog if Arduino CLI is not available"""
+        if not self.arduino_manager.is_arduino_cli_installed():
+            self.logger.log("Arduino CLI not found, showing setup dialog")
+            
+            dialog = SetupDialog(self.arduino_manager, self)
+            result = dialog.exec()
+            
+            if result == QDialog.Rejected:
+                self.logger.log("Setup was cancelled or failed")
+                QMessageBox.warning(
+                    self, 
+                    "Setup Incomplete", 
+                    "Arduino CLI setup was not completed. Some features may not work properly.\n\n"
+                    "You can manually install Arduino CLI and required libraries, or restart the application to try setup again."
+                )
+        else:
+            self.logger.log("Arduino CLI found, skipping setup dialog")
         
     def handle_step_update(self, step, message):
         """Handle step updates from background threads"""
@@ -1250,6 +1279,9 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.disconnect_serial()
         if self.is_imu_connected:
             self.disconnect_imu_serial()
+        
+        # Clean up temp files
+        self.user_data.cleanup_temp_files()
         
         # Write session end
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

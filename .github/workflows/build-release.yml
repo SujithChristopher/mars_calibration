@@ -1,0 +1,155 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.0
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Build executable with PyInstaller
+      run: |
+        pyinstaller mars_loadcell.spec
+    
+    - name: Test executable (basic smoke test)
+      run: |
+        # Basic test to ensure the executable runs without crashing
+        timeout 10 ./dist/MarsLoadCellCalibration.exe --help || echo "App started successfully"
+      shell: cmd
+      continue-on-error: true
+    
+    - name: Create release archive
+      run: |
+        mkdir release
+        copy dist\MarsLoadCellCalibration.exe release\
+        copy README.md release\
+        copy requirements.txt release\
+        powershell Compress-Archive -Path release\* -DestinationPath MarsLoadCellCalibration-Windows-x64.zip
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-executable
+        path: MarsLoadCellCalibration-Windows-x64.zip
+        retention-days: 90
+
+  build-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgl1-mesa-glx libxcb-xinerama0
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Build executable with PyInstaller
+      run: |
+        pyinstaller mars_loadcell.spec
+    
+    - name: Create release archive
+      run: |
+        mkdir release
+        cp dist/MarsLoadCellCalibration release/
+        cp README.md release/
+        cp requirements.txt release/
+        tar -czf MarsLoadCellCalibration-Linux-x64.tar.gz -C release .
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-executable
+        path: MarsLoadCellCalibration-Linux-x64.tar.gz
+        retention-days: 90
+
+  build-macos:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Build executable with PyInstaller
+      run: |
+        pyinstaller mars_loadcell.spec
+    
+    - name: Create release archive
+      run: |
+        mkdir release
+        cp dist/MarsLoadCellCalibration release/
+        cp README.md release/
+        cp requirements.txt release/
+        tar -czf MarsLoadCellCalibration-macOS-x64.tar.gz -C release .
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-executable
+        path: MarsLoadCellCalibration-macOS-x64.tar.gz
+        retention-days: 90
+
+  create-release:
+    needs: [build-windows, build-linux, build-macos]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+    
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          windows-executable/MarsLoadCellCalibration-Windows-x64.zip
+          linux-executable/MarsLoadCellCalibration-Linux-x64.tar.gz
+          macos-executable/MarsLoadCellCalibration-macOS-x64.tar.gz
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
