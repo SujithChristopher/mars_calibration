@@ -3,3 +3,4 @@ pyserial>=3.5
 toml>=0.10.2
 requests>=2.31.0
 pyinstaller>=5.13.0
+packaging>=21.3

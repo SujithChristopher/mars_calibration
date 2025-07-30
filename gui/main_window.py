@@ -27,6 +27,8 @@ from gui.load_cell_tab import setup_load_cell_tab
 from gui.imu_tab import setup_imu_tab
 from gui.upload_firmware_tab import setup_upload_firmware_tab
 from gui.setup_dialog import SetupDialog
+from gui.widgets.update_dialog import UpdateNotificationDialog, UpdateChecker
+from version import get_version_string
 
 
 class LoadCellCalibrationGUI(QMainWindow):
@@ -36,7 +38,9 @@ class LoadCellCalibrationGUI(QMainWindow):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Load Cell & IMU Calibration Wizard")
+        # Get version and set window title
+        self.current_version = get_version_string()
+        self.setWindowTitle(f"Mars Calibration v{self.current_version} - Load Cell & IMU Calibration System")
         
         # Set responsive window size based on screen ratio
         # For 16:10 screens: 1280x800, for 16:9 screens: 1280x720
@@ -110,6 +114,13 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.setup_ui()
         self.refresh_ports()
         self.update_step_status()
+        
+        # Initialize update checking
+        self.update_checker = None
+        self.update_dialog = None
+        
+        # Check for updates on startup (after a short delay)
+        QTimer.singleShot(3000, self.check_for_updates)
         
         # Timer for periodic updates
         self.update_timer = QTimer()
@@ -679,6 +690,46 @@ class LoadCellCalibrationGUI(QMainWindow):
     def update_display(self):
         """Update display periodically"""
         pass
+    
+    # Update Management Methods
+    def check_for_updates(self):
+        """Check for application updates in background."""
+        try:
+            self.logger.log("Checking for application updates...")
+            
+            # Create and start update checker thread
+            self.update_checker = UpdateChecker(self.current_version)
+            self.update_checker.update_available.connect(self.show_update_dialog)
+            self.update_checker.check_completed.connect(self.update_check_completed)
+            self.update_checker.start()
+            
+        except Exception as e:
+            self.logger.log_error(f"Update check failed: {str(e)}")
+    
+    def show_update_dialog(self, update_info):
+        """Show update notification dialog."""
+        try:
+            self.logger.log(f"Update available: v{update_info['version']}")
+            
+            # Create and show update dialog
+            self.update_dialog = UpdateNotificationDialog(
+                update_info, 
+                self.current_version, 
+                self
+            )
+            self.update_dialog.show()
+            
+        except Exception as e:
+            self.logger.log_error(f"Failed to show update dialog: {str(e)}")
+    
+    def update_check_completed(self):
+        """Handle update check completion."""
+        self.logger.log("Update check completed")
+        
+        # Clean up update checker
+        if self.update_checker:
+            self.update_checker.deleteLater()
+            self.update_checker = None
     
     # IMU Methods
     def upload_imu_code(self):
