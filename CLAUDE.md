@@ -82,7 +82,7 @@ python main.py
 ## File Structure
 
 ```
-mars_loadcell/
+mars_calibration/
 ├── main.py                    # Streamlined application entry point
 ├── arduino_compile.py         # Arduino compilation utility  
 ├── arduino-cli.exe           # Arduino CLI executable

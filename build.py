@@ -73,7 +73,7 @@ def build_executable():
     print("Building executable...")
     
     # Build command
-    command = "pyinstaller mars_loadcell.spec"
+    command = "pyinstaller mars_calibration.spec"
     
     if not run_command(command):
         return False

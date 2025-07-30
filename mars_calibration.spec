@@ -69,7 +69,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='MarsLoadCellCalibration',
+    name='MarsCalibration',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

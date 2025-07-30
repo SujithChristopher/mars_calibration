@@ -1,4 +1,4 @@
-# Mars Load Cell & IMU Calibration System
+# Mars Calibration System
 
 A comprehensive GUI application for calibrating load cells and IMU sensors with automated Arduino programming capabilities.
 
@@ -14,16 +14,16 @@ A comprehensive GUI application for calibrating load cells and IMU sensors with 
 ## Quick Start
 
 ### Option 1: Download Release (Recommended)
-1. Download the latest release for your platform from the [Releases page](https://github.com/yourusername/mars-loadcell-calibration/releases)
+1. Download the latest release for your platform from the [Releases page](https://github.com/SujithChristopher/mars_calibration/releases)
 2. Extract the archive
-3. Run `MarsLoadCellCalibration.exe` (Windows) or `MarsLoadCellCalibration` (Linux/macOS)
+3. Run `MarsCalibration.exe` (Windows) or `MarsCalibration` (Linux/macOS)
 4. Follow the first-time setup wizard
 
 ### Option 2: Run from Source
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/mars-loadcell-calibration.git
-cd mars-loadcell-calibration
+git clone https://github.com/SujithChristopher/mars_calibration.git
+cd mars_calibration
 
 # Install dependencies
 pip install -r requirements.txt
@@ -76,13 +76,13 @@ This is a one-time process that takes 2-5 minutes depending on your internet con
 
 The application stores data in platform-specific locations:
 
-- **Windows**: `%APPDATA%\MarsLoadCellCalibration\`
-- **macOS**: `~/Library/Application Support/MarsLoadCellCalibration/`
-- **Linux**: `~/.local/share/MarsLoadCellCalibration/`
+- **Windows**: `%APPDATA%\MarsCalibration\`
+- **macOS**: `~/Library/Application Support/MarsCalibration/`
+- **Linux**: `~/.local/share/MarsCalibration/`
 
 ### Directory Structure
 ```
-MarsLoadCellCalibration/
+MarsCalibration/
 ├── logs/                    # Application logs
 ├── calibrations/            # TOML calibration files
 ├── arduino-cli/            # Arduino CLI installation
@@ -135,7 +135,7 @@ This triggers automated builds for Windows, macOS, and Linux.
 pip install pyinstaller
 
 # Build executable
-pyinstaller mars_loadcell.spec
+pyinstaller mars_calibration.spec
 
 # The executable will be in dist/
 ```
@@ -225,9 +225,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/mars-loadcell-calibration/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/mars-loadcell-calibration/discussions)
-- **Wiki**: [Project Wiki](https://github.com/yourusername/mars-loadcell-calibration/wiki)
+- **Issues**: [GitHub Issues](https://github.com/SujithChristopher/mars_calibration/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/SujithChristopher/mars_calibration/discussions)
+- **Wiki**: [Project Wiki](https://github.com/SujithChristopher/mars_calibration/wiki)
 
 ## Acknowledgments
 
