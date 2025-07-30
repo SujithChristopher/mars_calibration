@@ -43,9 +43,9 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.setWindowTitle(f"Mars Calibration v{self.current_version} - Load Cell & IMU Calibration System")
         
         # Set responsive window size based on screen ratio
-        # For 16:10 screens: 1280x800, for 16:9 screens: 1280x720
-        self.setGeometry(100, 100, 1280, 800)
-        self.setMinimumSize(1000, 600)  # Minimum size for usability
+        # For 16:9 screens with taskbar: 1280x720, for 16:10 screens: 1280x750
+        self.setGeometry(100, 100, 1280, 720)
+        self.setMinimumSize(1000, 580)  # Minimum size for usability
         
         # Serial connection variables
         self.serial_worker = None
@@ -94,9 +94,9 @@ class LoadCellCalibrationGUI(QMainWindow):
         sketches_dir = self.user_data.copy_arduino_sketches()
         
         # Arduino sketch file paths
-        self.calibration_file = str(sketches_dir / "calibration" / "calibration.ino")
+        self.calibration_file = str(sketches_dir / "loadcell_calibration" / "loadcell_calibration.ino")
         self.firmware_file = str(sketches_dir / "firmware" / "firmware.ino")
-        self.imu_file = str(sketches_dir / "imu_program" / "imu_program.ino")
+        self.imu_file = str(sketches_dir / "imu_program_teensy" / "imu_program_teensy.ino")
         self.calibrations_dir = str(self.user_data.get_directory('calibrations'))
         
         # Show setup dialog on first run
@@ -184,13 +184,11 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.step1.set_completed(False)
         self.step2.set_current(False)
         self.step2.set_completed(False)
-        self.step3.set_current(False)
-        self.step3.set_completed(False)
         
         # Enable/disable groups
         self.step1_group.setEnabled(True)
         self.step2_group.setEnabled(False)
-        self.step3_group.setEnabled(False)
+        self.calibration_status_group.setEnabled(True)
         
         if self.current_step == 1:
             self.step1.set_current(True)
@@ -199,15 +197,9 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.step1.set_completed(True)
             self.step2.set_current(True)
             self.step2_group.setEnabled(True)
-        elif self.current_step == 3:
+        elif self.current_step >= 3:  # All completed
             self.step1.set_completed(True)
             self.step2.set_completed(True)
-            self.step3.set_current(True)
-            self.step3_group.setEnabled(True)
-        elif self.current_step == 4:  # All completed
-            self.step1.set_completed(True)
-            self.step2.set_completed(True)
-            self.step3.set_completed(True)
     
     # Load Cell Methods
     def upload_calibration_code(self):
@@ -631,17 +623,30 @@ class LoadCellCalibrationGUI(QMainWindow):
                     cal_msg = f"Calibration factor received: {cal_factor:.2f}"
                     self.logger.log_calibration(cal_msg)
                     
-                    # Move to step 3
-                    self.current_step = 3
-                    self.update_step_status()
-                    self.update_firmware_button.setEnabled(True)
-                    
                     step_msg = f"✓ Step 2 completed! Calibration factor: {cal_factor:.2f}"
                     ui_message = self.logger.log_step(step_msg)
                     self.log_message_to_ui(ui_message)
                     
-                    QMessageBox.information(self, "Calibration Complete", 
-                        f"Calibration successful!\nCalibration Factor: {cal_factor:.2f}\n\nYou can now proceed to Step 3.")
+                    # Update status and proceed to completed state
+                    self.current_step = 3
+                    self.update_step_status()
+                    
+                    # Update calibration status display
+                    self.calibration_status_label.setText(f"✓ Load cell calibration saved successfully!\nCalibration Factor: {cal_factor:.2f}\n\nGo to 'Upload Firmware' tab to upload final firmware.")
+                    self.calibration_status_label.setStyleSheet("""
+                    QLabel { 
+                        background: #e8f5e8; 
+                        color: #2e7d32; 
+                        padding: 15px; 
+                        border: 2px solid #4caf50; 
+                        border-radius: 8px;
+                        font-weight: bold;
+                        font-size: 11pt;
+                    }
+                    """)
+                    
+                    QMessageBox.information(self, "Calibration Saved", 
+                        f"Calibration saved successfully!\nCalibration Factor: {cal_factor:.2f}\n\nYou can now go to the 'Upload Firmware' tab.")
             except:
                 pass
                 

@@ -21,7 +21,7 @@ This is a Load Cell & IMU Calibration system with a GUI application for Arduino-
 - **arduino_compile.py**: Arduino compilation utility using pyduinocli (not actively used)
 
 ### **Arduino Firmware**
-- **calibration/calibration.ino**: Arduino calibration firmware that simulates HX711 load cell behavior
+- **loadcell_calibration/loadcell_calibration.ino**: Arduino calibration firmware that simulates HX711 load cell behavior
 - **firmware/firmware.ino**: Final Arduino firmware with HX711 integration
 - **imu_program/imu_program.ino**: IMU calibration program for Arduino Nano 33 BLE with LSM9DS1 sensor
 - **arduino-cli.exe**: Local Arduino CLI executable for compilation and upload
@@ -39,7 +39,7 @@ This is a Load Cell & IMU Calibration system with a GUI application for Arduino-
 - **Logger** (utils/logger.py): Centralized logging to file and UI
 
 ### Arduino Firmware
-- **calibration.ino**: Simulates load cell behavior, handles tare/calibration commands
+- **loadcell_calibration.ino**: Simulates load cell behavior, handles tare/calibration commands
 - **firmware.ino**: Production firmware with configurable calibration factor
 - **imu_program.ino**: IMU calibration firmware with accelerometer offset calculation and EEPROM storage
 
@@ -68,9 +68,9 @@ python main.py
 ## Workflows
 
 ### Load Cell Calibration Workflow
-1. **Step 1**: Upload calibration.ino to Arduino
-2. **Step 2**: Connect via serial, perform tare and calibration 
-3. **Step 3**: Update firmware.ino with calibration factor and upload
+1. **Step 1**: Upload loadcell_calibration.ino to Arduino
+2. **Step 2**: Connect via serial, perform tare and calibration, save calibration factor
+3. **Step 3**: Go to Upload Firmware tab to update firmware.ino with calibration factor and upload
 
 ### IMU Calibration Workflow
 1. **Upload**: Upload imu_program.ino to Arduino Nano 33 BLE
@@ -103,8 +103,8 @@ mars_calibration/
 ├── utils/                   # Utility classes
 │   ├── __init__.py
 │   └── logger.py            # Centralized logging
-├── calibration/
-│   └── calibration.ino      # Load cell calibration firmware
+├── loadcell_calibration/
+│   └── loadcell_calibration.ino  # Load cell calibration firmware
 ├── firmware/
 │   ├── firmware.ino         # Production load cell firmware
 │   └── firmware.ino.backup  # Backup created during updates

@@ -64,9 +64,9 @@ setup(
         "": ["*.ino", "*.toml", "*.txt", "*.md"],
     },
     data_files=[
-        ("arduino_sketches/calibration", ["calibration/calibration.ino"]),
+        ("arduino_sketches/loadcell_calibration", ["loadcell_calibration/loadcell_calibration.ino"]),
         ("arduino_sketches/firmware", ["firmware/firmware.ino"]),
-        ("arduino_sketches/imu_program", ["imu_program/imu_program.ino"]),
+        ("arduino_sketches/imu_program_teensy", ["imu_program_teensy/imu_program_teensy.ino"]),
     ],
     keywords="arduino, calibration, load-cell, imu, gui, automation",
     project_urls={

@@ -30,13 +30,11 @@ def setup_load_cell_tab(main_window):
     steps_group = QGroupBox("Progress")
     steps_layout = QVBoxLayout(steps_group)
     
-    main_window.step1 = StepIndicator(1, "Upload Calibration Code", "Upload calibration.ino to Arduino")
-    main_window.step2 = StepIndicator(2, "Calibrate Load Cell", "Run calibration process and get factor")
-    main_window.step3 = StepIndicator(3, "Calibration Complete", "Load cell calibration factor calculated")
+    main_window.step1 = StepIndicator(1, "Upload Calibration Code", "Upload loadcell_calibration.ino to Arduino")
+    main_window.step2 = StepIndicator(2, "Calibrate & Save", "Run calibration process and save factor")
     
     steps_layout.addWidget(main_window.step1)
     steps_layout.addWidget(main_window.step2)
-    steps_layout.addWidget(main_window.step3)
     
     left_layout.addWidget(steps_group)
     
@@ -148,27 +146,27 @@ def setup_load_cell_tab(main_window):
     
     left_layout.addWidget(main_window.step2_group)
     
-    # Step 3: Upload Firmware
-    main_window.step3_group = QGroupBox("Step 3: Upload Final Firmware")
-    step3_layout = QVBoxLayout(main_window.step3_group)
+    # Calibration Status
+    main_window.calibration_status_group = QGroupBox("Calibration Status")
+    status_layout = QVBoxLayout(main_window.calibration_status_group)
     
-    # Calibration completion message
-    completion_label = QLabel("✓ Load cell calibration factor has been calculated.\nGo to 'Upload Firmware' tab to save and upload final firmware.")
-    completion_label.setStyleSheet("""
+    # Status message
+    main_window.calibration_status_label = QLabel("No calibration completed yet.")
+    main_window.calibration_status_label.setStyleSheet("""
     QLabel { 
         background: palette(base); 
-        color: palette(link); 
+        color: palette(text); 
         padding: 15px; 
-        border: 2px solid palette(highlight); 
+        border: 2px solid palette(mid); 
         border-radius: 8px;
         font-weight: bold;
         font-size: 11pt;
     }
     """)
-    completion_label.setAlignment(Qt.AlignCenter)
-    step3_layout.addWidget(completion_label)
+    main_window.calibration_status_label.setAlignment(Qt.AlignCenter)
+    status_layout.addWidget(main_window.calibration_status_label)
     
-    left_layout.addWidget(main_window.step3_group)
+    left_layout.addWidget(main_window.calibration_status_group)
     
     # Progress bar (shared)
     main_window.progress_bar = QProgressBar()

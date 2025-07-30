@@ -9,9 +9,9 @@ project_root = Path.cwd()
 # Define data files to include
 added_files = [
     # Arduino sketches
-    (str(project_root / 'calibration'), 'calibration'),
+    (str(project_root / 'loadcell_calibration'), 'loadcell_calibration'),
     (str(project_root / 'firmware'), 'firmware'), 
-    (str(project_root / 'imu_program'), 'imu_program'),
+    (str(project_root / 'imu_program_teensy'), 'imu_program_teensy'),
     
     # Any additional data files
     (str(project_root / 'README.md'), '.'),
