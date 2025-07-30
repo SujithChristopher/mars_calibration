@@ -2035,3 +2035,1708 @@ Timestamp: 2025-07-26 17:16:31
 ============================================================
 SESSION END: 2025-07-26 17:25:37
 ============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-28 11:11:09
+============================================================
+[2025-07-28 11:11:10.001] [STEP] Application started
+[2025-07-28 11:11:10.002] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-28 11:11:10.004] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-28 11:11:10.005] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-28 11:11:10.169] [INFO] Refreshing serial ports
+[2025-07-28 11:11:10.262] [INFO] Found 5 serial ports
+[2025-07-28 11:11:10.265] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-28 11:11:10.267] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-28 11:11:10.268] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-28 11:11:10.270] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-28 11:11:10.271] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-28 11:11:10.273] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-28 11:11:36.321] [UPLOAD] Starting calibration code upload
+[2025-07-28 11:11:36.323] [UPLOAD] Upload parameters - Port: COM12, Board: arduino:mbed_nano:nano33ble
+[2025-07-28 11:11:36.324] [UPLOAD] Starting calibration upload to COM12
+[2025-07-28 11:11:36.324] [UPLOAD] Calibration Upload parameters:
+[2025-07-28 11:11:36.325] [UPLOAD]   File: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-28 11:11:36.325] [UPLOAD]   Board: arduino:mbed_nano:nano33ble
+[2025-07-28 11:11:36.325] [UPLOAD]   Port: COM12
+[2025-07-28 11:11:36.325] [UPLOAD] Checking Arduino Nano core installation...
+[2025-07-28 11:11:36.325] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-28 11:11:46.179] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-28 11:11:46
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-28 11:11:50
+============================================================
+[2025-07-28 11:11:50.577] [STEP] Application started
+[2025-07-28 11:11:50.577] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-28 11:11:50.578] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-28 11:11:50.578] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-28 11:11:50.633] [INFO] Refreshing serial ports
+[2025-07-28 11:11:50.649] [INFO] Found 5 serial ports
+[2025-07-28 11:11:50.651] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-28 11:11:50.652] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-28 11:11:50.652] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-28 11:11:50.653] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-28 11:11:50.654] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-28 11:11:50.654] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-28 11:12:06.604] [UPLOAD] Starting calibration code upload
+[2025-07-28 11:12:06.605] [UPLOAD] Upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-28 11:12:06.606] [UPLOAD] Starting calibration upload to COM12
+[2025-07-28 11:12:06.606] [UPLOAD] Calibration Upload parameters:
+[2025-07-28 11:12:06.607] [UPLOAD]   File: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-28 11:12:06.607] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-28 11:12:06.607] [UPLOAD]   Port: COM12
+[2025-07-28 11:12:06.607] [UPLOAD] Checking Teensy core installation...
+[2025-07-28 11:12:06.607] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-28 11:12:14.665] [UPLOAD] Teensy core installation check complete
+[2025-07-28 11:12:14.665] [UPLOAD] Compiling calibration sketch...
+[2025-07-28 11:12:15.723] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-28 11:12:15
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-28 11:12:17
+============================================================
+[2025-07-28 11:12:17.685] [STEP] Application started
+[2025-07-28 11:12:17.685] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-28 11:12:17.685] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-28 11:12:17.685] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-28 11:12:17.702] [INFO] Refreshing serial ports
+[2025-07-28 11:12:17.707] [INFO] Found 5 serial ports
+[2025-07-28 11:12:17.707] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-28 11:12:17.708] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-28 11:12:17.708] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-28 11:12:17.708] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-28 11:12:17.708] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-28 11:12:17.708] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-28 11:12:26.056] [INFO] Refreshing serial ports
+[2025-07-28 11:12:26.061] [INFO] Found 5 serial ports
+[2025-07-28 11:12:26.061] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-28 11:12:26.061] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-28 11:12:26.062] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-28 11:12:26.062] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-28 11:12:26.062] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-28 11:12:26.062] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-28 11:12:27.296] [IMU] Starting IMU code upload
+[2025-07-28 11:12:27.297] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-28 11:12:27.297] [IMU] Starting IMU upload to COM12
+[2025-07-28 11:12:27.298] [UPLOAD] Imu Upload parameters:
+[2025-07-28 11:12:27.298] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-28 11:12:27.299] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-28 11:12:27.299] [UPLOAD]   Port: COM12
+[2025-07-28 11:12:27.299] [UPLOAD] Checking Teensy core installation...
+[2025-07-28 11:12:27.299] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-28 11:12:36.220] [UPLOAD] Teensy core installation check complete
+[2025-07-28 11:12:36.220] [UPLOAD] Compiling IMU sketch...
+[2025-07-28 11:12:43.574] [SUCCESS] Imu compilation successful!
+[2025-07-28 11:12:43.575] [UPLOAD] Uploading IMU to COM12...
+[2025-07-28 11:12:50.967] [SUCCESS] Imu upload successful!
+[2025-07-28 11:12:55.361] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-28 11:12:55.364] [SUCCESS] Connected to IMU at COM12
+[2025-07-28 11:13:00.581] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-28 11:13:01.832] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-28 11:13:01.833] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-28 11:13:01.833] [IMU] Calibration will take about 10 seconds...
+[2025-07-28 11:13:01.834] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-28 11:13:22.168] [IMU] Disconnecting from IMU port
+[2025-07-28 11:13:22.169] [INFO] Disconnected from IMU
+[2025-07-28 11:13:23.666] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-28 11:13:23.667] [SUCCESS] Connected to IMU at COM12
+[2025-07-28 11:13:30.489] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-28 11:13:31.831] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-28 11:13:31.832] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-28 11:13:31.832] [IMU] Calibration will take about 10 seconds...
+[2025-07-28 11:13:31.833] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-28 11:13:33.572] [STEP] Application closing
+[2025-07-28 11:13:33.573] [IMU] Disconnecting from IMU port
+[2025-07-28 11:13:33.574] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-28 11:13:33
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 09:02:11
+============================================================
+[2025-07-30 09:02:11.699] [STEP] Application started
+[2025-07-30 09:02:11.699] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 09:02:11.700] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 09:02:11.700] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 09:02:11.791] [INFO] Refreshing serial ports
+[2025-07-30 09:02:11.810] [INFO] Found 5 serial ports
+[2025-07-30 09:02:11.812] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 09:02:11.813] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 09:02:11.813] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 09:02:11.814] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 09:02:11.814] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 09:02:11.814] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 09:02:17.920] [IMU] Starting IMU code upload
+[2025-07-30 09:02:17.921] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 09:02:17.921] [IMU] Starting IMU upload to COM12
+[2025-07-30 09:02:17.921] [UPLOAD] Imu Upload parameters:
+[2025-07-30 09:02:17.922] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 09:02:17.922] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 09:02:17.922] [UPLOAD]   Port: COM12
+[2025-07-30 09:02:17.922] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 09:02:17.922] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 09:02:26.615] [UPLOAD] Teensy core installation check complete
+[2025-07-30 09:02:26.617] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 09:02:35.663] [ERROR] Imu compilation failed: internal error in mingw32_gt_pch_use_address, at config/i386/host-mingw32.c:192: MapViewOfFileEx: Attempt to access invalid address. 
+
+Error during build: exit status 1
+
+[2025-07-30 09:03:38.696] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-30 09:03:38
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 09:03:41
+============================================================
+[2025-07-30 09:03:41.390] [STEP] Application started
+[2025-07-30 09:03:41.390] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 09:03:41.390] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 09:03:41.390] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 09:03:41.410] [INFO] Refreshing serial ports
+[2025-07-30 09:03:41.415] [INFO] Found 5 serial ports
+[2025-07-30 09:03:41.416] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 09:03:41.416] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 09:03:41.416] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 09:03:41.416] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 09:03:41.416] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 09:03:41.417] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 09:03:44.945] [INFO] Refreshing serial ports
+[2025-07-30 09:03:44.949] [INFO] Found 5 serial ports
+[2025-07-30 09:03:44.949] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 09:03:44.950] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 09:03:44.950] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 09:03:44.950] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 09:03:44.951] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 09:03:44.951] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 09:03:45.109] [INFO] Refreshing serial ports
+[2025-07-30 09:03:45.112] [INFO] Found 5 serial ports
+[2025-07-30 09:03:45.113] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 09:03:45.113] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 09:03:45.114] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 09:03:45.114] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 09:03:45.114] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 09:03:45.115] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 09:03:45.254] [INFO] Refreshing serial ports
+[2025-07-30 09:03:45.257] [INFO] Found 5 serial ports
+[2025-07-30 09:03:45.258] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 09:03:45.258] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 09:03:45.258] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 09:03:45.259] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 09:03:45.259] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 09:03:45.260] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 09:03:45.473] [INFO] Refreshing serial ports
+[2025-07-30 09:03:45.476] [INFO] Found 5 serial ports
+[2025-07-30 09:03:45.476] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 09:03:45.477] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 09:03:45.477] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 09:03:45.477] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 09:03:45.477] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 09:03:45.478] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 09:03:49.061] [IMU] Starting IMU code upload
+[2025-07-30 09:03:49.062] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 09:03:49.062] [IMU] Starting IMU upload to COM12
+[2025-07-30 09:03:49.063] [UPLOAD] Imu Upload parameters:
+[2025-07-30 09:03:49.063] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 09:03:49.063] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 09:03:49.063] [UPLOAD]   Port: COM12
+[2025-07-30 09:03:49.063] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 09:03:49.064] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 09:03:55.285] [UPLOAD] Teensy core installation check complete
+[2025-07-30 09:03:55.285] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 09:04:02.012] [ERROR] Imu compilation failed: internal error in mingw32_gt_pch_use_address, at config/i386/host-mingw32.c:192: MapViewOfFileEx: Attempt to access invalid address. 
+
+Error during build: exit status 1
+
+[2025-07-30 09:04:34.395] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-30 09:04:34
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:00:09
+============================================================
+[2025-07-30 10:00:09.828] [STEP] Application started
+[2025-07-30 10:00:09.828] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:00:09.828] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:00:09.828] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:00:09.879] [INFO] Refreshing serial ports
+[2025-07-30 10:00:09.883] [INFO] Found 4 serial ports
+[2025-07-30 10:00:09.884] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:00:09.885] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:00:09.885] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:00:09.885] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:00:09.885] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-30 10:00:12.363] [IMU] Starting IMU code upload
+[2025-07-30 10:00:12.364] [IMU] IMU upload parameters - Port: COM6, Board: teensy:avr:teensy41
+[2025-07-30 10:00:12.364] [IMU] Starting IMU upload to COM6
+[2025-07-30 10:00:12.366] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:00:12.367] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:00:12.367] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:00:12.367] [UPLOAD]   Port: COM6
+[2025-07-30 10:00:12.368] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:00:12.368] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:00:15.723] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:00:15.723] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:00:26.711] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:00:26.712] [UPLOAD] Uploading IMU to COM6...
+[2025-07-30 10:00:28.971] [SUCCESS] Imu upload successful!
+[2025-07-30 10:09:09.410] [IMU] Starting IMU code upload
+[2025-07-30 10:09:09.411] [IMU] IMU upload parameters - Port: COM6, Board: teensy:avr:teensy41
+[2025-07-30 10:09:09.411] [IMU] Starting IMU upload to COM6
+[2025-07-30 10:09:09.413] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:09:09.416] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:09:09.416] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:09:09.416] [UPLOAD]   Port: COM6
+[2025-07-30 10:09:09.417] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:09:09.418] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:09:12.650] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:09:12.650] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:09:17.568] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:09:17.568] [UPLOAD] Uploading IMU to COM6...
+[2025-07-30 10:09:20.093] [SUCCESS] Imu upload successful!
+[2025-07-30 10:10:09.919] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-30 10:10:09
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:10:10
+============================================================
+[2025-07-30 10:10:10.293] [STEP] Application started
+[2025-07-30 10:10:10.293] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:10:10.293] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:10:10.293] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:10:10.310] [INFO] Refreshing serial ports
+[2025-07-30 10:10:10.321] [INFO] Found 5 serial ports
+[2025-07-30 10:10:10.321] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:10:10.321] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:10:10.322] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:10:10.322] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:10:10.322] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:10:10.322] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:10:12.018] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-30 10:10:12
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:10:12
+============================================================
+[2025-07-30 10:10:12.819] [STEP] Application started
+[2025-07-30 10:10:12.819] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:10:12.819] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:10:12.820] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:10:12.835] [INFO] Refreshing serial ports
+[2025-07-30 10:10:12.840] [INFO] Found 5 serial ports
+[2025-07-30 10:10:12.840] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:10:12.840] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:10:12.841] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:10:12.841] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:10:12.841] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:10:12.841] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:10:15.636] [IMU] Starting IMU code upload
+[2025-07-30 10:10:15.637] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:10:15.638] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:10:15.639] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:10:15.640] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:10:15.640] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:10:15.641] [UPLOAD]   Port: COM12
+[2025-07-30 10:10:15.641] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:10:15.641] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:10:18.977] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:10:18.977] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:10:24.781] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:10:24.781] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:10:28.413] [SUCCESS] Imu upload successful!
+[2025-07-30 10:10:29.386] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:10:29.389] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:10:30.407] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:10:30.408] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:10:30.409] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:10:30.409] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:10:30.409] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:10:30.409] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:10:30.418] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:10:30.420] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:10:30.421] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:10:30.422] [IMU] Trying address 0x68...
+[2025-07-30 10:10:30.423] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:10:30.424] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:10:32.710] [IMU] MPU6050 ready for use!
+[2025-07-30 10:10:32.713] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:10:32.713] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:10:32.714] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:10:32.714] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:10:32.715] [IMU] Commands:
+[2025-07-30 10:10:32.715] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:10:32.716] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:10:32.716] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:10:32.719] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:10:40.072] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:10:41.082] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:10:41.083] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:10:41.083] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:10:41.086] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:10:41.090] [IMU] CAL: Sample 1/100 Raw: 0.0040,0.0040,1.0010
+[2025-07-30 10:10:41.190] [IMU] CAL: Sample 10/100 Raw: 0.0016,0.0067,0.9976
+[2025-07-30 10:10:41.292] [IMU] CAL: Sample 19/100 Raw: 0.0001,-0.0009,0.9991
+[2025-07-30 10:10:41.302] [IMU] Calibration progress: 20%
+[2025-07-30 10:10:41.398] [IMU] CAL: Sample 28/100 Raw: -0.0084,0.0030,1.0013
+[2025-07-30 10:10:41.502] [IMU] CAL: Sample 37/100 Raw: 0.0016,0.0028,0.9974
+[2025-07-30 10:10:41.533] [IMU] Calibration progress: 40%
+[2025-07-30 10:10:41.605] [IMU] CAL: Sample 46/100 Raw: -0.0004,0.0023,0.9879
+[2025-07-30 10:10:41.711] [IMU] CAL: Sample 55/100 Raw: 0.0021,-0.0036,1.0020
+[2025-07-30 10:10:41.765] [IMU] Calibration progress: 60%
+[2025-07-30 10:10:41.814] [IMU] CAL: Sample 64/100 Raw: -0.0028,-0.0007,0.9966
+[2025-07-30 10:10:41.919] [IMU] CAL: Sample 73/100 Raw: -0.0021,-0.0004,1.0032
+[2025-07-30 10:10:41.996] [IMU] Calibration progress: 80%
+[2025-07-30 10:10:42.022] [IMU] CAL: Sample 82/100 Raw: -0.0023,0.0037,1.0067
+[2025-07-30 10:10:42.126] [IMU] CAL: Sample 91/100 Raw: 0.0043,-0.0004,1.0018
+[2025-07-30 10:10:42.227] [IMU] Calibration progress: 100%
+[2025-07-30 10:10:42.230] [IMU] CAL: Sample 100/100 Raw: -0.0006,-0.0046,1.0015
+[2025-07-30 10:10:42.239] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:10:42.239] [IMU] X offset: 0.000159
+[2025-07-30 10:10:42.241] [IMU] Y offset: -0.000108
+[2025-07-30 10:10:42.242] [IMU] Z offset: 0.000227
+[2025-07-30 10:10:42.242] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:11:01.135] [STEP] Application closing
+[2025-07-30 10:11:01.136] [IMU] Disconnecting from IMU port
+[2025-07-30 10:11:01.138] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:11:01
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:15:57
+============================================================
+[2025-07-30 10:15:57.772] [STEP] Application started
+[2025-07-30 10:15:57.772] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:15:57.773] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:15:57.773] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:15:57.790] [INFO] Refreshing serial ports
+[2025-07-30 10:15:57.795] [INFO] Found 5 serial ports
+[2025-07-30 10:15:57.796] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:15:57.796] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:15:57.796] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:15:57.796] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:15:57.796] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:15:57.797] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:16:03.618] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:16:03.620] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:16:09.095] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:16:10.101] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:16:10.103] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:16:10.104] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:16:10.104] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:16:10.104] [IMU] CAL: Sample 1/100 Raw: 0.0013,-0.0051,1.0040
+[2025-07-30 10:16:10.211] [IMU] CAL: Sample 10/100 Raw: -0.0031,-0.0014,0.9993
+[2025-07-30 10:16:10.313] [IMU] CAL: Sample 19/100 Raw: 0.0028,0.0015,1.0001
+[2025-07-30 10:16:10.323] [IMU] Calibration progress: 20%
+[2025-07-30 10:16:10.418] [IMU] CAL: Sample 28/100 Raw: -0.0006,0.0006,0.9947
+[2025-07-30 10:16:10.521] [IMU] CAL: Sample 37/100 Raw: 0.0021,0.0018,1.0074
+[2025-07-30 10:16:10.554] [IMU] Calibration progress: 40%
+[2025-07-30 10:16:10.627] [IMU] CAL: Sample 46/100 Raw: 0.0025,0.0023,1.0057
+[2025-07-30 10:16:10.731] [IMU] CAL: Sample 55/100 Raw: -0.0011,-0.0021,0.9984
+[2025-07-30 10:16:10.785] [IMU] Calibration progress: 60%
+[2025-07-30 10:16:10.835] [IMU] CAL: Sample 64/100 Raw: -0.0060,-0.0031,0.9969
+[2025-07-30 10:16:10.936] [IMU] CAL: Sample 73/100 Raw: 0.0013,0.0015,0.9954
+[2025-07-30 10:16:11.017] [IMU] Calibration progress: 80%
+[2025-07-30 10:16:11.044] [IMU] CAL: Sample 82/100 Raw: 0.0045,0.0035,1.0018
+[2025-07-30 10:16:11.148] [IMU] CAL: Sample 91/100 Raw: -0.0048,-0.0026,0.9893
+[2025-07-30 10:16:11.248] [IMU] Calibration progress: 100%
+[2025-07-30 10:16:11.251] [IMU] CAL: Sample 100/100 Raw: 0.0006,0.0025,0.9988
+[2025-07-30 10:16:11.260] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:16:11.260] [IMU] X offset: -0.000483
+[2025-07-30 10:16:11.262] [IMU] Y offset: -0.000108
+[2025-07-30 10:16:11.263] [IMU] Z offset: 0.000105
+[2025-07-30 10:16:11.263] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:16:13.847] [IMU] Saved IMU 1 offsets: Pitch=0.0300, Roll=0.0300
+[2025-07-30 10:16:29.631] [IMU] Disconnecting from IMU port
+[2025-07-30 10:16:29.632] [INFO] Disconnected from IMU
+[2025-07-30 10:16:31.299] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:16:31.300] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:16:34.990] [STEP] Application closing
+[2025-07-30 10:16:34.990] [IMU] Disconnecting from IMU port
+[2025-07-30 10:16:34.992] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:16:34
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:17:21
+============================================================
+[2025-07-30 10:17:21.285] [STEP] Application started
+[2025-07-30 10:17:21.285] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:17:21.285] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:17:21.286] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:17:21.301] [INFO] Refreshing serial ports
+[2025-07-30 10:17:21.305] [INFO] Found 5 serial ports
+[2025-07-30 10:17:21.306] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:17:21.306] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:17:21.306] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:17:21.306] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:17:21.306] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:17:21.307] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:17:24.115] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:17:24.117] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:17:42.598] [ERROR] IMU connection lost
+[2025-07-30 10:17:42.598] [IMU] Disconnecting from IMU port
+[2025-07-30 10:17:42.599] [INFO] Disconnected from IMU
+[2025-07-30 10:17:47.258] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:17:47.260] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:18:06.165] [STEP] Application closing
+[2025-07-30 10:18:06.166] [IMU] Disconnecting from IMU port
+[2025-07-30 10:18:06.167] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:18:06
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:18:14
+============================================================
+[2025-07-30 10:18:14.841] [STEP] Application started
+[2025-07-30 10:18:14.841] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:18:14.841] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:18:14.841] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:18:14.857] [INFO] Refreshing serial ports
+[2025-07-30 10:18:14.862] [INFO] Found 5 serial ports
+[2025-07-30 10:18:14.862] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:18:14.862] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:18:14.862] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:18:14.863] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:18:14.863] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:18:14.863] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:18:16.762] [INFO] Refreshing serial ports
+[2025-07-30 10:18:16.773] [INFO] Found 5 serial ports
+[2025-07-30 10:18:16.777] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:18:16.777] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:18:16.778] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:18:16.778] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:18:16.779] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:18:16.779] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:18:21.879] [IMU] Starting IMU code upload
+[2025-07-30 10:18:21.880] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:18:21.880] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:18:21.881] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:18:21.881] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:18:21.881] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:18:21.881] [UPLOAD]   Port: COM12
+[2025-07-30 10:18:21.881] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:18:21.881] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:18:24.991] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:18:24.991] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:18:29.334] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:18:29.335] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:18:32.991] [SUCCESS] Imu upload successful!
+[2025-07-30 10:18:35.097] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:18:35.099] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:18:35.438] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:18:35.439] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:18:35.441] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:18:35.441] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:18:35.442] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:18:35.442] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:18:35.449] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:18:35.451] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:18:35.452] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:18:35.452] [IMU] Trying address 0x68...
+[2025-07-30 10:18:35.454] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:18:35.455] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:18:37.742] [IMU] MPU6050 ready for use!
+[2025-07-30 10:18:37.744] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:18:37.745] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:18:37.745] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:18:37.746] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:18:37.746] [IMU] Commands:
+[2025-07-30 10:18:37.746] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:18:37.747] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:18:37.747] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:18:37.750] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:18:44.022] [IMU] Saved IMU 1 offsets: Pitch=0.0000, Roll=0.0500
+[2025-07-30 10:18:53.689] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:18:54.689] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:18:54.692] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:18:54.692] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:18:54.693] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:18:54.693] [IMU] CAL: Sample 1/100 Raw: -0.0028,0.0002,0.9899
+[2025-07-30 10:18:54.798] [IMU] CAL: Sample 10/100 Raw: 0.0028,0.0021,0.9985
+[2025-07-30 10:18:54.901] [IMU] CAL: Sample 19/100 Raw: -0.0016,-0.0008,0.9977
+[2025-07-30 10:18:54.910] [IMU] Calibration progress: 20%
+[2025-07-30 10:18:55.006] [IMU] CAL: Sample 28/100 Raw: -0.0006,0.0006,0.9975
+[2025-07-30 10:18:55.111] [IMU] CAL: Sample 37/100 Raw: -0.0001,-0.0008,1.0014
+[2025-07-30 10:18:55.141] [IMU] Calibration progress: 40%
+[2025-07-30 10:18:55.214] [IMU] CAL: Sample 46/100 Raw: -0.0035,-0.0040,1.0009
+[2025-07-30 10:18:55.318] [IMU] CAL: Sample 55/100 Raw: 0.0004,-0.0064,1.0002
+[2025-07-30 10:18:55.373] [IMU] Calibration progress: 60%
+[2025-07-30 10:18:55.422] [IMU] CAL: Sample 64/100 Raw: 0.0030,0.0009,1.0060
+[2025-07-30 10:18:55.526] [IMU] CAL: Sample 73/100 Raw: -0.0031,-0.0001,1.0051
+[2025-07-30 10:18:55.605] [IMU] Calibration progress: 80%
+[2025-07-30 10:18:55.630] [IMU] CAL: Sample 82/100 Raw: -0.0033,0.0043,0.9933
+[2025-07-30 10:18:55.735] [IMU] CAL: Sample 91/100 Raw: -0.0013,0.0028,0.9987
+[2025-07-30 10:18:55.837] [IMU] Calibration progress: 100%
+[2025-07-30 10:18:55.839] [IMU] CAL: Sample 100/100 Raw: -0.0043,-0.0037,0.9894
+[2025-07-30 10:18:55.848] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:18:55.849] [IMU] X offset: -0.000481
+[2025-07-30 10:18:55.851] [IMU] Y offset: 0.000219
+[2025-07-30 10:18:55.851] [IMU] Z offset: 0.000264
+[2025-07-30 10:18:55.851] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:18:57.687] [IMU] Saved IMU 1 offsets: Pitch=-0.0100, Roll=0.0300
+[2025-07-30 10:19:24.967] [IMU] Disconnecting from IMU port
+[2025-07-30 10:19:24.969] [INFO] Disconnected from IMU
+[2025-07-30 10:19:25.639] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:19:25.640] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:19:35.215] [IMU] Disconnecting from IMU port
+[2025-07-30 10:19:35.217] [INFO] Disconnected from IMU
+[2025-07-30 10:19:36.730] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:19:36.732] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:19:43.791] [IMU] Resetting IMU offsets
+[2025-07-30 10:19:44.802] [IMU] Calibration offsets reset to zero
+[2025-07-30 10:19:52.102] [STEP] Application closing
+[2025-07-30 10:19:52.103] [IMU] Disconnecting from IMU port
+[2025-07-30 10:19:52.105] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:19:52
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:22:43
+============================================================
+[2025-07-30 10:22:43.381] [STEP] Application started
+[2025-07-30 10:22:43.381] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:22:43.381] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:22:43.381] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:22:43.400] [INFO] Refreshing serial ports
+[2025-07-30 10:22:43.406] [INFO] Found 5 serial ports
+[2025-07-30 10:22:43.406] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:22:43.406] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:22:43.407] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:22:43.407] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:22:43.407] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:22:43.407] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:22:51.267] [IMU] Starting IMU code upload
+[2025-07-30 10:22:51.268] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:22:51.269] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:22:51.271] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:22:51.271] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:22:51.272] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:22:51.272] [UPLOAD]   Port: COM12
+[2025-07-30 10:22:51.273] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:22:51.273] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:22:54.435] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:22:54.436] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:22:58.893] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:22:58.893] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:23:02.535] [SUCCESS] Imu upload successful!
+[2025-07-30 10:23:05.003] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:23:05.004] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:23:07.232] [IMU] MPU6050 ready for use!
+[2025-07-30 10:23:07.235] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:23:07.235] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:23:07.235] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:23:07.238] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:23:07.239] [IMU] Commands:
+[2025-07-30 10:23:07.239] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:23:07.239] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:23:07.240] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:23:07.240] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:23:12.160] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:23:13.162] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:23:13.165] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:23:13.165] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:23:13.166] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:23:13.166] [IMU] CAL: Sample 1/100 Raw: 0.0033,-0.0012,0.9903
+[2025-07-30 10:23:13.271] [IMU] CAL: Sample 10/100 Raw: 0.0003,-0.0017,0.9979
+[2025-07-30 10:23:13.375] [IMU] CAL: Sample 19/100 Raw: -0.0021,-0.0029,0.9962
+[2025-07-30 10:23:13.383] [IMU] Calibration progress: 20%
+[2025-07-30 10:23:13.479] [IMU] CAL: Sample 28/100 Raw: 0.0030,-0.0026,1.0001
+[2025-07-30 10:23:13.581] [IMU] CAL: Sample 37/100 Raw: -0.0016,0.0013,1.0040
+[2025-07-30 10:23:13.615] [IMU] Calibration progress: 40%
+[2025-07-30 10:23:13.687] [IMU] CAL: Sample 46/100 Raw: -0.0007,0.0081,1.0076
+[2025-07-30 10:23:13.790] [IMU] CAL: Sample 55/100 Raw: 0.0006,0.0042,1.0035
+[2025-07-30 10:23:13.846] [IMU] Calibration progress: 60%
+[2025-07-30 10:23:13.895] [IMU] CAL: Sample 64/100 Raw: 0.0047,-0.0004,0.9986
+[2025-07-30 10:23:14.000] [IMU] CAL: Sample 73/100 Raw: 0.0008,0.0037,1.0084
+[2025-07-30 10:23:14.078] [IMU] Calibration progress: 80%
+[2025-07-30 10:23:14.104] [IMU] CAL: Sample 82/100 Raw: -0.0021,0.0081,0.9954
+[2025-07-30 10:23:14.209] [IMU] CAL: Sample 91/100 Raw: -0.0065,0.0015,1.0042
+[2025-07-30 10:23:14.309] [IMU] Calibration progress: 100%
+[2025-07-30 10:23:14.312] [IMU] CAL: Sample 100/100 Raw: 0.0028,-0.0029,0.9852
+[2025-07-30 10:23:14.321] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:23:14.322] [IMU] X offset: -0.000601
+[2025-07-30 10:23:14.324] [IMU] Y offset: 0.000178
+[2025-07-30 10:23:14.324] [IMU] Z offset: -0.000255
+[2025-07-30 10:23:14.324] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:23:17.840] [IMU] Saved IMU 1 offsets: Pitch=0.0200, Roll=-0.0200
+[2025-07-30 10:24:07.399] [IMU] Resetting IMU offsets
+[2025-07-30 10:24:08.407] [IMU] Calibration offsets reset to zero
+[2025-07-30 10:24:13.039] [IMU] Disconnecting from IMU port
+[2025-07-30 10:24:13.040] [INFO] Disconnected from IMU
+[2025-07-30 10:24:13.532] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:24:13.533] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:24:15.128] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:24:16.132] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:24:16.134] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:24:16.134] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:24:16.134] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:24:16.135] [IMU] CAL: Sample 1/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:16.239] [IMU] CAL: Sample 10/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:16.344] [IMU] CAL: Sample 19/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:16.354] [IMU] Calibration progress: 20%
+[2025-07-30 10:24:16.448] [IMU] CAL: Sample 28/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:16.553] [IMU] CAL: Sample 37/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:16.584] [IMU] Calibration progress: 40%
+[2025-07-30 10:24:16.657] [IMU] CAL: Sample 46/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:16.761] [IMU] CAL: Sample 55/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:16.816] [IMU] Calibration progress: 60%
+[2025-07-30 10:24:16.864] [IMU] CAL: Sample 64/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:16.969] [IMU] CAL: Sample 73/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:17.048] [IMU] Calibration progress: 80%
+[2025-07-30 10:24:17.072] [IMU] CAL: Sample 82/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:17.177] [IMU] CAL: Sample 91/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:17.280] [IMU] Calibration progress: 100%
+[2025-07-30 10:24:17.282] [IMU] CAL: Sample 100/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:17.291] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:24:17.291] [IMU] X offset: -0.078047
+[2025-07-30 10:24:17.293] [IMU] Y offset: -0.991655
+[2025-07-30 10:24:17.294] [IMU] Z offset: -0.215751
+[2025-07-30 10:24:17.294] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:24:23.247] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:24:24.250] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:24:24.252] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:24:24.253] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:24:24.253] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:24:24.254] [IMU] CAL: Sample 1/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:24.356] [IMU] CAL: Sample 10/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:24.461] [IMU] CAL: Sample 19/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:24.471] [IMU] Calibration progress: 20%
+[2025-07-30 10:24:24.574] [IMU] CAL: Sample 28/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:24.670] [IMU] CAL: Sample 37/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:24.703] [IMU] Calibration progress: 40%
+[2025-07-30 10:24:24.774] [IMU] CAL: Sample 46/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:24.879] [IMU] CAL: Sample 55/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:24.935] [IMU] Calibration progress: 60%
+[2025-07-30 10:24:24.983] [IMU] CAL: Sample 64/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:25.087] [IMU] CAL: Sample 73/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:25.166] [IMU] Calibration progress: 80%
+[2025-07-30 10:24:25.191] [IMU] CAL: Sample 82/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:25.295] [IMU] CAL: Sample 91/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:25.398] [IMU] Calibration progress: 100%
+[2025-07-30 10:24:25.400] [IMU] CAL: Sample 100/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:25.409] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:24:25.411] [IMU] X offset: -0.078047
+[2025-07-30 10:24:25.411] [IMU] Y offset: -0.991655
+[2025-07-30 10:24:25.412] [IMU] Z offset: -0.215751
+[2025-07-30 10:24:25.412] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:24:33.136] [IMU] Saved IMU 1 offsets: Pitch=5.9600, Roll=-51.1400
+[2025-07-30 10:24:35.415] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:24:36.420] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:24:36.422] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:24:36.423] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:24:36.423] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:24:36.424] [IMU] CAL: Sample 1/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:36.527] [IMU] CAL: Sample 10/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:36.632] [IMU] CAL: Sample 19/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:36.641] [IMU] Calibration progress: 20%
+[2025-07-30 10:24:36.736] [IMU] CAL: Sample 28/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:36.840] [IMU] CAL: Sample 37/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:36.873] [IMU] Calibration progress: 40%
+[2025-07-30 10:24:36.944] [IMU] CAL: Sample 46/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:37.048] [IMU] CAL: Sample 55/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:37.105] [IMU] Calibration progress: 60%
+[2025-07-30 10:24:37.152] [IMU] CAL: Sample 64/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:37.257] [IMU] CAL: Sample 73/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:37.336] [IMU] Calibration progress: 80%
+[2025-07-30 10:24:37.361] [IMU] CAL: Sample 82/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:37.466] [IMU] CAL: Sample 91/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:37.568] [IMU] Calibration progress: 100%
+[2025-07-30 10:24:37.570] [IMU] CAL: Sample 100/100 Raw: -0.0780,-0.9917,0.7843
+[2025-07-30 10:24:37.581] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:24:37.581] [IMU] X offset: -0.078047
+[2025-07-30 10:24:37.582] [IMU] Y offset: -0.991655
+[2025-07-30 10:24:37.582] [IMU] Z offset: -0.215751
+[2025-07-30 10:24:37.583] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:24:40.782] [STEP] Application closing
+[2025-07-30 10:24:40.782] [IMU] Disconnecting from IMU port
+[2025-07-30 10:24:40.785] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:24:40
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:26:32
+============================================================
+[2025-07-30 10:26:32.195] [STEP] Application started
+[2025-07-30 10:26:32.195] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:26:32.195] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:26:32.195] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:26:32.210] [INFO] Refreshing serial ports
+[2025-07-30 10:26:32.215] [INFO] Found 5 serial ports
+[2025-07-30 10:26:32.215] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:26:32.215] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:26:32.216] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:26:32.216] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:26:32.216] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:26:32.216] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:26:34.778] [IMU] Starting IMU code upload
+[2025-07-30 10:26:34.779] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:26:34.779] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:26:34.782] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:26:34.783] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:26:34.783] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:26:34.784] [UPLOAD]   Port: COM12
+[2025-07-30 10:26:34.784] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:26:34.785] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:26:37.879] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:26:37.879] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:26:42.353] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:26:42.353] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:26:46.063] [SUCCESS] Imu upload successful!
+[2025-07-30 10:26:48.038] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:26:48.039] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:26:48.456] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:26:48.461] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:26:48.461] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:26:48.461] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:26:48.462] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:26:48.462] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:26:48.468] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:26:48.469] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:26:48.470] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:26:48.470] [IMU] Trying address 0x68...
+[2025-07-30 10:26:48.472] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:26:48.473] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:26:50.759] [IMU] MPU6050 ready for use!
+[2025-07-30 10:26:50.761] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:26:50.762] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:26:50.762] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:26:50.762] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:26:50.763] [IMU] Commands:
+[2025-07-30 10:26:50.763] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:26:50.763] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:26:50.766] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:26:50.766] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:26:56.975] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:26:57.983] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:26:57.986] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:26:57.986] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:26:57.987] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:26:57.987] [IMU] CAL: Sample 1/100 Raw: -0.0040,0.0025,1.0006
+[2025-07-30 10:26:58.092] [IMU] CAL: Sample 10/100 Raw: 0.0002,-0.0019,1.0003
+[2025-07-30 10:26:58.196] [IMU] CAL: Sample 19/100 Raw: 0.0051,-0.0053,1.0052
+[2025-07-30 10:26:58.205] [IMU] Calibration progress: 20%
+[2025-07-30 10:26:58.300] [IMU] CAL: Sample 28/100 Raw: -0.0020,0.0006,1.0059
+[2025-07-30 10:26:58.404] [IMU] CAL: Sample 37/100 Raw: 0.0019,0.0003,1.0013
+[2025-07-30 10:26:58.436] [IMU] Calibration progress: 40%
+[2025-07-30 10:26:58.509] [IMU] CAL: Sample 46/100 Raw: -0.0003,-0.0041,0.9898
+[2025-07-30 10:26:58.613] [IMU] CAL: Sample 55/100 Raw: -0.0013,0.0050,1.0054
+[2025-07-30 10:26:58.667] [IMU] Calibration progress: 60%
+[2025-07-30 10:26:58.717] [IMU] CAL: Sample 64/100 Raw: 0.0036,0.0010,0.9886
+[2025-07-30 10:26:58.821] [IMU] CAL: Sample 73/100 Raw: -0.0022,-0.0012,0.9976
+[2025-07-30 10:26:58.899] [IMU] Calibration progress: 80%
+[2025-07-30 10:26:58.926] [IMU] CAL: Sample 82/100 Raw: -0.0018,0.0006,1.0018
+[2025-07-30 10:26:59.031] [IMU] CAL: Sample 91/100 Raw: -0.0001,-0.0021,0.9976
+[2025-07-30 10:26:59.131] [IMU] Calibration progress: 100%
+[2025-07-30 10:26:59.133] [IMU] CAL: Sample 100/100 Raw: -0.0010,0.0067,0.9974
+[2025-07-30 10:26:59.142] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:26:59.144] [IMU] X offset: -0.000580
+[2025-07-30 10:26:59.145] [IMU] Y offset: -0.000184
+[2025-07-30 10:26:59.145] [IMU] Z offset: -0.000334
+[2025-07-30 10:26:59.146] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:27:02.775] [IMU] Saved IMU 1 offsets: Pitch=0.0200, Roll=-0.0400
+[2025-07-30 10:27:37.258] [STEP] Application closing
+[2025-07-30 10:27:37.258] [IMU] Disconnecting from IMU port
+[2025-07-30 10:27:37.261] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:27:37
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:28:17
+============================================================
+[2025-07-30 10:28:17.813] [STEP] Application started
+[2025-07-30 10:28:17.813] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:28:17.813] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:28:17.813] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:28:17.830] [INFO] Refreshing serial ports
+[2025-07-30 10:28:17.835] [INFO] Found 5 serial ports
+[2025-07-30 10:28:17.835] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:28:17.835] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:28:17.836] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:28:17.836] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:28:17.836] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:28:17.836] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:28:20.819] [IMU] Starting IMU code upload
+[2025-07-30 10:28:20.821] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:28:20.821] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:28:20.823] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:28:20.824] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:28:20.824] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:28:20.825] [UPLOAD]   Port: COM12
+[2025-07-30 10:28:20.825] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:28:20.826] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:28:23.970] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:28:23.971] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:28:28.370] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:28:28.371] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:28:32.017] [SUCCESS] Imu upload successful!
+[2025-07-30 10:28:36.773] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:28:36.773] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:28:43.120] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:28:44.128] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:28:44.129] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:28:44.129] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:28:44.131] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:28:44.134] [IMU] CAL: Sample 1/100 Raw: -0.0031,0.0027,0.9954
+[2025-07-30 10:28:44.237] [IMU] CAL: Sample 10/100 Raw: -0.0017,-0.0017,1.0093
+[2025-07-30 10:28:44.341] [IMU] CAL: Sample 19/100 Raw: 0.0042,-0.0021,0.9908
+[2025-07-30 10:28:44.350] [IMU] Calibration progress: 20%
+[2025-07-30 10:28:44.445] [IMU] CAL: Sample 28/100 Raw: 0.0005,0.0020,1.0074
+[2025-07-30 10:28:44.549] [IMU] CAL: Sample 37/100 Raw: 0.0025,0.0025,0.9991
+[2025-07-30 10:28:44.581] [IMU] Calibration progress: 40%
+[2025-07-30 10:28:44.654] [IMU] CAL: Sample 46/100 Raw: 0.0052,0.0020,1.0054
+[2025-07-30 10:28:44.758] [IMU] CAL: Sample 55/100 Raw: 0.0035,0.0027,1.0037
+[2025-07-30 10:28:44.812] [IMU] Calibration progress: 60%
+[2025-07-30 10:28:44.863] [IMU] CAL: Sample 64/100 Raw: 0.0018,-0.0009,1.0069
+[2025-07-30 10:28:44.966] [IMU] CAL: Sample 73/100 Raw: -0.0053,0.0015,0.9978
+[2025-07-30 10:28:45.045] [IMU] Calibration progress: 80%
+[2025-07-30 10:28:45.070] [IMU] CAL: Sample 82/100 Raw: -0.0024,0.0010,0.9942
+[2025-07-30 10:28:45.175] [IMU] CAL: Sample 91/100 Raw: 0.0013,-0.0043,0.9976
+[2025-07-30 10:28:45.276] [IMU] Calibration progress: 100%
+[2025-07-30 10:28:45.278] [IMU] CAL: Sample 100/100 Raw: 0.0003,-0.0029,0.9964
+[2025-07-30 10:28:45.287] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:28:45.288] [IMU] X offset: 0.000784
+[2025-07-30 10:28:45.290] [IMU] Y offset: -0.000012
+[2025-07-30 10:28:45.290] [IMU] Z offset: -0.000142
+[2025-07-30 10:28:45.290] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:28:49.911] [IMU] Saved IMU 1 offsets: Pitch=0.0100, Roll=0.0000
+[2025-07-30 10:28:52.575] [IMU] Sent software reset command 'R' to Teensy
+[2025-07-30 10:28:57.577] [IMU] Disconnecting from IMU port
+[2025-07-30 10:28:57.579] [INFO] Disconnected from IMU
+[2025-07-30 10:28:57.579] [IMU] Attempting to reconnect after reset...
+[2025-07-30 10:28:58.576] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:28:58.579] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:29:13.816] [IMU] Sent software reset command 'R' to Teensy
+[2025-07-30 10:29:18.814] [IMU] Disconnecting from IMU port
+[2025-07-30 10:29:18.815] [INFO] Disconnected from IMU
+[2025-07-30 10:29:18.816] [IMU] Attempting to reconnect after reset...
+[2025-07-30 10:29:19.830] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:29:19.832] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:29:30.622] [IMU] Disconnecting from IMU port
+[2025-07-30 10:29:30.624] [INFO] Disconnected from IMU
+[2025-07-30 10:29:31.027] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:29:31.029] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:29:32.905] [IMU] Sent software reset command 'R' to Teensy
+[2025-07-30 10:29:37.920] [IMU] Disconnecting from IMU port
+[2025-07-30 10:29:37.921] [INFO] Disconnected from IMU
+[2025-07-30 10:29:37.922] [IMU] Attempting to reconnect after reset...
+[2025-07-30 10:29:38.921] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:29:38.924] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:29:44.151] [IMU] Sent software reset command 'R' to Teensy
+[2025-07-30 10:29:49.160] [IMU] Disconnecting from IMU port
+[2025-07-30 10:29:49.162] [INFO] Disconnected from IMU
+[2025-07-30 10:29:49.162] [IMU] Attempting to reconnect after reset...
+[2025-07-30 10:29:50.175] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:29:50.177] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:29:53.129] [IMU] Disconnecting from IMU port
+[2025-07-30 10:29:53.131] [INFO] Disconnected from IMU
+[2025-07-30 10:29:53.531] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:29:53.532] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:30:00.424] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:30:01.425] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:30:01.427] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:30:01.427] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:30:01.428] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:30:01.428] [IMU] CAL: Sample 1/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:01.533] [IMU] CAL: Sample 10/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:01.636] [IMU] CAL: Sample 19/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:01.645] [IMU] Calibration progress: 20%
+[2025-07-30 10:30:01.740] [IMU] CAL: Sample 28/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:01.845] [IMU] CAL: Sample 37/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:01.877] [IMU] Calibration progress: 40%
+[2025-07-30 10:30:01.949] [IMU] CAL: Sample 46/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:02.053] [IMU] CAL: Sample 55/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:02.109] [IMU] Calibration progress: 60%
+[2025-07-30 10:30:02.157] [IMU] CAL: Sample 64/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:02.261] [IMU] CAL: Sample 73/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:02.340] [IMU] Calibration progress: 80%
+[2025-07-30 10:30:02.365] [IMU] CAL: Sample 82/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:02.469] [IMU] CAL: Sample 91/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:02.571] [IMU] Calibration progress: 100%
+[2025-07-30 10:30:02.573] [IMU] CAL: Sample 100/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:02.583] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:30:02.584] [IMU] X offset: -0.074407
+[2025-07-30 10:30:02.586] [IMU] Y offset: -0.991884
+[2025-07-30 10:30:02.586] [IMU] Z offset: -0.216507
+[2025-07-30 10:30:02.586] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:30:05.367] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:30:06.371] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:30:06.374] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:30:06.375] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:30:06.375] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:30:06.376] [IMU] CAL: Sample 1/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:06.479] [IMU] CAL: Sample 10/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:06.583] [IMU] CAL: Sample 19/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:06.592] [IMU] Calibration progress: 20%
+[2025-07-30 10:30:06.687] [IMU] CAL: Sample 28/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:06.792] [IMU] CAL: Sample 37/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:06.824] [IMU] Calibration progress: 40%
+[2025-07-30 10:30:06.895] [IMU] CAL: Sample 46/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:07.000] [IMU] CAL: Sample 55/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:07.055] [IMU] Calibration progress: 60%
+[2025-07-30 10:30:07.104] [IMU] CAL: Sample 64/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:07.209] [IMU] CAL: Sample 73/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:07.287] [IMU] Calibration progress: 80%
+[2025-07-30 10:30:07.313] [IMU] CAL: Sample 82/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:07.416] [IMU] CAL: Sample 91/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:07.518] [IMU] Calibration progress: 100%
+[2025-07-30 10:30:07.521] [IMU] CAL: Sample 100/100 Raw: -0.0744,-0.9919,0.7835
+[2025-07-30 10:30:07.530] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:30:07.531] [IMU] X offset: -0.074407
+[2025-07-30 10:30:07.531] [IMU] Y offset: -0.991884
+[2025-07-30 10:30:07.533] [IMU] Z offset: -0.216507
+[2025-07-30 10:30:07.534] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:30:10.301] [STEP] Application closing
+[2025-07-30 10:30:10.301] [IMU] Disconnecting from IMU port
+[2025-07-30 10:30:10.304] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:30:10
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:34:16
+============================================================
+[2025-07-30 10:34:16.884] [STEP] Application started
+[2025-07-30 10:34:16.884] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:34:16.884] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:34:16.885] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:34:16.901] [INFO] Refreshing serial ports
+[2025-07-30 10:34:16.906] [INFO] Found 5 serial ports
+[2025-07-30 10:34:16.907] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:34:16.907] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:34:16.907] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:34:16.907] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:34:16.908] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:34:16.908] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:34:19.147] [IMU] Starting IMU code upload
+[2025-07-30 10:34:19.148] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:34:19.149] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:34:19.151] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:34:19.152] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:34:19.153] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:34:19.153] [UPLOAD]   Port: COM12
+[2025-07-30 10:34:19.154] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:34:19.154] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:34:22.360] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:34:22.360] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:34:26.760] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:34:26.761] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:34:30.403] [SUCCESS] Imu upload successful!
+[2025-07-30 10:34:32.740] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:34:32.742] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:34:32.817] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:34:32.818] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:34:32.820] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:34:32.820] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:34:32.820] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:34:32.820] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:34:32.829] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:34:32.831] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:34:32.832] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:34:32.832] [IMU] Trying address 0x68...
+[2025-07-30 10:34:32.833] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:34:32.834] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:34:35.120] [IMU] MPU6050 ready for use!
+[2025-07-30 10:34:35.123] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:34:35.123] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:34:35.123] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:34:35.124] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:34:35.124] [IMU] Commands:
+[2025-07-30 10:34:35.124] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:34:35.125] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:34:35.126] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:34:35.127] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:34:39.935] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:34:40.943] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:34:40.946] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:34:40.947] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:34:40.947] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:34:40.947] [IMU] CAL: Sample 1/100 Raw: 0.0053,-0.0040,1.0044
+[2025-07-30 10:34:41.052] [IMU] CAL: Sample 10/100 Raw: 0.0018,0.0006,0.9985
+[2025-07-30 10:34:41.156] [IMU] CAL: Sample 19/100 Raw: 0.0014,-0.0033,0.9919
+[2025-07-30 10:34:41.165] [IMU] Calibration progress: 20%
+[2025-07-30 10:34:41.260] [IMU] CAL: Sample 28/100 Raw: -0.0030,-0.0033,1.0007
+[2025-07-30 10:34:41.365] [IMU] CAL: Sample 37/100 Raw: -0.0011,-0.0006,0.9995
+[2025-07-30 10:34:41.397] [IMU] Calibration progress: 40%
+[2025-07-30 10:34:41.469] [IMU] CAL: Sample 46/100 Raw: -0.0001,0.0045,1.0000
+[2025-07-30 10:34:41.573] [IMU] CAL: Sample 55/100 Raw: -0.0011,-0.0043,0.9990
+[2025-07-30 10:34:41.628] [IMU] Calibration progress: 60%
+[2025-07-30 10:34:41.677] [IMU] CAL: Sample 64/100 Raw: 0.0048,-0.0009,0.9958
+[2025-07-30 10:34:41.782] [IMU] CAL: Sample 73/100 Raw: -0.0052,-0.0033,0.9951
+[2025-07-30 10:34:41.859] [IMU] Calibration progress: 80%
+[2025-07-30 10:34:41.886] [IMU] CAL: Sample 82/100 Raw: -0.0013,0.0072,1.0046
+[2025-07-30 10:34:41.990] [IMU] CAL: Sample 91/100 Raw: 0.0057,0.0004,0.9973
+[2025-07-30 10:34:42.091] [IMU] Calibration progress: 100%
+[2025-07-30 10:34:42.093] [IMU] CAL: Sample 100/100 Raw: -0.0026,-0.0050,0.9970
+[2025-07-30 10:34:42.103] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:34:42.103] [IMU] X offset: -0.000159
+[2025-07-30 10:34:42.106] [IMU] Y offset: -0.000502
+[2025-07-30 10:34:42.106] [IMU] Z offset: 0.000194
+[2025-07-30 10:34:42.106] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:34:44.895] [IMU] Saved IMU 1 offsets: Pitch=0.0100, Roll=0.0200
+[2025-07-30 10:35:04.119] [IMU] Sent software reset command 'R' to Teensy
+[2025-07-30 10:35:09.140] [IMU] Disconnecting from IMU port
+[2025-07-30 10:35:09.141] [INFO] Disconnected from IMU
+[2025-07-30 10:35:09.142] [IMU] Attempting to reconnect after reset...
+[2025-07-30 10:35:10.136] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:35:10.138] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:35:19.015] [ERROR] IMU connection lost
+[2025-07-30 10:35:19.015] [IMU] Disconnecting from IMU port
+[2025-07-30 10:35:19.024] [INFO] Disconnected from IMU
+[2025-07-30 10:35:22.443] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:35:22.445] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:35:23.463] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:35:23.464] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:35:23.466] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:35:23.467] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:35:23.468] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:35:23.468] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:35:23.474] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:35:23.476] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:35:23.477] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:35:23.479] [IMU] Trying address 0x68...
+[2025-07-30 10:35:23.481] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:35:23.481] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:35:25.766] [IMU] MPU6050 ready for use!
+[2025-07-30 10:35:25.768] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:35:25.769] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:35:25.769] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:35:25.772] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:35:25.772] [IMU] Commands:
+[2025-07-30 10:35:25.772] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:35:25.772] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:35:25.773] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:35:25.773] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:35:30.274] [IMU] Selected IMU 2 for calibration
+[2025-07-30 10:35:36.984] [IMU] Saved IMU 2 offsets: Pitch=0.0200, Roll=0.0100
+[2025-07-30 10:35:41.263] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:35:42.274] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:35:42.276] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:35:42.277] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:35:42.277] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:35:42.277] [IMU] CAL: Sample 1/100 Raw: 0.0028,0.0004,0.9964
+[2025-07-30 10:35:42.382] [IMU] CAL: Sample 10/100 Raw: -0.0034,-0.0047,1.0028
+[2025-07-30 10:35:42.486] [IMU] CAL: Sample 19/100 Raw: -0.0029,-0.0013,0.9920
+[2025-07-30 10:35:42.495] [IMU] Calibration progress: 20%
+[2025-07-30 10:35:42.594] [IMU] CAL: Sample 28/100 Raw: -0.0065,0.0060,1.0015
+[2025-07-30 10:35:42.695] [IMU] CAL: Sample 37/100 Raw: -0.0004,-0.0013,1.0033
+[2025-07-30 10:35:42.726] [IMU] Calibration progress: 40%
+[2025-07-30 10:35:42.798] [IMU] CAL: Sample 46/100 Raw: -0.0046,-0.0008,0.9952
+[2025-07-30 10:35:42.903] [IMU] CAL: Sample 55/100 Raw: -0.0090,0.0006,1.0013
+[2025-07-30 10:35:42.958] [IMU] Calibration progress: 60%
+[2025-07-30 10:35:43.007] [IMU] CAL: Sample 64/100 Raw: 0.0003,0.0014,1.0042
+[2025-07-30 10:35:43.112] [IMU] CAL: Sample 73/100 Raw: -0.0048,-0.0006,1.0076
+[2025-07-30 10:35:43.189] [IMU] Calibration progress: 80%
+[2025-07-30 10:35:43.215] [IMU] CAL: Sample 82/100 Raw: -0.0038,-0.0043,1.0084
+[2025-07-30 10:35:43.320] [IMU] CAL: Sample 91/100 Raw: 0.0052,0.0004,1.0094
+[2025-07-30 10:35:43.421] [IMU] Calibration progress: 100%
+[2025-07-30 10:35:43.423] [IMU] CAL: Sample 100/100 Raw: 0.0057,0.0031,1.0018
+[2025-07-30 10:35:43.432] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:35:43.433] [IMU] X offset: -0.000373
+[2025-07-30 10:35:43.433] [IMU] Y offset: -0.000002
+[2025-07-30 10:35:43.435] [IMU] Z offset: 0.000694
+[2025-07-30 10:35:43.436] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:35:46.087] [IMU] Saved IMU 2 offsets: Pitch=0.0300, Roll=-0.0100
+[2025-07-30 10:35:50.855] [IMU] Sent software reset command 'R' to Teensy
+[2025-07-30 10:35:55.859] [IMU] Disconnecting from IMU port
+[2025-07-30 10:35:55.861] [INFO] Disconnected from IMU
+[2025-07-30 10:35:55.861] [IMU] Attempting to reconnect after reset...
+[2025-07-30 10:35:56.869] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:35:56.872] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:36:08.127] [IMU] Sent software reset command 'R' to Teensy
+[2025-07-30 10:36:13.140] [IMU] Disconnecting from IMU port
+[2025-07-30 10:36:13.141] [INFO] Disconnected from IMU
+[2025-07-30 10:36:13.142] [IMU] Attempting to reconnect after reset...
+[2025-07-30 10:36:14.151] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:36:14.153] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:36:25.791] [IMU] Resetting IMU offsets
+[2025-07-30 10:36:26.792] [IMU] Calibration offsets reset to zero
+[2025-07-30 10:36:30.832] [STEP] Application closing
+[2025-07-30 10:36:30.832] [IMU] Disconnecting from IMU port
+[2025-07-30 10:36:30.833] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:36:30
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:40:39
+============================================================
+[2025-07-30 10:40:39.062] [STEP] Application started
+[2025-07-30 10:40:39.062] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:40:39.062] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:40:39.062] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:40:39.079] [INFO] Refreshing serial ports
+[2025-07-30 10:40:39.084] [INFO] Found 5 serial ports
+[2025-07-30 10:40:39.085] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:40:39.085] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:40:39.085] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:40:39.085] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:40:39.085] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:40:39.085] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:40:41.530] [IMU] Starting IMU code upload
+[2025-07-30 10:40:41.531] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:40:41.531] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:40:41.533] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:40:41.534] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:40:41.534] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:40:41.535] [UPLOAD]   Port: COM12
+[2025-07-30 10:40:41.535] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:40:41.535] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:40:44.634] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:40:44.634] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:40:49.168] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:40:49.168] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:40:52.832] [SUCCESS] Imu upload successful!
+[2025-07-30 10:41:00.316] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:41:00.317] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:41:20.816] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:41:21.827] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:41:21.827] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:41:21.829] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:41:21.829] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:41:21.829] [IMU] CAL: Sample 1/100 Raw: -0.0060,-0.0052,0.9932
+[2025-07-30 10:41:21.936] [IMU] CAL: Sample 10/100 Raw: -0.0067,0.0046,0.9993
+[2025-07-30 10:41:22.039] [IMU] CAL: Sample 19/100 Raw: 0.0038,0.0011,1.0113
+[2025-07-30 10:41:22.048] [IMU] Calibration progress: 20%
+[2025-07-30 10:41:22.143] [IMU] CAL: Sample 28/100 Raw: -0.0052,0.0063,1.0032
+[2025-07-30 10:41:22.249] [IMU] CAL: Sample 37/100 Raw: 0.0040,-0.0047,1.0159
+[2025-07-30 10:41:22.280] [IMU] Calibration progress: 40%
+[2025-07-30 10:41:22.352] [IMU] CAL: Sample 46/100 Raw: 0.0026,0.0048,0.9993
+[2025-07-30 10:41:22.456] [IMU] CAL: Sample 55/100 Raw: 0.0016,-0.0006,1.0044
+[2025-07-30 10:41:22.511] [IMU] Calibration progress: 60%
+[2025-07-30 10:41:22.561] [IMU] CAL: Sample 64/100 Raw: -0.0043,0.0033,1.0071
+[2025-07-30 10:41:22.665] [IMU] CAL: Sample 73/100 Raw: -0.0033,-0.0025,1.0132
+[2025-07-30 10:41:22.743] [IMU] Calibration progress: 80%
+[2025-07-30 10:41:22.768] [IMU] CAL: Sample 82/100 Raw: -0.0004,-0.0030,1.0076
+[2025-07-30 10:41:22.873] [IMU] CAL: Sample 91/100 Raw: -0.0016,-0.0001,1.0020
+[2025-07-30 10:41:22.974] [IMU] Calibration progress: 100%
+[2025-07-30 10:41:22.977] [IMU] CAL: Sample 100/100 Raw: 0.0011,0.0036,0.9939
+[2025-07-30 10:41:22.985] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:41:22.986] [IMU] X offset: -0.000669
+[2025-07-30 10:41:22.988] [IMU] Y offset: 0.000355
+[2025-07-30 10:41:22.988] [IMU] Z offset: 0.001799
+[2025-07-30 10:41:22.989] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:41:25.111] [IMU] Saved IMU 1 offsets: Pitch=0.0300, Roll=-0.0200
+[2025-07-30 10:41:28.502] [STEP] Application closing
+[2025-07-30 10:41:28.502] [IMU] Disconnecting from IMU port
+[2025-07-30 10:41:28.504] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:41:28
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:45:55
+============================================================
+[2025-07-30 10:45:55.305] [STEP] Application started
+[2025-07-30 10:45:55.305] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:45:55.305] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:45:55.305] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:45:55.860] [INFO] Refreshing serial ports
+[2025-07-30 10:45:55.864] [INFO] Found 4 serial ports
+[2025-07-30 10:45:55.865] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:45:55.865] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:45:55.865] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:45:55.865] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:45:55.865] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-30 10:47:11.713] [INFO] Refreshing serial ports
+[2025-07-30 10:47:11.725] [INFO] Found 5 serial ports
+[2025-07-30 10:47:11.726] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:47:11.726] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:47:11.726] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:47:11.726] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:47:11.726] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:47:11.727] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:47:11.940] [INFO] Refreshing serial ports
+[2025-07-30 10:47:11.949] [INFO] Found 5 serial ports
+[2025-07-30 10:47:11.950] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:47:11.951] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:47:11.952] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:47:11.953] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:47:11.954] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:47:11.955] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:47:12.115] [INFO] Refreshing serial ports
+[2025-07-30 10:47:12.122] [INFO] Found 5 serial ports
+[2025-07-30 10:47:12.122] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:47:12.123] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:47:12.123] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:47:12.123] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:47:12.124] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:47:12.124] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:47:12.269] [INFO] Refreshing serial ports
+[2025-07-30 10:47:12.278] [INFO] Found 5 serial ports
+[2025-07-30 10:47:12.279] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:47:12.280] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:47:12.281] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:47:12.281] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:47:12.282] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:47:12.283] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:47:13.707] [IMU] Starting IMU code upload
+[2025-07-30 10:47:13.709] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:47:13.709] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:47:13.711] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:47:13.712] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:47:13.712] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:47:13.712] [UPLOAD]   Port: COM12
+[2025-07-30 10:47:13.713] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:47:13.713] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:47:16.838] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:47:16.838] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:47:21.308] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:47:21.309] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:47:24.953] [SUCCESS] Imu upload successful!
+[2025-07-30 10:47:27.285] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:47:27.286] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:47:27.406] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:47:27.408] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:47:27.408] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:47:27.409] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:47:27.409] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:47:27.411] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:47:27.418] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:47:27.420] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:47:27.421] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:47:27.421] [IMU] Trying address 0x68...
+[2025-07-30 10:47:27.423] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:47:27.424] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:47:28.255] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:47:29.710] [IMU] MPU6050 ready for use!
+[2025-07-30 10:47:29.712] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:47:29.713] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:47:29.714] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:47:29.714] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:47:29.714] [IMU] Commands:
+[2025-07-30 10:47:29.715] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:47:29.715] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:47:29.716] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:47:29.718] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:47:32.709] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:47:32.712] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:47:32.712] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:47:32.713] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:47:32.713] [IMU] CAL: Sample 1/100 Raw: 0.0058,-0.0019,0.9911
+[2025-07-30 10:47:32.818] [IMU] CAL: Sample 10/100 Raw: -0.0032,-0.0050,0.9919
+[2025-07-30 10:47:32.921] [IMU] CAL: Sample 19/100 Raw: -0.0030,0.0069,0.9951
+[2025-07-30 10:47:32.930] [IMU] Calibration progress: 20%
+[2025-07-30 10:47:33.025] [IMU] CAL: Sample 28/100 Raw: -0.0015,0.0023,0.9904
+[2025-07-30 10:47:33.130] [IMU] CAL: Sample 37/100 Raw: -0.0035,-0.0031,1.0046
+[2025-07-30 10:47:33.162] [IMU] Calibration progress: 40%
+[2025-07-30 10:47:33.234] [IMU] CAL: Sample 46/100 Raw: -0.0037,0.0045,1.0090
+[2025-07-30 10:47:33.338] [IMU] CAL: Sample 55/100 Raw: -0.0047,0.0001,0.9968
+[2025-07-30 10:47:33.394] [IMU] Calibration progress: 60%
+[2025-07-30 10:47:33.442] [IMU] CAL: Sample 64/100 Raw: -0.0050,0.0018,1.0041
+[2025-07-30 10:47:33.547] [IMU] CAL: Sample 73/100 Raw: -0.0013,-0.0026,1.0029
+[2025-07-30 10:47:33.625] [IMU] Calibration progress: 80%
+[2025-07-30 10:47:33.651] [IMU] CAL: Sample 82/100 Raw: -0.0010,0.0018,0.9980
+[2025-07-30 10:47:33.755] [IMU] CAL: Sample 91/100 Raw: -0.0010,-0.0011,0.9933
+[2025-07-30 10:47:33.857] [IMU] Calibration progress: 100%
+[2025-07-30 10:47:33.859] [IMU] CAL: Sample 100/100 Raw: 0.0036,-0.0016,1.0016
+[2025-07-30 10:47:33.868] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:47:33.869] [IMU] X offset: -0.000220
+[2025-07-30 10:47:33.871] [IMU] Y offset: -0.000165
+[2025-07-30 10:47:33.872] [IMU] Z offset: -0.000330
+[2025-07-30 10:47:33.872] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:47:38.048] [IMU] Saved IMU 1 offsets: Pitch=-0.0100, Roll=0.0300
+[2025-07-30 10:47:51.623] [IMU] Selected IMU 2 for calibration
+[2025-07-30 10:47:53.050] [ERROR] IMU connection lost
+[2025-07-30 10:47:53.050] [IMU] Disconnecting from IMU port
+[2025-07-30 10:47:53.054] [INFO] Disconnected from IMU
+[2025-07-30 10:47:57.939] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:47:57.940] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:47:58.960] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:47:58.962] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:47:58.963] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:47:58.963] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:47:58.963] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:47:58.964] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:47:58.972] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:47:58.976] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:47:58.976] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:47:58.976] [IMU] Trying address 0x68...
+[2025-07-30 10:47:58.979] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:47:58.979] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:48:01.263] [IMU] MPU6050 ready for use!
+[2025-07-30 10:48:01.266] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:48:01.266] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:48:01.266] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:48:01.267] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:48:01.267] [IMU] Commands:
+[2025-07-30 10:48:01.267] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:48:01.268] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:48:01.270] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:48:01.271] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:48:02.719] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:48:04.263] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:48:04.265] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:48:04.266] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:48:04.266] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:48:04.267] [IMU] CAL: Sample 1/100 Raw: -0.0004,0.0049,0.9995
+[2025-07-30 10:48:04.371] [IMU] CAL: Sample 10/100 Raw: -0.0021,0.0027,1.0095
+[2025-07-30 10:48:04.476] [IMU] CAL: Sample 19/100 Raw: 0.0035,-0.0022,1.0149
+[2025-07-30 10:48:04.484] [IMU] Calibration progress: 20%
+[2025-07-30 10:48:04.580] [IMU] CAL: Sample 28/100 Raw: -0.0007,0.0049,0.9939
+[2025-07-30 10:48:04.684] [IMU] CAL: Sample 37/100 Raw: -0.0009,-0.0054,0.9983
+[2025-07-30 10:48:04.716] [IMU] Calibration progress: 40%
+[2025-07-30 10:48:04.787] [IMU] CAL: Sample 46/100 Raw: 0.0054,0.0020,0.9992
+[2025-07-30 10:48:04.892] [IMU] CAL: Sample 55/100 Raw: -0.0019,0.0020,1.0014
+[2025-07-30 10:48:04.947] [IMU] Calibration progress: 60%
+[2025-07-30 10:48:04.996] [IMU] CAL: Sample 64/100 Raw: 0.0040,-0.0032,1.0017
+[2025-07-30 10:48:05.100] [IMU] CAL: Sample 73/100 Raw: -0.0055,-0.0034,1.0056
+[2025-07-30 10:48:05.178] [IMU] Calibration progress: 80%
+[2025-07-30 10:48:05.204] [IMU] CAL: Sample 82/100 Raw: -0.0048,0.0002,0.9995
+[2025-07-30 10:48:05.308] [IMU] CAL: Sample 91/100 Raw: 0.0045,-0.0049,0.9983
+[2025-07-30 10:48:05.410] [IMU] Calibration progress: 100%
+[2025-07-30 10:48:05.413] [IMU] CAL: Sample 100/100 Raw: -0.0046,-0.0019,1.0075
+[2025-07-30 10:48:05.421] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:48:05.423] [IMU] X offset: 0.000094
+[2025-07-30 10:48:05.423] [IMU] Y offset: 0.000246
+[2025-07-30 10:48:05.427] [IMU] Z offset: 0.000638
+[2025-07-30 10:48:05.427] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:48:08.023] [IMU] Saved IMU 2 offsets: Pitch=-0.0200, Roll=0.0100
+[2025-07-30 10:48:12.377] [IMU] Selected IMU 3 for calibration
+[2025-07-30 10:48:15.167] [ERROR] IMU connection lost
+[2025-07-30 10:48:15.167] [IMU] Disconnecting from IMU port
+[2025-07-30 10:48:15.183] [INFO] Disconnected from IMU
+[2025-07-30 10:48:21.228] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:48:21.229] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:48:21.781] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:48:21.783] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:48:21.783] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:48:21.784] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:48:21.784] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:48:21.784] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:48:21.793] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:48:21.795] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:48:21.797] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:48:21.797] [IMU] Trying address 0x68...
+[2025-07-30 10:48:21.799] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:48:21.800] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:48:22.008] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:48:24.084] [IMU] MPU6050 ready for use!
+[2025-07-30 10:48:24.086] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:48:24.087] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:48:24.087] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:48:24.087] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:48:24.088] [IMU] Commands:
+[2025-07-30 10:48:24.088] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:48:24.090] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:48:24.091] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:48:24.092] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:48:27.084] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:48:27.087] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:48:27.087] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:48:27.088] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:48:27.088] [IMU] CAL: Sample 1/100 Raw: -0.0092,0.0016,0.9963
+[2025-07-30 10:48:27.192] [IMU] CAL: Sample 10/100 Raw: 0.0067,-0.0006,1.0058
+[2025-07-30 10:48:27.310] [IMU] CAL: Sample 19/100 Raw: 0.0013,-0.0040,0.9982
+[2025-07-30 10:48:27.311] [IMU] Calibration progress: 20%
+[2025-07-30 10:48:27.401] [IMU] CAL: Sample 28/100 Raw: 0.0008,-0.0040,1.0007
+[2025-07-30 10:48:27.505] [IMU] CAL: Sample 37/100 Raw: -0.0014,-0.0028,1.0048
+[2025-07-30 10:48:27.536] [IMU] Calibration progress: 40%
+[2025-07-30 10:48:27.609] [IMU] CAL: Sample 46/100 Raw: -0.0085,0.0019,1.0107
+[2025-07-30 10:48:27.712] [IMU] CAL: Sample 55/100 Raw: -0.0002,0.0033,1.0022
+[2025-07-30 10:48:27.768] [IMU] Calibration progress: 60%
+[2025-07-30 10:48:27.817] [IMU] CAL: Sample 64/100 Raw: 0.0010,0.0006,1.0048
+[2025-07-30 10:48:27.921] [IMU] CAL: Sample 73/100 Raw: 0.0049,0.0021,1.0041
+[2025-07-30 10:48:28.000] [IMU] Calibration progress: 80%
+[2025-07-30 10:48:28.025] [IMU] CAL: Sample 82/100 Raw: 0.0008,-0.0035,0.9973
+[2025-07-30 10:48:28.130] [IMU] CAL: Sample 91/100 Raw: -0.0021,0.0016,1.0036
+[2025-07-30 10:48:28.231] [IMU] Calibration progress: 100%
+[2025-07-30 10:48:28.233] [IMU] CAL: Sample 100/100 Raw: -0.0036,-0.0006,1.0014
+[2025-07-30 10:48:28.243] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:48:28.244] [IMU] X offset: 0.000214
+[2025-07-30 10:48:28.245] [IMU] Y offset: 0.000129
+[2025-07-30 10:48:28.247] [IMU] Z offset: 0.001060
+[2025-07-30 10:48:28.247] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:48:31.895] [IMU] Saved IMU 3 offset: Roll=0.0100
+[2025-07-30 10:48:31.896] [IMU] All 3 IMUs calibrated! Ready to update firmware.
+[2025-07-30 10:48:38.232] [STEP] Application closing
+[2025-07-30 10:48:38.233] [IMU] Disconnecting from IMU port
+[2025-07-30 10:48:38.234] [INFO] Disconnected from IMU
+
+============================================================
+SESSION END: 2025-07-30 10:48:38
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 10:48:39
+============================================================
+[2025-07-30 10:48:39.768] [STEP] Application started
+[2025-07-30 10:48:39.768] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 10:48:39.768] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 10:48:39.768] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:48:40.081] [INFO] Refreshing serial ports
+[2025-07-30 10:48:40.086] [INFO] Found 5 serial ports
+[2025-07-30 10:48:40.086] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 10:48:40.087] [SUCCESS]   COM12 - USB Serial Device (COM12) (Microsoft) [TEENSY DETECTED]
+[2025-07-30 10:48:40.087] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 10:48:40.087] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 10:48:40.087] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 10:48:40.087] [SUCCESS] Auto-selected Teensy port: COM12
+[2025-07-30 10:48:44.811] [IMU] Starting IMU code upload
+[2025-07-30 10:48:44.813] [IMU] IMU upload parameters - Port: COM12, Board: teensy:avr:teensy41
+[2025-07-30 10:48:44.813] [IMU] Starting IMU upload to COM12
+[2025-07-30 10:48:44.815] [UPLOAD] Imu Upload parameters:
+[2025-07-30 10:48:44.816] [UPLOAD]   File: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 10:48:44.816] [UPLOAD]   Board: teensy:avr:teensy41
+[2025-07-30 10:48:44.816] [UPLOAD]   Port: COM12
+[2025-07-30 10:48:44.817] [UPLOAD] Checking Teensy core installation...
+[2025-07-30 10:48:44.817] [UPLOAD] This may take several minutes on first run - please wait...
+[2025-07-30 10:48:47.951] [UPLOAD] Teensy core installation check complete
+[2025-07-30 10:48:47.951] [UPLOAD] Compiling IMU sketch...
+[2025-07-30 10:48:52.387] [SUCCESS] Imu compilation successful!
+[2025-07-30 10:48:52.388] [UPLOAD] Uploading IMU to COM12...
+[2025-07-30 10:48:56.053] [SUCCESS] Imu upload successful!
+[2025-07-30 10:49:01.354] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:49:01.356] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:49:07.056] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:49:08.067] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:49:08.067] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:49:08.068] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:49:08.069] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:49:08.069] [IMU] CAL: Sample 1/100 Raw: 0.0020,-0.0024,1.0021
+[2025-07-30 10:49:08.175] [IMU] CAL: Sample 10/100 Raw: -0.0017,-0.0029,0.9975
+[2025-07-30 10:49:08.279] [IMU] CAL: Sample 19/100 Raw: 0.0037,-0.0002,0.9960
+[2025-07-30 10:49:08.288] [IMU] Calibration progress: 20%
+[2025-07-30 10:49:08.383] [IMU] CAL: Sample 28/100 Raw: -0.0021,0.0003,0.9972
+[2025-07-30 10:49:08.487] [IMU] CAL: Sample 37/100 Raw: -0.0026,-0.0039,1.0041
+[2025-07-30 10:49:08.519] [IMU] Calibration progress: 40%
+[2025-07-30 10:49:08.592] [IMU] CAL: Sample 46/100 Raw: 0.0005,0.0059,0.9938
+[2025-07-30 10:49:08.696] [IMU] CAL: Sample 55/100 Raw: -0.0014,0.0003,1.0026
+[2025-07-30 10:49:08.751] [IMU] Calibration progress: 60%
+[2025-07-30 10:49:08.800] [IMU] CAL: Sample 64/100 Raw: -0.0034,-0.0014,0.9923
+[2025-07-30 10:49:08.904] [IMU] CAL: Sample 73/100 Raw: -0.0038,-0.0046,0.9926
+[2025-07-30 10:49:08.982] [IMU] Calibration progress: 80%
+[2025-07-30 10:49:09.009] [IMU] CAL: Sample 82/100 Raw: 0.0015,-0.0039,0.9989
+[2025-07-30 10:49:09.112] [IMU] CAL: Sample 91/100 Raw: -0.0012,-0.0044,1.0011
+[2025-07-30 10:49:09.214] [IMU] Calibration progress: 100%
+[2025-07-30 10:49:09.216] [IMU] CAL: Sample 100/100 Raw: 0.0010,0.0015,0.9860
+[2025-07-30 10:49:09.226] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:49:09.226] [IMU] X offset: 0.000500
+[2025-07-30 10:49:09.228] [IMU] Y offset: -0.000038
+[2025-07-30 10:49:09.228] [IMU] Z offset: -0.000356
+[2025-07-30 10:49:09.229] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:49:12.448] [IMU] Saved IMU 1 offsets: Pitch=-0.0300, Roll=-0.0200
+[2025-07-30 10:49:53.766] [IMU] Selected IMU 2 for calibration
+[2025-07-30 10:49:57.119] [ERROR] IMU connection lost
+[2025-07-30 10:49:57.119] [IMU] Disconnecting from IMU port
+[2025-07-30 10:49:57.123] [INFO] Disconnected from IMU
+[2025-07-30 10:50:02.588] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:50:02.589] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:50:03.597] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:50:03.598] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:50:03.600] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:50:03.601] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:50:03.601] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:50:03.601] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:50:03.609] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:50:03.611] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:50:03.614] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:50:03.614] [IMU] Trying address 0x68...
+[2025-07-30 10:50:03.617] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:50:03.618] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:50:04.944] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:50:05.901] [IMU] MPU6050 ready for use!
+[2025-07-30 10:50:05.903] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:50:05.903] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:50:05.904] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:50:05.904] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:50:05.904] [IMU] Commands:
+[2025-07-30 10:50:05.908] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:50:05.909] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:50:05.909] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:50:05.909] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:50:08.900] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:50:08.903] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:50:08.903] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:50:08.904] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:50:08.904] [IMU] CAL: Sample 1/100 Raw: 0.0008,0.0006,0.9921
+[2025-07-30 10:50:09.009] [IMU] CAL: Sample 10/100 Raw: 0.0003,-0.0028,0.9946
+[2025-07-30 10:50:09.113] [IMU] CAL: Sample 19/100 Raw: 0.0011,-0.0006,0.9965
+[2025-07-30 10:50:09.122] [IMU] Calibration progress: 20%
+[2025-07-30 10:50:09.217] [IMU] CAL: Sample 28/100 Raw: 0.0045,0.0023,1.0038
+[2025-07-30 10:50:09.321] [IMU] CAL: Sample 37/100 Raw: -0.0019,0.0031,0.9929
+[2025-07-30 10:50:09.353] [IMU] Calibration progress: 40%
+[2025-07-30 10:50:09.425] [IMU] CAL: Sample 46/100 Raw: 0.0028,0.0031,0.9899
+[2025-07-30 10:50:09.530] [IMU] CAL: Sample 55/100 Raw: -0.0016,0.0028,1.0048
+[2025-07-30 10:50:09.585] [IMU] Calibration progress: 60%
+[2025-07-30 10:50:09.634] [IMU] CAL: Sample 64/100 Raw: 0.0023,-0.0043,1.0016
+[2025-07-30 10:50:09.738] [IMU] CAL: Sample 73/100 Raw: -0.0033,-0.0023,0.9975
+[2025-07-30 10:50:09.816] [IMU] Calibration progress: 80%
+[2025-07-30 10:50:09.842] [IMU] CAL: Sample 82/100 Raw: 0.0038,0.0043,0.9948
+[2025-07-30 10:50:09.946] [IMU] CAL: Sample 91/100 Raw: -0.0004,0.0043,1.0073
+[2025-07-30 10:50:10.048] [IMU] Calibration progress: 100%
+[2025-07-30 10:50:10.051] [IMU] CAL: Sample 100/100 Raw: -0.0001,-0.0052,1.0021
+[2025-07-30 10:50:10.060] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:50:10.061] [IMU] X offset: -0.000244
+[2025-07-30 10:50:10.062] [IMU] Y offset: 0.000874
+[2025-07-30 10:50:10.062] [IMU] Z offset: 0.000400
+[2025-07-30 10:50:10.062] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:50:19.512] [IMU] Saved IMU 2 offsets: Pitch=-0.0000, Roll=-0.0100
+[2025-07-30 10:50:27.232] [IMU] Selected IMU 3 for calibration
+[2025-07-30 10:50:28.405] [ERROR] IMU connection lost
+[2025-07-30 10:50:28.405] [IMU] Disconnecting from IMU port
+[2025-07-30 10:50:28.406] [INFO] Disconnected from IMU
+[2025-07-30 10:50:33.548] [IMU] Attempting IMU connection to COM12 at 115200 baud
+[2025-07-30 10:50:33.550] [SUCCESS] Connected to IMU at COM12
+[2025-07-30 10:50:33.825] [IMU] === 3-IMU Sequential Calibration Program ===
+[2025-07-30 10:50:33.826] [IMU] Teensy 4.1 - MPU6050 IMU on I2C Pins 18/19
+[2025-07-30 10:50:33.828] [IMU] === Trying I2C Configuration 1: Custom Pins 18/19 ===
+[2025-07-30 10:50:33.828] [IMU] I2C initialized on pins 18(SDA) and 19(SCL)
+[2025-07-30 10:50:33.828] [IMU] Scanning I2C bus for devices...
+[2025-07-30 10:50:33.829] [IMU] Scanning I2C addresses from 0x01 to 0x7F...
+[2025-07-30 10:50:33.836] [IMU] I2C device found at address 0x68 (likely MPU6050/MPU9250)
+[2025-07-30 10:50:33.839] [IMU] Found 1 I2C device(s).
+[2025-07-30 10:50:33.840] [IMU] Trying to connect to MPU6050...
+[2025-07-30 10:50:33.841] [IMU] Trying address 0x68...
+[2025-07-30 10:50:33.843] [IMU] MPU6050 connected successfully at address 0x68!
+[2025-07-30 10:50:33.843] [IMU] Calculating gyroscope offsets, do not move MPU6050
+[2025-07-30 10:50:35.791] [IMU] Starting IMU calibration - place device flat and still
+[2025-07-30 10:50:36.129] [IMU] MPU6050 ready for use!
+[2025-07-30 10:50:36.130] [IMU] 3-IMU Sequential Calibration Workflow:
+[2025-07-30 10:50:36.132] [IMU] 1. Connect IMU 1, calibrate pitch+roll -> angle_offset1, angle_offset2
+[2025-07-30 10:50:36.132] [IMU] 2. Connect IMU 2, calibrate pitch+roll -> angle_offset3, angle_offset4
+[2025-07-30 10:50:36.133] [IMU] 3. Connect IMU 3, calibrate roll only -> angle_offset5
+[2025-07-30 10:50:36.133] [IMU] Commands:
+[2025-07-30 10:50:36.134] [IMU] 'c' - Start calibration (place device flat and level)
+[2025-07-30 10:50:36.134] [IMU] 'r' - Reset offsets to zero
+[2025-07-30 10:50:36.134] [IMU] 'RESET' - Software reset Teensy for IMU switching
+[2025-07-30 10:50:36.136] [IMU] Output format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
+[2025-07-30 10:50:39.128] [IMU] *** STARTING REAL IMU CALIBRATION ***
+[2025-07-30 10:50:39.130] [IMU] Place the device on a flat, level surface and keep it still.
+[2025-07-30 10:50:39.131] [IMU] Calibration will take about 10 seconds...
+[2025-07-30 10:50:39.131] [IMU] Calibration started... Keep device perfectly still!
+[2025-07-30 10:50:39.132] [IMU] CAL: Sample 1/100 Raw: -0.0058,0.0018,1.0035
+[2025-07-30 10:50:39.237] [IMU] CAL: Sample 10/100 Raw: 0.0015,0.0027,0.9947
+[2025-07-30 10:50:39.340] [IMU] CAL: Sample 19/100 Raw: 0.0008,-0.0036,1.0005
+[2025-07-30 10:50:39.349] [IMU] Calibration progress: 20%
+[2025-07-30 10:50:39.444] [IMU] CAL: Sample 28/100 Raw: 0.0008,0.0025,1.0076
+[2025-07-30 10:50:39.553] [IMU] CAL: Sample 37/100 Raw: -0.0029,0.0010,0.9971
+[2025-07-30 10:50:39.581] [IMU] Calibration progress: 40%
+[2025-07-30 10:50:39.653] [IMU] CAL: Sample 46/100 Raw: -0.0080,0.0049,0.9971
+[2025-07-30 10:50:39.757] [IMU] CAL: Sample 55/100 Raw: 0.0047,0.0006,1.0084
+[2025-07-30 10:50:39.812] [IMU] Calibration progress: 60%
+[2025-07-30 10:50:39.866] [IMU] CAL: Sample 64/100 Raw: -0.0017,-0.0041,1.0040
+[2025-07-30 10:50:39.966] [IMU] CAL: Sample 73/100 Raw: 0.0010,0.0023,1.0047
+[2025-07-30 10:50:40.044] [IMU] Calibration progress: 80%
+[2025-07-30 10:50:40.069] [IMU] CAL: Sample 82/100 Raw: -0.0007,0.0006,0.9976
+[2025-07-30 10:50:40.174] [IMU] CAL: Sample 91/100 Raw: 0.0039,0.0013,1.0049
+[2025-07-30 10:50:40.276] [IMU] Calibration progress: 100%
+[2025-07-30 10:50:40.278] [IMU] CAL: Sample 100/100 Raw: 0.0027,-0.0026,1.0010
+[2025-07-30 10:50:40.287] [IMU] *** CALIBRATION COMPLETE ***
+[2025-07-30 10:50:40.287] [IMU] X offset: -0.000481
+[2025-07-30 10:50:40.288] [IMU] Y offset: 0.000466
+[2025-07-30 10:50:40.290] [IMU] Z offset: 0.000529
+[2025-07-30 10:50:40.290] [IMU] *** Use these offsets in your firmware ***
+[2025-07-30 10:50:43.687] [IMU] Saved IMU 3 offset: Roll=0.0100
+[2025-07-30 10:51:44.792] [IMU] Disconnecting from IMU port
+[2025-07-30 10:51:44.793] [INFO] Disconnected from IMU
+[2025-07-30 11:11:30.998] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-30 11:11:30
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 11:11:37
+============================================================
+[2025-07-30 11:11:37.625] [STEP] Application started
+[2025-07-30 11:11:37.625] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 11:11:37.626] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 11:11:37.626] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 11:11:37.989] [INFO] Refreshing serial ports
+[2025-07-30 11:11:37.994] [INFO] Found 4 serial ports
+[2025-07-30 11:11:37.994] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 11:11:37.995] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 11:11:37.995] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 11:11:37.995] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 11:11:37.995] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-30 11:15:41.296] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-30 11:15:41
+============================================================
+
+============================================================
+LOAD CELL CALIBRATION SESSION START
+Timestamp: 2025-07-30 11:19:46
+============================================================
+[2025-07-30 11:19:46.688] [STEP] Application started
+[2025-07-30 11:19:46.691] [INFO] Calibration file path: e:\homer\mars_loadcell\calibration\calibration.ino
+[2025-07-30 11:19:46.691] [INFO] Firmware file path: e:\homer\mars_loadcell\firmware\firmware.ino
+[2025-07-30 11:19:46.691] [INFO] IMU file path: e:\homer\mars_loadcell\imu_program_teensy\imu_program_teensy.ino
+[2025-07-30 11:19:47.295] [INFO] Refreshing serial ports
+[2025-07-30 11:19:47.300] [INFO] Found 4 serial ports
+[2025-07-30 11:19:47.301] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 11:19:47.301] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 11:19:47.301] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 11:19:47.301] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 11:19:47.302] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-30 11:20:19.820] [INFO] Refreshing serial ports
+[2025-07-30 11:20:19.828] [INFO] Found 4 serial ports
+[2025-07-30 11:20:19.829] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 11:20:19.829] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 11:20:19.829] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 11:20:19.829] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 11:20:19.829] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-30 11:20:58.562] [INFO] Refreshing serial ports
+[2025-07-30 11:20:58.571] [INFO] Found 4 serial ports
+[2025-07-30 11:20:58.572] [INFO]   COM6 - Standard Serial over Bluetooth link (COM6) (Microsoft)
+[2025-07-30 11:20:58.573] [INFO]   COM8 - Standard Serial over Bluetooth link (COM8) (Microsoft)
+[2025-07-30 11:20:58.573] [INFO]   COM5 - Standard Serial over Bluetooth link (COM5) (Microsoft)
+[2025-07-30 11:20:58.574] [INFO]   COM9 - Standard Serial over Bluetooth link (COM9) (Microsoft)
+[2025-07-30 11:20:58.574] [WARNING] No Teensy devices detected. Make sure Teensy is connected and drivers are installed.
+[2025-07-30 11:22:21.133] [STEP] Application closing
+
+============================================================
+SESSION END: 2025-07-30 11:22:21
+============================================================

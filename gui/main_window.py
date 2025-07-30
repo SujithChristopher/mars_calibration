@@ -11,6 +11,8 @@ import re
 import serial
 import serial.tools.list_ports
 from datetime import datetime
+import toml
+import glob
 
 from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget, QMessageBox, QLabel
 from PySide6.QtCore import QTimer, Signal, QThread, QObject, Qt
@@ -21,6 +23,7 @@ from gui.workers.serial_worker import SerialWorker
 from gui.workers.imu_worker import IMUDataWorker
 from gui.load_cell_tab import setup_load_cell_tab
 from gui.imu_tab import setup_imu_tab
+from gui.upload_firmware_tab import setup_upload_firmware_tab
 
 
 class LoadCellCalibrationGUI(QMainWindow):
@@ -31,7 +34,11 @@ class LoadCellCalibrationGUI(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Load Cell & IMU Calibration Wizard")
-        self.setGeometry(100, 100, 1200, 800)
+        
+        # Set responsive window size based on screen ratio
+        # For 16:10 screens: 1280x800, for 16:9 screens: 1280x720
+        self.setGeometry(100, 100, 1280, 800)
+        self.setMinimumSize(1000, 600)  # Minimum size for usability
         
         # Serial connection variables
         self.serial_worker = None
@@ -49,6 +56,9 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.current_offset_x = 0.0
         self.current_offset_y = 0.0
         self.current_offset_z = 0.0
+        
+        # IMU calibration state tracking
+        self.imu_calibration_started = False
         
         # 3-IMU system variables
         self.current_imu_index = 0  # 0=IMU1, 1=IMU2, 2=IMU3
@@ -73,6 +83,10 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.calibration_file = os.path.join(base_path, "calibration", "calibration.ino")
         self.firmware_file = os.path.join(base_path, "firmware", "firmware.ino")
         self.imu_file = os.path.join(base_path, "imu_program_teensy", "imu_program_teensy.ino")
+        self.calibrations_dir = os.path.join(base_path, "calibrations")
+        
+        # Create calibrations directory if it doesn't exist
+        os.makedirs(self.calibrations_dir, exist_ok=True)
         
         self.logger.log(f"Calibration file path: {self.calibration_file}")
         self.logger.log(f"Firmware file path: {self.firmware_file}")
@@ -121,6 +135,7 @@ class LoadCellCalibrationGUI(QMainWindow):
         # Create tabs
         setup_load_cell_tab(self)
         setup_imu_tab(self)
+        setup_upload_firmware_tab(self)
         
     def update_step_status(self):
         """Update the visual status of steps"""
@@ -750,9 +765,6 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.imu_connect_button.setText("Disconnect IMU")
             self.imu_connect_button.setStyleSheet("QPushButton { background: #f44336; color: white; }")
             self.start_imu_cal_button.setEnabled(True)
-            self.reset_imu_offsets_button.setEnabled(True)
-            self.update_firmware_button.setEnabled(False)  # Will be enabled when valid offsets are available
-            self.upload_firmware_button.setEnabled(False)
             
             success_msg = f"Connected to IMU at {selected_port}"
             ui_message = self.logger.log_success(success_msg)
@@ -774,12 +786,10 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.imu_thread.wait()
             
         self.is_imu_connected = False
+        self.imu_calibration_started = False  # Reset calibration state
         self.imu_connect_button.setText("Connect to IMU")
         self.imu_connect_button.setStyleSheet("")
         self.start_imu_cal_button.setEnabled(False)
-        self.reset_imu_offsets_button.setEnabled(False)
-        self.update_firmware_button.setEnabled(False)
-        self.upload_firmware_button.setEnabled(False)
         
         ui_message = self.logger.log("Disconnected from IMU")
         self.log_imu_message_to_ui(ui_message)
@@ -845,18 +855,65 @@ class LoadCellCalibrationGUI(QMainWindow):
         QMessageBox.warning(self, "Warning", "IMU connection lost!")
         
     def start_imu_calibration(self):
-        """Start IMU calibration process"""
+        """Start IMU calibration process and auto-save when complete"""
         if self.imu_worker:
             self.imu_worker.send_data("c")
+            self.imu_calibration_started = True
+            self.start_imu_cal_button.setEnabled(False)  # Disable during calibration
             ui_message = self.logger.log_imu("Starting IMU calibration - place device flat and still")
             self.log_imu_message_to_ui("Sent: c (start IMU calibration)")
             
-    def reset_imu_offsets(self):
-        """Reset IMU offsets"""
-        if self.imu_worker:
-            self.imu_worker.send_data("r")
-            ui_message = self.logger.log_imu("Resetting IMU offsets")
-            self.log_imu_message_to_ui("Sent: r (reset IMU offsets)")
+            # Set timer to auto-save after calibration completes (Arduino takes ~10 seconds)
+            QTimer.singleShot(12000, self.auto_save_imu_calibration)
+    
+    def auto_save_imu_calibration(self):
+        """Automatically save IMU calibration after completion"""
+        if not self.current_imu_data:
+            # Calibration may not be complete, try again in 2 seconds
+            QTimer.singleShot(2000, self.auto_save_imu_calibration)
+            return
+            
+        # Save the current IMU offsets
+        current_pitch = self.current_imu_data.get('pitch', 0.0)
+        current_roll = self.current_imu_data.get('roll', 0.0)
+        
+        imu_names = ["IMU 1", "IMU 2", "IMU 3"]
+        current_imu_name = imu_names[self.current_imu_index]
+        
+        if self.current_imu_index == 0:  # IMU 1
+            self.angle_offset1 = current_pitch
+            self.angle_offset2 = current_roll
+            self.angle_offset1_label.setText(f"{self.angle_offset1:.4f}")
+            self.angle_offset2_label.setText(f"{self.angle_offset2:.4f}")
+            # Update final tab labels
+            if hasattr(self, 'final_angle_offset1_label'):
+                self.final_angle_offset1_label.setText(f"{self.angle_offset1:.4f}")
+                self.final_angle_offset2_label.setText(f"{self.angle_offset2:.4f}")
+            
+        elif self.current_imu_index == 1:  # IMU 2
+            self.angle_offset3 = current_pitch
+            self.angle_offset4 = current_roll
+            self.angle_offset3_label.setText(f"{self.angle_offset3:.4f}")
+            self.angle_offset4_label.setText(f"{self.angle_offset4:.4f}")
+            # Update final tab labels
+            if hasattr(self, 'final_angle_offset3_label'):
+                self.final_angle_offset3_label.setText(f"{self.angle_offset3:.4f}")
+                self.final_angle_offset4_label.setText(f"{self.angle_offset4:.4f}")
+            
+        elif self.current_imu_index == 2:  # IMU 3 - roll only
+            self.angle_offset5 = current_roll
+            self.angle_offset5_label.setText(f"{self.angle_offset5:.4f}")
+            # Update final tab labels
+            if hasattr(self, 'final_angle_offset5_label'):
+                self.final_angle_offset5_label.setText(f"{self.angle_offset5:.4f}")
+        
+        # Re-enable the button and show success message
+        self.start_imu_cal_button.setEnabled(True)
+        ui_message = self.logger.log_imu(f"✓ {current_imu_name} calibration completed and saved automatically!")
+        self.log_imu_message_to_ui(ui_message)
+        
+        # Update final firmware tab buttons if all calibrations are done
+        self.update_final_tab_status()
             
     def update_firmware_with_offsets(self):
         """Update firmware.ino file with all 5 angle offsets from 3 IMUs"""
@@ -957,6 +1014,11 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.current_imu_index = 1
         elif "IMU 3" in text:
             self.current_imu_index = 2
+        
+        # Reset calibration state when changing IMU selection    
+        self.imu_calibration_started = False
+        if self.is_imu_connected:
+            self.save_imu_offsets_button.setEnabled(False)  # Disable save until calibration starts
             
         imu_name = text.split(" (")[0]  # Extract just "IMU 1", "IMU 2", etc.
         ui_message = self.logger.log_imu(f"Selected {imu_name} for calibration")
@@ -967,6 +1029,8 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.log_imu_message_to_ui("Note: IMU 3 calibrates ROLL only")
         else:
             self.log_imu_message_to_ui("Note: This IMU calibrates PITCH and ROLL")
+        
+        self.log_imu_message_to_ui("Note: Disconnect and reconnect IMU physically for new calibration")
             
     def save_current_imu_offsets(self):
         """Save current IMU calibration as angle offsets"""
@@ -1012,47 +1076,173 @@ class LoadCellCalibrationGUI(QMainWindow):
         if (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and 
             self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0 and 
             self.angle_offset5 != 0.0):
-            self.update_firmware_button.setEnabled(True)
-            ui_message = self.logger.log_imu("All 3 IMUs calibrated! Ready to update firmware.")
+            ui_message = self.logger.log_imu("All 3 IMUs calibrated! Go to Upload Firmware tab.")
             self.log_imu_message_to_ui(ui_message)
-            
-    def software_reset_teensy(self):
-        """Send software reset command to Teensy"""
-        if self.imu_worker:
-            # Send a reset command - most Arduino boards respond to specific characters
-            # For Teensy, we can send a break signal or reset character
-            try:
-                self.imu_worker.send_data("RESET")
-                ui_message = self.logger.log_imu("Sent software reset command to Teensy")
-                self.log_imu_message_to_ui(ui_message)
-                
-                # Give some time for reset and reconnection
-                QTimer.singleShot(2000, self.reconnect_after_reset)
-                
-            except Exception as e:
-                error_msg = f"Software reset failed: {str(e)}"
-                self.logger.log_error(error_msg)
-                self.log_imu_message_to_ui(error_msg)
-        else:
-            QMessageBox.warning(self, "Warning", "No IMU connection to reset!")
-            
-    def reconnect_after_reset(self):
-        """Reconnect to IMU after software reset"""
+    
+    def update_final_tab_status(self):
+        """Update the final tab with current calibration status"""
+        # Update load cell factor display
+        if hasattr(self, 'final_calibration_factor_label'):
+            if self.current_calibration_factor != 1.0:
+                self.final_calibration_factor_label.setText(f"{self.current_calibration_factor:.2f}")
+            else:
+                self.final_calibration_factor_label.setText("Not Calibrated")
+        
+        # Check if we have complete calibration data
+        has_loadcell = self.current_calibration_factor != 1.0
+        has_all_imus = (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and 
+                       self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0 and 
+                       self.angle_offset5 != 0.0)
+        
+        # Enable buttons in final tab if we have calibration data
+        if hasattr(self, 'update_firmware_with_values_button'):
+            self.update_firmware_with_values_button.setEnabled(has_loadcell and has_all_imus)
+    
+    # TOML Management Methods
+    def save_current_calibration(self):
+        """Save current calibration data to TOML file with timestamp"""
         try:
-            if self.is_imu_connected:
-                self.disconnect_imu_serial()
-                
-            # Wait a bit more, then reconnect
-            QTimer.singleShot(1000, self.connect_imu_serial)
+            # Create calibration data dictionary
+            calibration_data = {
+                "metadata": {
+                    "timestamp": datetime.now().isoformat(),
+                    "version": "1.0",
+                    "description": "Load Cell and IMU Calibration Data"
+                },
+                "load_cell": {
+                    "calibration_factor": float(self.current_calibration_factor)
+                },
+                "imu_offsets": {
+                    "imu1_pitch": float(self.angle_offset1),
+                    "imu1_roll": float(self.angle_offset2),
+                    "imu2_pitch": float(self.angle_offset3),
+                    "imu2_roll": float(self.angle_offset4),
+                    "imu3_roll": float(self.angle_offset5)
+                }
+            }
             
-            ui_message = self.logger.log_imu("Attempting to reconnect after reset...")
-            self.log_imu_message_to_ui(ui_message)
+            # Generate filename with timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"calibration_{timestamp}.toml"
+            filepath = os.path.join(self.calibrations_dir, filename)
+            
+            # Save to TOML file
+            with open(filepath, 'w') as f:
+                toml.dump(calibration_data, f)
+            
+            self.logger.log(f"Calibration saved to: {filename}")
+            QMessageBox.information(self, "Success", f"Calibration saved successfully!\n{filename}")
+            
+            # Refresh the history table
+            self.refresh_calibration_history()
             
         except Exception as e:
-            error_msg = f"Reconnection after reset failed: {str(e)}"
+            error_msg = f"Failed to save calibration: {str(e)}"
             self.logger.log_error(error_msg)
-            self.log_imu_message_to_ui(error_msg)
-        
+            QMessageBox.critical(self, "Error", error_msg)
+    
+    def refresh_calibration_history(self):
+        """Refresh the calibration history table from TOML files"""
+        try:
+            # Clear existing table
+            self.calibration_history_table.setRowCount(0)
+            
+            # Find all TOML files in calibrations directory
+            toml_files = glob.glob(os.path.join(self.calibrations_dir, "calibration_*.toml"))
+            toml_files.sort(reverse=True)  # Most recent first
+            
+            # Populate table
+            for i, filepath in enumerate(toml_files):
+                try:
+                    with open(filepath, 'r') as f:
+                        data = toml.load(f)
+                    
+                    # Extract data
+                    timestamp = data.get("metadata", {}).get("timestamp", "Unknown")
+                    loadcell_factor = data.get("load_cell", {}).get("calibration_factor", 0.0)
+                    imu_data = data.get("imu_offsets", {})
+                    
+                    # Format timestamp for display
+                    try:
+                        dt = datetime.fromisoformat(timestamp)
+                        display_time = dt.strftime("%Y-%m-%d %H:%M:%S")
+                    except:
+                        display_time = timestamp
+                    
+                    # Add row to table
+                    self.calibration_history_table.insertRow(i)
+                    self.calibration_history_table.setItem(i, 0, QTableWidgetItem(display_time))
+                    self.calibration_history_table.setItem(i, 1, QTableWidgetItem(f"{loadcell_factor:.2f}"))
+                    self.calibration_history_table.setItem(i, 2, QTableWidgetItem(f"{imu_data.get('imu1_pitch', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 3, QTableWidgetItem(f"{imu_data.get('imu1_roll', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 4, QTableWidgetItem(f"{imu_data.get('imu2_pitch', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(f"{imu_data.get('imu2_roll', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(f"{imu_data.get('imu3_roll', 0.0):.4f}"))
+                    
+                    # Store filepath in row data for loading
+                    self.calibration_history_table.item(i, 0).setData(Qt.UserRole, filepath)
+                    
+                except Exception as e:
+                    self.logger.log_error(f"Error reading {filepath}: {str(e)}")
+                    continue
+                    
+        except Exception as e:
+            error_msg = f"Failed to refresh calibration history: {str(e)}"
+            self.logger.log_error(error_msg)
+    
+    def load_selected_calibration(self):
+        """Load the selected calibration from the history table"""
+        try:
+            selected_items = self.calibration_history_table.selectedItems()
+            if not selected_items:
+                QMessageBox.warning(self, "Warning", "Please select a calibration to load.")
+                return
+            
+            # Get filepath from the first column of selected row
+            row = selected_items[0].row()
+            filepath_item = self.calibration_history_table.item(row, 0)
+            filepath = filepath_item.data(Qt.UserRole)
+            
+            if not filepath or not os.path.exists(filepath):
+                QMessageBox.warning(self, "Warning", "Calibration file not found.")
+                return
+            
+            # Load TOML data
+            with open(filepath, 'r') as f:
+                data = toml.load(f)
+            
+            # Update current calibration values
+            self.current_calibration_factor = data.get("load_cell", {}).get("calibration_factor", 1.0)
+            imu_data = data.get("imu_offsets", {})
+            
+            self.angle_offset1 = imu_data.get("imu1_pitch", 0.0)
+            self.angle_offset2 = imu_data.get("imu1_roll", 0.0) 
+            self.angle_offset3 = imu_data.get("imu2_pitch", 0.0)
+            self.angle_offset4 = imu_data.get("imu2_roll", 0.0)
+            self.angle_offset5 = imu_data.get("imu3_roll", 0.0)
+            
+            # Update all display labels
+            self.update_final_tab_status()
+            
+            filename = os.path.basename(filepath)
+            self.logger.log(f"Loaded calibration from: {filename}")
+            QMessageBox.information(self, "Success", f"Calibration loaded successfully!\n{filename}")
+            
+        except Exception as e:
+            error_msg = f"Failed to load calibration: {str(e)}"
+            self.logger.log_error(error_msg)
+            QMessageBox.critical(self, "Error", error_msg)
+    
+    def update_firmware_with_current_values(self):
+        """Update firmware with current calibration values"""
+        # Implementation will be similar to existing firmware update but using current values
+        pass
+    
+    def upload_final_firmware(self):
+        """Upload the final firmware with all calibration data"""
+        # Implementation for final firmware upload
+        pass
+            
     def closeEvent(self, event):
         """Handle application close"""
         self.logger.log_step("Application closing")

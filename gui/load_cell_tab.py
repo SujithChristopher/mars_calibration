@@ -32,7 +32,7 @@ def setup_load_cell_tab(main_window):
     
     main_window.step1 = StepIndicator(1, "Upload Calibration Code", "Upload calibration.ino to Arduino")
     main_window.step2 = StepIndicator(2, "Calibrate Load Cell", "Run calibration process and get factor")
-    main_window.step3 = StepIndicator(3, "Upload Final Firmware", "Upload firmware.ino with calibration factor")
+    main_window.step3 = StepIndicator(3, "Calibration Complete", "Load cell calibration factor calculated")
     
     steps_layout.addWidget(main_window.step1)
     steps_layout.addWidget(main_window.step2)
@@ -152,24 +152,21 @@ def setup_load_cell_tab(main_window):
     main_window.step3_group = QGroupBox("Step 3: Upload Final Firmware")
     step3_layout = QVBoxLayout(main_window.step3_group)
     
-    # File display
-    firm_file_layout = QHBoxLayout()
-    firm_file_layout.addWidget(QLabel("File:"))
-    main_window.firm_file_label = QLabel(main_window.firmware_file)
-    main_window.firm_file_label.setStyleSheet("QLabel { background: #f0f0f0; padding: 5px; border: 1px solid #ccc; }")
-    firm_file_layout.addWidget(main_window.firm_file_label)
-    step3_layout.addLayout(firm_file_layout)
-    
-    main_window.update_firmware_button = QPushButton("Update Firmware with Cal Factor")
-    main_window.update_firmware_button.clicked.connect(main_window.update_firmware_code)
-    main_window.update_firmware_button.setEnabled(False)
-    step3_layout.addWidget(main_window.update_firmware_button)
-    
-    main_window.upload_firmware_button = QPushButton("Upload Final Firmware")
-    main_window.upload_firmware_button.setStyleSheet("QPushButton { background: #4CAF50; color: white; padding: 10px; font-weight: bold; }")
-    main_window.upload_firmware_button.clicked.connect(main_window.upload_firmware_code)
-    main_window.upload_firmware_button.setEnabled(False)
-    step3_layout.addWidget(main_window.upload_firmware_button)
+    # Calibration completion message
+    completion_label = QLabel("✓ Load cell calibration factor has been calculated.\nGo to 'Upload Firmware' tab to save and upload final firmware.")
+    completion_label.setStyleSheet("""
+    QLabel { 
+        background: palette(base); 
+        color: palette(link); 
+        padding: 15px; 
+        border: 2px solid palette(highlight); 
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 11pt;
+    }
+    """)
+    completion_label.setAlignment(Qt.AlignCenter)
+    step3_layout.addWidget(completion_label)
     
     left_layout.addWidget(main_window.step3_group)
     

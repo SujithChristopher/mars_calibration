@@ -69,7 +69,17 @@ def setup_imu_tab(main_window):
     imu_file_layout = QHBoxLayout()
     imu_file_layout.addWidget(QLabel("File:"))
     main_window.imu_file_label = QLabel("imu_program_teensy.ino (MPU6050 + Library)")
-    main_window.imu_file_label.setStyleSheet("QLabel { background: #f0f0f0; padding: 5px; border: 1px solid #ccc; color: #FF5722; font-weight: bold; }")
+    main_window.imu_file_label.setStyleSheet("""
+    QLabel { 
+        background: palette(base); 
+        padding: 8px; 
+        border: 2px solid palette(mid); 
+        border-radius: 4px;
+        color: palette(link); 
+        font-weight: bold; 
+        font-family: 'Consolas', 'Monaco', monospace;
+    }
+    """)
     imu_file_layout.addWidget(main_window.imu_file_label)
     imu_upload_layout.addLayout(imu_file_layout)
     
@@ -98,41 +108,14 @@ def setup_imu_tab(main_window):
     main_window.imu_connect_button.clicked.connect(main_window.toggle_imu_connection)
     imu_control_layout.addWidget(main_window.imu_connect_button)
     
-    # Software Reset button
-    main_window.software_reset_button = QPushButton("Software Reset Teensy")
-    main_window.software_reset_button.clicked.connect(main_window.software_reset_teensy)
-    main_window.software_reset_button.setEnabled(False)
-    main_window.software_reset_button.setStyleSheet("QPushButton { background: #9C27B0; color: white; padding: 8px; font-weight: bold; }")
-    imu_control_layout.addWidget(main_window.software_reset_button)
-    
     # IMU Control buttons
     imu_buttons_layout = QGridLayout()
     
-    main_window.start_imu_cal_button = QPushButton("Start Calibration (c)")
+    main_window.start_imu_cal_button = QPushButton("Calibrate & Save Current IMU")
     main_window.start_imu_cal_button.clicked.connect(main_window.start_imu_calibration)
     main_window.start_imu_cal_button.setEnabled(False)
-    imu_buttons_layout.addWidget(main_window.start_imu_cal_button, 0, 0)
-    
-    main_window.reset_imu_offsets_button = QPushButton("Reset Current IMU (r)")
-    main_window.reset_imu_offsets_button.clicked.connect(main_window.reset_imu_offsets)
-    main_window.reset_imu_offsets_button.setEnabled(False)
-    imu_buttons_layout.addWidget(main_window.reset_imu_offsets_button, 0, 1)
-    
-    main_window.save_imu_offsets_button = QPushButton("Save Current IMU Offsets")
-    main_window.save_imu_offsets_button.clicked.connect(main_window.save_current_imu_offsets)
-    main_window.save_imu_offsets_button.setEnabled(False)
-    main_window.save_imu_offsets_button.setStyleSheet("QPushButton { background: #4CAF50; color: white; padding: 8px; font-weight: bold; }")
-    imu_buttons_layout.addWidget(main_window.save_imu_offsets_button, 1, 0)
-    
-    main_window.update_firmware_button = QPushButton("Update Firmware with All Offsets")
-    main_window.update_firmware_button.clicked.connect(main_window.update_firmware_with_offsets)
-    main_window.update_firmware_button.setEnabled(False)
-    imu_buttons_layout.addWidget(main_window.update_firmware_button, 1, 1)
-    
-    main_window.upload_firmware_button = QPushButton("Upload Updated Firmware")
-    main_window.upload_firmware_button.clicked.connect(main_window.upload_updated_firmware)
-    main_window.upload_firmware_button.setEnabled(False)
-    imu_buttons_layout.addWidget(main_window.upload_firmware_button, 2, 0)
+    main_window.start_imu_cal_button.setStyleSheet("QPushButton { background: #4CAF50; color: white; padding: 10px; font-weight: bold; }")
+    imu_buttons_layout.addWidget(main_window.start_imu_cal_button, 0, 0, 1, 2)  # Span 2 columns
     
     imu_control_layout.addLayout(imu_buttons_layout)
     
@@ -140,19 +123,34 @@ def setup_imu_tab(main_window):
     current_offsets_group = QGroupBox("Current IMU Live Offsets")
     current_offsets_layout = QGridLayout(current_offsets_group)
     
+    # Theme-adaptive styling for offset labels
+    offset_style = """
+    QLabel {
+        background: palette(base);
+        color: palette(text);
+        padding: 8px;
+        border: 2px solid palette(mid);
+        border-radius: 4px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 11pt;
+        font-weight: bold;
+        min-width: 80px;
+    }
+    """
+    
     current_offsets_layout.addWidget(QLabel("X Offset:"), 0, 0)
     main_window.offset_x_label = QLabel("0.0000")
-    main_window.offset_x_label.setStyleSheet("QLabel { background: #f8f9fa; padding: 5px; border: 1px solid #dee2e6; }")
+    main_window.offset_x_label.setStyleSheet(offset_style)
     current_offsets_layout.addWidget(main_window.offset_x_label, 0, 1)
     
     current_offsets_layout.addWidget(QLabel("Y Offset:"), 1, 0)
     main_window.offset_y_label = QLabel("0.0000")
-    main_window.offset_y_label.setStyleSheet("QLabel { background: #f8f9fa; padding: 5px; border: 1px solid #dee2e6; }")
+    main_window.offset_y_label.setStyleSheet(offset_style)
     current_offsets_layout.addWidget(main_window.offset_y_label, 1, 1)
     
     current_offsets_layout.addWidget(QLabel("Z Offset:"), 2, 0)
     main_window.offset_z_label = QLabel("0.0000")
-    main_window.offset_z_label.setStyleSheet("QLabel { background: #f8f9fa; padding: 5px; border: 1px solid #dee2e6; }")
+    main_window.offset_z_label.setStyleSheet(offset_style)
     current_offsets_layout.addWidget(main_window.offset_z_label, 2, 1)
     
     imu_control_layout.addWidget(current_offsets_group)
@@ -161,32 +159,75 @@ def setup_imu_tab(main_window):
     saved_offsets_group = QGroupBox("Saved IMU Angle Offsets")
     saved_offsets_layout = QGridLayout(saved_offsets_group)
     
+    # Theme-adaptive styling for different IMUs with distinct colors
+    imu1_style = """
+    QLabel {
+        background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 palette(highlight), stop:1 palette(base));
+        color: palette(highlighted-text);
+        padding: 8px;
+        border: 2px solid palette(highlight);
+        border-radius: 4px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 11pt;
+        font-weight: bold;
+        min-width: 80px;
+    }
+    """
+    
+    imu2_style = """
+    QLabel {
+        background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 palette(button), stop:1 palette(base));
+        color: palette(button-text);
+        padding: 8px;
+        border: 2px solid palette(button);
+        border-radius: 4px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 11pt;
+        font-weight: bold;
+        min-width: 80px;
+    }
+    """
+    
+    imu3_style = """
+    QLabel {
+        background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 palette(mid), stop:1 palette(base));
+        color: palette(text);
+        padding: 8px;
+        border: 2px solid palette(mid);
+        border-radius: 4px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 11pt;
+        font-weight: bold;
+        min-width: 80px;
+    }
+    """
+    
     # IMU 1 (angle_offset1, angle_offset2)
     saved_offsets_layout.addWidget(QLabel("IMU 1 Pitch:"), 0, 0)
     main_window.angle_offset1_label = QLabel("0.0000")
-    main_window.angle_offset1_label.setStyleSheet("QLabel { background: #e3f2fd; padding: 5px; border: 1px solid #90caf9; }")
+    main_window.angle_offset1_label.setStyleSheet(imu1_style)
     saved_offsets_layout.addWidget(main_window.angle_offset1_label, 0, 1)
     
     saved_offsets_layout.addWidget(QLabel("IMU 1 Roll:"), 0, 2)
     main_window.angle_offset2_label = QLabel("0.0000")
-    main_window.angle_offset2_label.setStyleSheet("QLabel { background: #e3f2fd; padding: 5px; border: 1px solid #90caf9; }")
+    main_window.angle_offset2_label.setStyleSheet(imu1_style)
     saved_offsets_layout.addWidget(main_window.angle_offset2_label, 0, 3)
     
     # IMU 2 (angle_offset3, angle_offset4)
     saved_offsets_layout.addWidget(QLabel("IMU 2 Pitch:"), 1, 0)
     main_window.angle_offset3_label = QLabel("0.0000")
-    main_window.angle_offset3_label.setStyleSheet("QLabel { background: #e8f5e8; padding: 5px; border: 1px solid #a5d6a7; }")
+    main_window.angle_offset3_label.setStyleSheet(imu2_style)
     saved_offsets_layout.addWidget(main_window.angle_offset3_label, 1, 1)
     
     saved_offsets_layout.addWidget(QLabel("IMU 2 Roll:"), 1, 2)
     main_window.angle_offset4_label = QLabel("0.0000")
-    main_window.angle_offset4_label.setStyleSheet("QLabel { background: #e8f5e8; padding: 5px; border: 1px solid #a5d6a7; }")
+    main_window.angle_offset4_label.setStyleSheet(imu2_style)
     saved_offsets_layout.addWidget(main_window.angle_offset4_label, 1, 3)
     
     # IMU 3 (angle_offset5 - roll only)
     saved_offsets_layout.addWidget(QLabel("IMU 3 Roll:"), 2, 0)
     main_window.angle_offset5_label = QLabel("0.0000")
-    main_window.angle_offset5_label.setStyleSheet("QLabel { background: #fce4ec; padding: 5px; border: 1px solid #f8bbd9; }")
+    main_window.angle_offset5_label.setStyleSheet(imu3_style)
     saved_offsets_layout.addWidget(main_window.angle_offset5_label, 2, 1)
     
     imu_control_layout.addWidget(saved_offsets_group)
@@ -227,23 +268,23 @@ def setup_imu_tab(main_window):
     data_group = QGroupBox("Raw Accelerometer Data")
     data_layout = QGridLayout(data_group)
     
-    # Raw acceleration values with LCD displays
+    # Raw acceleration values with LCD displays - theme adaptive
     data_layout.addWidget(QLabel("AX:"), 0, 0)
     main_window.ax_lcd = QLCDNumber(6)
     main_window.ax_lcd.setDigitCount(6)
-    main_window.ax_lcd.setStyleSheet("QLCDNumber { background-color: #f44336; color: white; }")
+    main_window.ax_lcd.setStyleSheet("QLCDNumber { background: palette(highlight); color: palette(highlighted-text); border: 1px solid palette(mid); }")
     data_layout.addWidget(main_window.ax_lcd, 0, 1)
     
     data_layout.addWidget(QLabel("AY:"), 1, 0)
     main_window.ay_lcd = QLCDNumber(6)
     main_window.ay_lcd.setDigitCount(6)
-    main_window.ay_lcd.setStyleSheet("QLCDNumber { background-color: #4CAF50; color: white; }")
+    main_window.ay_lcd.setStyleSheet("QLCDNumber { background: palette(button); color: palette(button-text); border: 1px solid palette(mid); }")
     data_layout.addWidget(main_window.ay_lcd, 1, 1)
     
     data_layout.addWidget(QLabel("AZ:"), 2, 0)
     main_window.az_lcd = QLCDNumber(6)
     main_window.az_lcd.setDigitCount(6)
-    main_window.az_lcd.setStyleSheet("QLCDNumber { background-color: #2196F3; color: white; }")
+    main_window.az_lcd.setStyleSheet("QLCDNumber { background: palette(dark); color: palette(bright-text); border: 1px solid palette(mid); }")
     data_layout.addWidget(main_window.az_lcd, 2, 1)
     
     right_layout.addWidget(data_group)
@@ -269,4 +310,14 @@ def setup_imu_tab(main_window):
     # Add panels to splitter
     splitter.addWidget(left_panel)
     splitter.addWidget(right_panel)
-    splitter.setSizes([350, 850])  # Set initial sizes
+    
+    # Set responsive sizes based on screen ratio
+    # For 16:10 and 16:9 screens, use proportional sizing
+    total_width = 1200  # Default window width
+    left_width = int(total_width * 0.35)   # 35% for controls
+    right_width = int(total_width * 0.65)  # 65% for visualizations
+    splitter.setSizes([left_width, right_width])
+    
+    # Set minimum sizes to prevent panels from being too small
+    left_panel.setMinimumWidth(300)
+    right_panel.setMinimumWidth(400)

@@ -24,6 +24,7 @@ struct CalibrationData {
 // Calibration variables
 CalibrationData calibration;
 bool isCalibrating = false;
+bool imu_ready = false;
 int calibrationSamples = 0;
 const int MAX_CALIBRATION_SAMPLES = 100;
 float calibrationSum[3] = {0, 0, 0};
@@ -46,17 +47,38 @@ void setup() {
   Serial.println("Arduino Nano 33 BLE - LSM9DS1 Sensor");
   Serial.println();
   
-  // Initialize the IMU
-  if (!IMU.begin()) {
-    Serial.println("Failed to initialize IMU!");
-    while (1);
+  // Initialize the IMU with retry logic
+  bool imu_initialized = false;
+  int retry_count = 0;
+  const int max_retries = 5;
+  
+  while (!imu_initialized && retry_count < max_retries) {
+    Serial.print("Attempting IMU initialization (attempt ");
+    Serial.print(retry_count + 1);
+    Serial.print("/");
+    Serial.print(max_retries);
+    Serial.println(")...");
+    
+    if (IMU.begin()) {
+      imu_initialized = true;
+      imu_ready = true;
+      Serial.println("IMU initialized successfully!");
+      Serial.print("Accelerometer sample rate = ");
+      Serial.print(IMU.accelerationSampleRate());
+      Serial.println(" Hz");
+      Serial.println();
+    } else {
+      Serial.println("IMU initialization failed, retrying in 1 second...");
+      delay(1000);
+      retry_count++;
+    }
   }
   
-  Serial.println("IMU initialized successfully!");
-  Serial.print("Accelerometer sample rate = ");
-  Serial.print(IMU.accelerationSampleRate());
-  Serial.println(" Hz");
-  Serial.println();
+  if (!imu_initialized) {
+    Serial.println("*** CRITICAL ERROR: Failed to initialize IMU after all retries! ***");
+    Serial.println("*** Please check IMU connections and power cycle the device ***");
+    // Don't halt completely - allow for manual reset attempts
+  }
   
   // Initialize calibration data
   calibration.accel_offset_x = 0.0;
@@ -78,6 +100,18 @@ void setup() {
 void loop() {
   // Handle serial commands
   handleSerialCommands();
+  
+  // Check if IMU is ready before reading data
+  if (!imu_ready) {
+    // IMU not initialized, send error message periodically
+    static unsigned long lastErrorTime = 0;
+    if (millis() - lastErrorTime >= 5000) {  // Every 5 seconds
+      Serial.println("ERROR: IMU not initialized. Send 'i' to retry initialization.");
+      lastErrorTime = millis();
+    }
+    delay(100);
+    return;
+  }
   
   // Read accelerometer data
   float ax, ay, az;
@@ -167,7 +201,6 @@ void handleSerialCommands() {
         resetCalibration();
         break;
         
-        
       default:
         // Ignore other characters
         break;
@@ -235,4 +268,5 @@ void resetCalibration() {
   
   Serial.println("Calibration offsets reset to zero");
 }
+
 
