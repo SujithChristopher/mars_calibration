@@ -18,7 +18,34 @@ def setup_upload_firmware_tab(main_window):
     # Main layout
     main_layout = QVBoxLayout(upload_tab)
     
-    # Top section - Load Cell Calibration Status
+    # Mars ID Section
+    mars_id_group = QGroupBox("Mars Device Information")
+    mars_id_layout = QGridLayout(mars_id_group)
+    
+    mars_id_layout.addWidget(QLabel("Mars ID:"), 0, 0)
+    main_window.firmware_mars_id_label = QLabel("Not Set")
+    main_window.firmware_mars_id_label.setStyleSheet("""
+    QLabel {
+        background: palette(base);
+        color: palette(text);
+        padding: 8px;
+        border: 2px solid palette(mid);
+        border-radius: 4px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 11pt;
+        font-weight: bold;
+        min-width: 120px;
+    }
+    """)
+    mars_id_layout.addWidget(main_window.firmware_mars_id_label, 0, 1)
+    
+    mars_id_note = QLabel("💡 Mars ID is automatically included in all filenames and calibration data")
+    mars_id_note.setStyleSheet("QLabel { color: #666; font-size: 10px; }")
+    mars_id_layout.addWidget(mars_id_note, 1, 0, 1, 2)
+    
+    main_layout.addWidget(mars_id_group)
+    
+    # Load Cell Calibration Status
     loadcell_group = QGroupBox("Load Cell Calibration Status")
     loadcell_layout = QGridLayout(loadcell_group)
     
@@ -115,9 +142,9 @@ def setup_upload_firmware_tab(main_window):
     
     # Calibration history table
     main_window.calibration_history_table = QTableWidget()
-    main_window.calibration_history_table.setColumnCount(7)
+    main_window.calibration_history_table.setColumnCount(8)
     main_window.calibration_history_table.setHorizontalHeaderLabels([
-        "Date/Time", "Load Factor", "IMU1 P", "IMU1 R", "IMU2 P", "IMU2 R", "IMU3 R"
+        "Mars ID", "Date/Time", "Load Factor", "IMU1 P", "IMU1 R", "IMU2 P", "IMU2 R", "IMU3 R"
     ])
     
     # Make table fill the width

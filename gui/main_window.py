@@ -80,6 +80,9 @@ class LoadCellCalibrationGUI(QMainWindow):
         # Step tracking
         self.current_step = 1
         
+        # Mars device ID tracking
+        self.current_mars_id = ""
+        
         # Initialize user data management
         self.user_data = UserDataManager()
         
@@ -94,9 +97,10 @@ class LoadCellCalibrationGUI(QMainWindow):
         sketches_dir = self.user_data.copy_arduino_sketches()
         
         # Arduino sketch file paths
-        self.calibration_file = str(sketches_dir / "loadcell_calibration" / "loadcell_calibration.ino")
+        self.unified_calibration_file = str(sketches_dir / "calibration" / "calibration.ino")
+        self.calibration_file = str(sketches_dir / "loadcell_calibration" / "loadcell_calibration.ino")  # Legacy support
         self.firmware_file = str(sketches_dir / "firmware" / "firmware.ino")
-        self.imu_file = str(sketches_dir / "imu_program_teensy" / "imu_program_teensy.ino")
+        self.imu_file = str(sketches_dir / "imu_program_teensy" / "imu_program_teensy.ino")  # Legacy support
         self.calibrations_dir = str(self.user_data.get_directory('calibrations'))
         
         # Show setup dialog on first run
@@ -114,6 +118,9 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.setup_ui()
         self.refresh_ports()
         self.update_step_status()
+        
+        # Load saved Mars ID
+        self.load_saved_mars_id()
         
         # Initialize update checking
         self.update_checker = None
@@ -201,13 +208,96 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.step1.set_completed(True)
             self.step2.set_completed(True)
     
+    # Mars ID Management Methods
+    def set_mars_id(self, mars_id):
+        """Set Mars ID and sync across all tabs"""
+        self.current_mars_id = mars_id
+        self.sync_mars_id_to_all_tabs()
+        self.save_mars_id()
+        self.logger.log(f"Mars ID set to: {mars_id}")
+    
+    def sync_mars_id_to_all_tabs(self):
+        """Synchronize Mars ID across all tabs"""
+        # Update Load Cell tab Mars ID field
+        if hasattr(self, 'mars_id_input'):
+            self.mars_id_input.blockSignals(True)
+            self.mars_id_input.setText(self.current_mars_id)
+            self.mars_id_input.blockSignals(False)
+        
+        # Update IMU tab Mars ID field  
+        if hasattr(self, 'imu_mars_id_input'):
+            self.imu_mars_id_input.blockSignals(True)
+            self.imu_mars_id_input.setText(self.current_mars_id)
+            self.imu_mars_id_input.blockSignals(False)
+            
+        # Update Firmware Upload tab Mars ID display
+        if hasattr(self, 'firmware_mars_id_label'):
+            display_text = self.current_mars_id if self.current_mars_id else "Not Set"
+            self.firmware_mars_id_label.setText(display_text)
+            
+        # Update window title with Mars ID
+        if self.current_mars_id:
+            base_title = f"Mars Calibration v{self.current_version}"
+            self.setWindowTitle(f"{base_title} - Mars ID: {self.current_mars_id}")
+        else:
+            self.setWindowTitle(f"Mars Calibration v{self.current_version} - Load Cell & IMU Calibration System")
+    
+    def validate_mars_id(self, mars_id):
+        """Validate Mars ID format - must be a non-negative integer"""
+        if not mars_id:
+            return False, "Mars ID cannot be empty"
+        
+        try:
+            mars_id_int = int(mars_id)
+            if mars_id_int < 0:
+                return False, "Mars ID must be a non-negative integer (0 or greater)"
+            if mars_id_int > 9999:
+                return False, "Mars ID must be 9999 or less"
+            return True, ""
+        except ValueError:
+            return False, "Mars ID must be a valid integer"
+    
+    def get_mars_filename_prefix(self):
+        """Get filename prefix with Mars ID"""
+        if self.current_mars_id:
+            # Format as zero-padded 4-digit number for better sorting
+            try:
+                mars_id_int = int(self.current_mars_id)
+                return f"Mars_{mars_id_int:04d}_"
+            except ValueError:
+                return f"Mars_{self.current_mars_id}_"
+        return "Mars_Unknown_"
+    
+    def save_mars_id(self):
+        """Save Mars ID to persistent storage"""
+        try:
+            mars_id_file = self.user_data.get_directory('root') / 'mars_id.txt'
+            with open(mars_id_file, 'w') as f:
+                f.write(self.current_mars_id)
+        except Exception as e:
+            self.logger.log_error(f"Failed to save Mars ID: {str(e)}")
+    
+    def load_saved_mars_id(self):
+        """Load previously saved Mars ID"""
+        try:
+            mars_id_file = self.user_data.get_directory('root') / 'mars_id.txt'
+            if mars_id_file.exists():
+                with open(mars_id_file, 'r') as f:
+                    saved_mars_id = f.read().strip()
+                if saved_mars_id:
+                    self.current_mars_id = saved_mars_id
+                    self.sync_mars_id_to_all_tabs()
+                    self.logger.log(f"Loaded saved Mars ID: {saved_mars_id}")
+        except Exception as e:
+            self.logger.log_error(f"Failed to load saved Mars ID: {str(e)}")
+    
     # Load Cell Methods
     def upload_calibration_code(self):
-        """Upload calibration Arduino code"""
-        self.logger.log_upload("Starting calibration code upload")
+        """Upload unified calibration Arduino code"""
+        self.logger.log_upload("Starting unified calibration code upload")
         
-        if not os.path.exists(self.calibration_file):
-            error_msg = f"Calibration file not found: {self.calibration_file}"
+        if not os.path.exists(self.unified_calibration_file):
+            error_msg = f"Unified calibration file not found: {self.unified_calibration_file}"
             self.logger.log_error(error_msg)
             QMessageBox.warning(self, "Warning", error_msg)
             return
@@ -235,11 +325,11 @@ class LoadCellCalibrationGUI(QMainWindow):
         selected_board = self.board_combo.currentText()
         
         self.logger.log_upload(f"Upload parameters - Port: {selected_port}, Board: {selected_board}")
-        ui_message = self.logger.log_upload(f"Starting calibration upload to {selected_port}")
+        ui_message = self.logger.log_upload(f"Starting unified calibration upload to {selected_port}")
         self.log_message_to_ui(ui_message)
         
         # Run upload in separate thread
-        threading.Thread(target=self._upload_thread, args=(self.calibration_file, selected_board, selected_port, "calibration"), daemon=True).start()
+        threading.Thread(target=self._upload_thread, args=(self.unified_calibration_file, selected_board, selected_port, "unified_calibration"), daemon=True).start()
         
     def upload_firmware_code(self):
         """Upload firmware Arduino code"""
@@ -305,14 +395,32 @@ class LoadCellCalibrationGUI(QMainWindow):
             
             # Update the calibration factor line
             pattern = r'float calibration_factor\s*=\s*[\d\.-]+;'
-            replacement = f'float calibration_factor = {self.current_calibration_factor:.2f};'
+            replacement = f'float calibration_factor = {self.current_calibration_factor:.2f}; // Mars ID: {self.current_mars_id}'
             
             updated_content = re.sub(pattern, replacement, content)
             
+            # Also try to update Mars ID comment if it exists, otherwise add it
+            mars_id_pattern = r'// Mars ID:.*'
+            if re.search(mars_id_pattern, updated_content):
+                updated_content = re.sub(mars_id_pattern, f'// Mars ID: {self.current_mars_id}', updated_content)
+            else:
+                # Add Mars ID comment at the top after any existing header comments
+                lines = updated_content.split('\n')
+                insert_index = 0
+                for i, line in enumerate(lines):
+                    if not line.strip().startswith('//') and not line.strip().startswith('/*') and line.strip():
+                        insert_index = i
+                        break
+                lines.insert(insert_index, f'// Mars ID: {self.current_mars_id}')
+                updated_content = '\n'.join(lines)
+            
             # Check if replacement was made
             if 'calibration_factor' in content:
-                # Create backup
-                backup_path = self.firmware_file + ".backup"
+                # Create backup with Mars ID
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                mars_prefix = self.get_mars_filename_prefix()
+                backup_filename = f"{mars_prefix}firmware_backup_{timestamp}.ino"
+                backup_path = os.path.join(os.path.dirname(self.firmware_file), backup_filename)
                 with open(backup_path, 'w') as backup_file:
                     backup_file.write(content)
                 
@@ -738,11 +846,11 @@ class LoadCellCalibrationGUI(QMainWindow):
     
     # IMU Methods
     def upload_imu_code(self):
-        """Upload IMU Arduino code"""
-        self.logger.log_imu("Starting IMU code upload")
+        """Upload unified calibration Arduino code (same as load cell)"""
+        self.logger.log_imu("Starting unified calibration code upload for IMU")
         
-        if not os.path.exists(self.imu_file):
-            error_msg = f"IMU file not found: {self.imu_file}"
+        if not os.path.exists(self.unified_calibration_file):
+            error_msg = f"Unified calibration file not found: {self.unified_calibration_file}"
             self.logger.log_error(error_msg)
             QMessageBox.warning(self, "Warning", error_msg)
             return
@@ -770,7 +878,7 @@ class LoadCellCalibrationGUI(QMainWindow):
         selected_board = self.imu_board_combo.currentText()
         
         self.logger.log_imu(f"IMU upload parameters - Port: {selected_port}, Board: {selected_board}")
-        ui_message = self.logger.log_imu(f"Starting IMU upload to {selected_port}")
+        ui_message = self.logger.log_imu(f"Starting unified calibration upload to {selected_port}")
         self.log_imu_message_to_ui(ui_message)
         
         # Handle auto-detect board
@@ -784,7 +892,7 @@ class LoadCellCalibrationGUI(QMainWindow):
                 selected_board = "arduino:mbed_nano:nano33ble"
         
         # Run upload in separate thread
-        threading.Thread(target=self._upload_thread, args=(self.imu_file, selected_board, selected_port, "IMU"), daemon=True).start()
+        threading.Thread(target=self._upload_thread, args=(self.unified_calibration_file, selected_board, selected_port, "unified_calibration_imu"), daemon=True).start()
     
     def detect_board_on_port(self, port):
         """Auto-detect board type on specified port"""
@@ -1192,7 +1300,8 @@ class LoadCellCalibrationGUI(QMainWindow):
                 "metadata": {
                     "timestamp": datetime.now().isoformat(),
                     "version": "1.0",
-                    "description": "Load Cell and IMU Calibration Data"
+                    "description": "Load Cell and IMU Calibration Data",
+                    "mars_id": self.current_mars_id if self.current_mars_id else "Unknown"
                 },
                 "load_cell": {
                     "calibration_factor": float(self.current_calibration_factor)
@@ -1206,9 +1315,10 @@ class LoadCellCalibrationGUI(QMainWindow):
                 }
             }
             
-            # Generate filename with timestamp
+            # Generate filename with Mars ID and timestamp
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f"calibration_{timestamp}.toml"
+            mars_prefix = self.get_mars_filename_prefix()
+            filename = f"{mars_prefix}calibration_{timestamp}.toml"
             filepath = os.path.join(self.calibrations_dir, filename)
             
             # Save to TOML file
@@ -1243,7 +1353,9 @@ class LoadCellCalibrationGUI(QMainWindow):
                         data = toml.load(f)
                     
                     # Extract data
-                    timestamp = data.get("metadata", {}).get("timestamp", "Unknown")
+                    metadata = data.get("metadata", {})
+                    timestamp = metadata.get("timestamp", "Unknown")
+                    mars_id = metadata.get("mars_id", "Unknown")
                     loadcell_factor = data.get("load_cell", {}).get("calibration_factor", 0.0)
                     imu_data = data.get("imu_offsets", {})
                     
@@ -1254,17 +1366,21 @@ class LoadCellCalibrationGUI(QMainWindow):
                     except:
                         display_time = timestamp
                     
+                    # Format Mars ID for display
+                    display_mars_id = str(mars_id) if mars_id != "Unknown" else "Unknown"
+                    
                     # Add row to table
                     self.calibration_history_table.insertRow(i)
-                    self.calibration_history_table.setItem(i, 0, QTableWidgetItem(display_time))
-                    self.calibration_history_table.setItem(i, 1, QTableWidgetItem(f"{loadcell_factor:.2f}"))
-                    self.calibration_history_table.setItem(i, 2, QTableWidgetItem(f"{imu_data.get('imu1_pitch', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 3, QTableWidgetItem(f"{imu_data.get('imu1_roll', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 4, QTableWidgetItem(f"{imu_data.get('imu2_pitch', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(f"{imu_data.get('imu2_roll', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(f"{imu_data.get('imu3_roll', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 0, QTableWidgetItem(display_mars_id))
+                    self.calibration_history_table.setItem(i, 1, QTableWidgetItem(display_time))
+                    self.calibration_history_table.setItem(i, 2, QTableWidgetItem(f"{loadcell_factor:.2f}"))
+                    self.calibration_history_table.setItem(i, 3, QTableWidgetItem(f"{imu_data.get('imu1_pitch', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 4, QTableWidgetItem(f"{imu_data.get('imu1_roll', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(f"{imu_data.get('imu2_pitch', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(f"{imu_data.get('imu2_roll', 0.0):.4f}"))
+                    self.calibration_history_table.setItem(i, 7, QTableWidgetItem(f"{imu_data.get('imu3_roll', 0.0):.4f}"))
                     
-                    # Store filepath in row data for loading
+                    # Store filepath in row data for loading (now in Mars ID column)
                     self.calibration_history_table.item(i, 0).setData(Qt.UserRole, filepath)
                     
                 except Exception as e:
@@ -1283,7 +1399,7 @@ class LoadCellCalibrationGUI(QMainWindow):
                 QMessageBox.warning(self, "Warning", "Please select a calibration to load.")
                 return
             
-            # Get filepath from the first column of selected row
+            # Get filepath from the first column (Mars ID column) of selected row
             row = selected_items[0].row()
             filepath_item = self.calibration_history_table.item(row, 0)
             filepath = filepath_item.data(Qt.UserRole)

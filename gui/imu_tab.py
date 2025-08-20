@@ -4,9 +4,9 @@ IMU calibration tab UI components.
 
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QSplitter, 
                                QGroupBox, QLabel, QPushButton, QComboBox, 
-                               QTextEdit, QGridLayout, QLCDNumber)
+                               QTextEdit, QGridLayout, QLCDNumber, QLineEdit)
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont, QColor
+from PySide6.QtGui import QFont, QColor, QIntValidator
 
 from gui.widgets.angle_indicator import AngleIndicator
 from gui.widgets.attitude_indicator import AttitudeIndicator
@@ -26,6 +26,44 @@ def setup_imu_tab(main_window):
     # Left panel - Controls and Connection
     left_panel = QWidget()
     left_layout = QVBoxLayout(left_panel)
+    
+    # Mars ID Settings (synchronized with Load Cell tab)
+    imu_mars_id_group = QGroupBox("Mars Device ID")
+    imu_mars_id_layout = QVBoxLayout(imu_mars_id_group)
+    
+    imu_mars_id_input_layout = QHBoxLayout()
+    imu_mars_id_input_layout.addWidget(QLabel("Mars ID:"))
+    main_window.imu_mars_id_input = QLineEdit()
+    main_window.imu_mars_id_input.setPlaceholderText("Enter Mars device ID (e.g., 1, 42, 123)")
+    
+    # Set integer validator for non-negative integers
+    imu_int_validator = QIntValidator(0, 9999)
+    main_window.imu_mars_id_input.setValidator(imu_int_validator)
+    main_window.imu_mars_id_input.setMaxLength(4)
+    
+    def on_imu_mars_id_changed():
+        mars_id = main_window.imu_mars_id_input.text().strip()
+        if mars_id:
+            is_valid, error_msg = main_window.validate_mars_id(mars_id)
+            if is_valid:
+                main_window.set_mars_id(mars_id)
+                main_window.imu_mars_id_input.setStyleSheet("QLineEdit { background: #e8f5e8; }")
+            else:
+                main_window.imu_mars_id_input.setStyleSheet("QLineEdit { background: #ffe8e8; }")
+                main_window.imu_mars_id_input.setToolTip(error_msg)
+        else:
+            main_window.imu_mars_id_input.setStyleSheet("")
+            main_window.imu_mars_id_input.setToolTip("")
+    
+    main_window.imu_mars_id_input.textChanged.connect(on_imu_mars_id_changed)
+    imu_mars_id_input_layout.addWidget(main_window.imu_mars_id_input)
+    imu_mars_id_layout.addLayout(imu_mars_id_input_layout)
+    
+    imu_mars_id_info = QLabel("💡 Synchronized with Load Cell tab - same Mars ID applies to both")
+    imu_mars_id_info.setStyleSheet("QLabel { color: #666; font-size: 10px; }")
+    imu_mars_id_layout.addWidget(imu_mars_id_info)
+    
+    left_layout.addWidget(imu_mars_id_group)
     
     # IMU Connection Settings
     imu_connection_group = QGroupBox("IMU Connection Settings")
@@ -61,14 +99,14 @@ def setup_imu_tab(main_window):
     
     left_layout.addWidget(imu_connection_group)
     
-    # IMU Upload Section
-    imu_upload_group = QGroupBox("Upload IMU Program")
+    # Unified Calibration Upload Section
+    imu_upload_group = QGroupBox("Upload Unified Calibration Program")
     imu_upload_layout = QVBoxLayout(imu_upload_group)
     
-    # IMU File display
+    # Unified Calibration File display
     imu_file_layout = QHBoxLayout()
     imu_file_layout.addWidget(QLabel("File:"))
-    main_window.imu_file_label = QLabel("imu_program_teensy.ino (MPU6050 + Library)")
+    main_window.imu_file_label = QLabel("calibration.ino (Load Cell + IMU)")
     main_window.imu_file_label.setStyleSheet("""
     QLabel { 
         background: palette(base); 
@@ -83,7 +121,7 @@ def setup_imu_tab(main_window):
     imu_file_layout.addWidget(main_window.imu_file_label)
     imu_upload_layout.addLayout(imu_file_layout)
     
-    main_window.upload_imu_button = QPushButton("Upload IMU Program")
+    main_window.upload_imu_button = QPushButton("Upload Unified Calibration")
     main_window.upload_imu_button.setStyleSheet("QPushButton { background: #FF9800; color: white; padding: 10px; font-weight: bold; }")
     main_window.upload_imu_button.clicked.connect(main_window.upload_imu_code)
     imu_upload_layout.addWidget(main_window.upload_imu_button)

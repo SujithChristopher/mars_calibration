@@ -26,7 +26,11 @@
       "Bash(gh run download:*)",
       "Bash(rm:*)",
       "Bash(gh release view:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(conda activate:*)",
+      "Bash(call conda activate py12)",
+      "Bash(conda info:*)",
+      "Bash(C:/Users/Pintu/miniconda3/envs/py12/python main.py)"
     ],
     "deny": []
   }

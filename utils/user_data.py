@@ -86,7 +86,7 @@ class UserDataManager:
             target_dir.mkdir(exist_ok=True)
             
             # Copy sketch directories
-            sketch_dirs = ['calibration', 'firmware', 'imu_program']
+            sketch_dirs = ['calibration', 'loadcell_calibration', 'firmware', 'imu_program', 'imu_program_teensy']
             
             for sketch_dir in sketch_dirs:
                 source_sketch = source_dir / sketch_dir
