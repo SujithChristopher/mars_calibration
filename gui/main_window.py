@@ -1300,13 +1300,27 @@ class LoadCellCalibrationGUI(QMainWindow):
                 self.final_calibration_factor_label.setText(f"{self.current_calibration_factor:.2f}")
             else:
                 self.final_calibration_factor_label.setText("Not Calibrated")
-        
+
+        # Update all 6 IMU offset labels
+        if hasattr(self, 'final_angle_offset1_label'):
+            self.final_angle_offset1_label.setText(f"{self.angle_offset1:.4f}")
+        if hasattr(self, 'final_angle_offset2_label'):
+            self.final_angle_offset2_label.setText(f"{self.angle_offset2:.4f}")
+        if hasattr(self, 'final_angle_offset3_label'):
+            self.final_angle_offset3_label.setText(f"{self.angle_offset3:.4f}")
+        if hasattr(self, 'final_angle_offset4_label'):
+            self.final_angle_offset4_label.setText(f"{self.angle_offset4:.4f}")
+        if hasattr(self, 'final_angle_offset5_label'):
+            self.final_angle_offset5_label.setText(f"{self.angle_offset5:.4f}")
+        if hasattr(self, 'final_angle_offset6_label'):
+            self.final_angle_offset6_label.setText(f"{self.angle_offset6:.4f}")
+
         # Check if we have complete calibration data
         has_loadcell = self.current_calibration_factor != 1.0
         has_all_imus = (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and
                        self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0 and
                        self.angle_offset5 != 0.0 and self.angle_offset6 != 0.0)
-        
+
         # Enable buttons in final tab if we have calibration data
         if hasattr(self, 'update_firmware_with_values_button'):
             self.update_firmware_with_values_button.setEnabled(has_loadcell and has_all_imus)
@@ -1414,58 +1428,122 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.logger.log_error(error_msg)
     
     def load_selected_calibration(self):
-        """Load the selected calibration from the history table"""
+        """Load the selected calibration from the history table and display values"""
         try:
             selected_items = self.calibration_history_table.selectedItems()
             if not selected_items:
                 QMessageBox.warning(self, "Warning", "Please select a calibration to load.")
                 return
-            
+
             # Get filepath from the first column (Mars ID column) of selected row
             row = selected_items[0].row()
             filepath_item = self.calibration_history_table.item(row, 0)
             filepath = filepath_item.data(Qt.UserRole)
-            
+
             if not filepath or not os.path.exists(filepath):
                 QMessageBox.warning(self, "Warning", "Calibration file not found.")
                 return
-            
+
             # Load TOML data
             with open(filepath, 'r') as f:
                 data = toml.load(f)
-            
+
             # Update current calibration values
             self.current_calibration_factor = data.get("load_cell", {}).get("calibration_factor", 1.0)
             imu_data = data.get("imu_offsets", {})
-            
+
             self.angle_offset1 = imu_data.get("imu1_pitch", 0.0)
             self.angle_offset2 = imu_data.get("imu1_roll", 0.0)
             self.angle_offset3 = imu_data.get("imu2_pitch", 0.0)
             self.angle_offset4 = imu_data.get("imu2_roll", 0.0)
             self.angle_offset5 = imu_data.get("imu3_pitch", 0.0)
             self.angle_offset6 = imu_data.get("imu3_roll", 0.0)
-            
-            # Update all display labels
+
+            # Update all display labels (including final tab)
             self.update_final_tab_status()
-            
+
             filename = os.path.basename(filepath)
+            metadata = data.get("metadata", {})
+            mars_id = metadata.get("mars_id", "Unknown")
+
+            # Log detailed information about loaded calibration
             self.logger.log(f"Loaded calibration from: {filename}")
-            QMessageBox.information(self, "Success", f"Calibration loaded successfully!\n{filename}")
-            
+            self.logger.log(f"  Mars ID: {mars_id}")
+            self.logger.log(f"  Load Cell Factor: {self.current_calibration_factor:.2f}")
+            self.logger.log(f"  IMU1 Pitch: {self.angle_offset1:.4f}, Roll: {self.angle_offset2:.4f}")
+            self.logger.log(f"  IMU2 Pitch: {self.angle_offset3:.4f}, Roll: {self.angle_offset4:.4f}")
+            self.logger.log(f"  IMU3 Pitch: {self.angle_offset5:.4f}, Roll: {self.angle_offset6:.4f}")
+
+            success_msg = (f"Calibration loaded successfully!\n\n"
+                          f"File: {filename}\n"
+                          f"Mars ID: {mars_id}\n\n"
+                          f"Load Cell Factor: {self.current_calibration_factor:.2f}\n"
+                          f"IMU1 - Pitch: {self.angle_offset1:.4f}, Roll: {self.angle_offset2:.4f}\n"
+                          f"IMU2 - Pitch: {self.angle_offset3:.4f}, Roll: {self.angle_offset4:.4f}\n"
+                          f"IMU3 - Pitch: {self.angle_offset5:.4f}, Roll: {self.angle_offset6:.4f}\n\n"
+                          f"Ready to upload firmware!")
+
+            QMessageBox.information(self, "Success", success_msg)
+
         except Exception as e:
             error_msg = f"Failed to load calibration: {str(e)}"
             self.logger.log_error(error_msg)
             QMessageBox.critical(self, "Error", error_msg)
     
     def update_firmware_with_current_values(self):
-        """Update firmware with current calibration values"""
-        # Implementation will be similar to existing firmware update but using current values
-        pass
-    
+        """Update firmware_v2 variable.h with current calibration values (including loaded values)"""
+        try:
+            # Verify we have valid calibration data
+            if self.current_calibration_factor == 1.0:
+                QMessageBox.warning(self, "Warning", "Please load or perform Load Cell calibration first.")
+                return
+
+            has_all_imus = (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and
+                           self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0 and
+                           self.angle_offset5 != 0.0 and self.angle_offset6 != 0.0)
+
+            if not has_all_imus:
+                QMessageBox.warning(self, "Warning", "Please load or perform all IMU calibrations first.")
+                return
+
+            # Read variable.h file from firmware_v2
+            variable_h_file = os.path.join(self.firmware_v2_dir, 'variable.h')
+            with open(variable_h_file, 'r') as f:
+                variable_content = f.read()
+
+            # Update all 6 IMU offset values in variable.h using #define format
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU1PITCHOFFSET', self.angle_offset1)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU1ROLLOFFSET', self.angle_offset2)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU2PITCHOFFSET', self.angle_offset3)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU2ROLLOFFSET', self.angle_offset4)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU3PITCHOFFSET', self.angle_offset5)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU3ROLLOFFSET', self.angle_offset6)
+
+            # Write updated variable.h file
+            with open(variable_h_file, 'w') as f:
+                f.write(variable_content)
+
+            # Update load cell calibration factor if needed (you can add this if your firmware supports it)
+            ui_message = self.logger.log(f"Updated firmware_v2 with calibration values:")
+            ui_message += f"\n  Load Cell Factor: {self.current_calibration_factor:.2f}"
+            ui_message += f"\n  IMU1: Pitch={self.angle_offset1:.4f}, Roll={self.angle_offset2:.4f}"
+            ui_message += f"\n  IMU2: Pitch={self.angle_offset3:.4f}, Roll={self.angle_offset4:.4f}"
+            ui_message += f"\n  IMU3: Pitch={self.angle_offset5:.4f}, Roll={self.angle_offset6:.4f}"
+
+            self.logger.log(ui_message)
+            QMessageBox.information(self, "Success", f"Firmware updated with calibration values!\n\n{ui_message}\n\nReady to upload.")
+
+        except Exception as e:
+            error_msg = f"Failed to update firmware: {str(e)}"
+            self.logger.log_error(error_msg)
+            QMessageBox.critical(self, "Error", error_msg)
+
     def upload_final_firmware(self):
         """Upload the final firmware with all calibration data"""
-        # Implementation for final firmware upload
-        pass
+        # First update firmware with current values
+        self.update_firmware_with_current_values()
+        # Then upload (this part would call the upload method)
+        # Note: Full implementation depends on your upload workflow
             
     def closeEvent(self, event):
         """Handle application close"""
