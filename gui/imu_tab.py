@@ -136,7 +136,7 @@ def setup_imu_tab(main_window):
     imu_selection_layout = QHBoxLayout()
     imu_selection_layout.addWidget(QLabel("Current IMU:"))
     main_window.current_imu_combo = QComboBox()
-    main_window.current_imu_combo.addItems(["IMU 1 (Pitch+Roll)", "IMU 2 (Pitch+Roll)", "IMU 3 (Roll only)"])
+    main_window.current_imu_combo.addItems(["IMU 1 (Pitch+Roll)", "IMU 2 (Pitch+Roll)", "IMU 3 (Pitch+Roll)"])
     main_window.current_imu_combo.currentTextChanged.connect(main_window.on_imu_selection_changed)
     imu_selection_layout.addWidget(main_window.current_imu_combo)
     imu_control_layout.addLayout(imu_selection_layout)
@@ -262,11 +262,16 @@ def setup_imu_tab(main_window):
     main_window.angle_offset4_label.setStyleSheet(imu2_style)
     saved_offsets_layout.addWidget(main_window.angle_offset4_label, 1, 3)
     
-    # IMU 3 (angle_offset5 - roll only)
-    saved_offsets_layout.addWidget(QLabel("IMU 3 Roll:"), 2, 0)
+    # IMU 3 (angle_offset5, angle_offset6)
+    saved_offsets_layout.addWidget(QLabel("IMU 3 Pitch:"), 2, 0)
     main_window.angle_offset5_label = QLabel("0.0000")
     main_window.angle_offset5_label.setStyleSheet(imu3_style)
     saved_offsets_layout.addWidget(main_window.angle_offset5_label, 2, 1)
+
+    saved_offsets_layout.addWidget(QLabel("IMU 3 Roll:"), 2, 2)
+    main_window.angle_offset6_label = QLabel("0.0000")
+    main_window.angle_offset6_label.setStyleSheet(imu3_style)
+    saved_offsets_layout.addWidget(main_window.angle_offset6_label, 2, 3)
     
     imu_control_layout.addWidget(saved_offsets_group)
     

@@ -9,10 +9,11 @@ float calibration_factor = -8029.94; // Adjust this as per your setup
 
 // 3-IMU system angle offsets (to be updated after sequential IMU calibration)
 float angle_offset1 = 0.0;  // IMU 1 pitch offset
-float angle_offset2 = 0.0;  // IMU 1 roll offset  
+float angle_offset2 = 0.0;  // IMU 1 roll offset
 float angle_offset3 = 0.0;  // IMU 2 pitch offset
 float angle_offset4 = 0.0;  // IMU 2 roll offset
-float angle_offset5 = 0.0;  // IMU 3 roll offset
+float angle_offset5 = 0.0;  // IMU 3 pitch offset
+float angle_offset6 = 0.0;  // IMU 3 roll offset
 
 // Simulated IMU variables for Teensy (no physical IMU attached)
 bool imu_simulation_enabled = true;

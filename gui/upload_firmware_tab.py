@@ -110,10 +110,15 @@ def setup_upload_firmware_tab(main_window):
     imu_layout.addWidget(main_window.final_angle_offset4_label, 1, 3)
     
     # IMU 3
-    imu_layout.addWidget(QLabel("IMU 3 Roll:"), 2, 0)
+    imu_layout.addWidget(QLabel("IMU 3 Pitch:"), 2, 0)
     main_window.final_angle_offset5_label = QLabel("Not Set")
     main_window.final_angle_offset5_label.setStyleSheet(imu_offset_style)
     imu_layout.addWidget(main_window.final_angle_offset5_label, 2, 1)
+
+    imu_layout.addWidget(QLabel("IMU 3 Roll:"), 2, 2)
+    main_window.final_angle_offset6_label = QLabel("Not Set")
+    main_window.final_angle_offset6_label.setStyleSheet(imu_offset_style)
+    imu_layout.addWidget(main_window.final_angle_offset6_label, 2, 3)
     
     main_layout.addWidget(imu_group)
     
@@ -142,9 +147,9 @@ def setup_upload_firmware_tab(main_window):
     
     # Calibration history table
     main_window.calibration_history_table = QTableWidget()
-    main_window.calibration_history_table.setColumnCount(8)
+    main_window.calibration_history_table.setColumnCount(9)
     main_window.calibration_history_table.setHorizontalHeaderLabels([
-        "Mars ID", "Date/Time", "Load Factor", "IMU1 P", "IMU1 R", "IMU2 P", "IMU2 R", "IMU3 R"
+        "Mars ID", "Date/Time", "Load Factor", "IMU1 P", "IMU1 R", "IMU2 P", "IMU2 R", "IMU3 P", "IMU3 R"
     ])
     
     # Make table fill the width
