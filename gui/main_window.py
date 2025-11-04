@@ -473,7 +473,11 @@ class LoadCellCalibrationGUI(QMainWindow):
             # Check if local arduino-cli.exe exists
             if not os.path.exists(arduino_cli_path):
                 self.log_signal.emit(self.logger.log_error("arduino-cli.exe not found in program directory!"))
-                self.log_signal.emit(self.logger.log_error("Please place arduino-cli.exe in the same folder as this program."))
+                # Emit signal to show download dialog (must be done from main thread)
+                self.log_signal.emit(self.logger.log_error("Checking for Arduino CLI download option..."))
+                # Call main thread to show dialog
+                from PySide6.QtCore import QTimer
+                QTimer.singleShot(0, lambda: self.show_arduino_cli_download_dialog())
                 return
             
             # Install required cores if needed
@@ -529,12 +533,13 @@ class LoadCellCalibrationGUI(QMainWindow):
                     
                     if result.returncode == 0:
                         self.log_signal.emit(self.logger.log_success(f"{upload_type.title()} upload successful!"))
-                        
-                        # Update step progress using signal
-                        if upload_type == "calibration":
+
+                        # Update step progress using signal (only for Load Cell tab, not IMU tab)
+                        if upload_type in ["calibration", "unified_calibration"]:
                             self.step_update_signal.emit(2, "✓ Step 1 completed! Now connect to serial and calibrate.")
                         elif upload_type == "firmware":
                             self.step_update_signal.emit(4, "✓ All steps completed! Load cell is ready to use.")
+                        # Note: unified_calibration_imu upload doesn't trigger step updates (IMU tab has no steps)
                         
                     else:
                         self.log_signal.emit(self.logger.log_error(f"{upload_type.title()} upload failed: {result.stderr}"))
@@ -554,13 +559,48 @@ class LoadCellCalibrationGUI(QMainWindow):
         finally:
             # Hide progress bar and re-enable button
             self.progress_bar.setVisible(False)
-            if upload_type == "calibration":
+            if upload_type in ["calibration", "unified_calibration"]:
                 self.upload_cal_button.setEnabled(True)
-            elif upload_type == "IMU":
+            elif upload_type in ["IMU", "unified_calibration_imu"]:
                 self.upload_imu_button.setEnabled(True)
             else:
                 self.upload_firmware_button.setEnabled(True)
-            
+
+    def show_arduino_cli_download_dialog(self):
+        """Show dialog asking user to download Arduino CLI"""
+        import webbrowser
+
+        reply = QMessageBox.question(
+            self,
+            "Arduino CLI Not Found",
+            "Arduino CLI (arduino-cli.exe) is required for uploading firmware.\n\n"
+            "Would you like to download it now?\n\n"
+            "Click 'Yes' to open the download page in your browser, or "
+            "'No' to close this dialog.",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.Yes
+        )
+
+        if reply == QMessageBox.Yes:
+            # Open Arduino CLI download page
+            self.logger.log("Opening Arduino CLI download page...")
+            webbrowser.open("https://github.com/arduino/arduino-cli/releases")
+
+            # Show instructions dialog
+            QMessageBox.information(
+                self,
+                "Arduino CLI Download",
+                "A browser window has opened to the Arduino CLI download page.\n\n"
+                "INSTRUCTIONS:\n"
+                "1. Download the Windows version (arduino-cli_Windows_64bit.zip)\n"
+                "2. Extract the ZIP file\n"
+                "3. Copy 'arduino-cli.exe' to the same folder as this application\n"
+                "4. Restart this application and try uploading again\n\n"
+                f"Application folder: {os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}"
+            )
+        else:
+            self.logger.log("User declined Arduino CLI download")
+
     def refresh_ports(self):
         """Refresh available serial ports"""
         self.logger.log("Refreshing serial ports")
@@ -1376,9 +1416,9 @@ class LoadCellCalibrationGUI(QMainWindow):
         try:
             # Clear existing table
             self.calibration_history_table.setRowCount(0)
-            
-            # Find all TOML files in calibrations directory
-            toml_files = glob.glob(os.path.join(self.calibrations_dir, "calibration_*.toml"))
+
+            # Find all TOML calibration files (matches Mars_####_calibration_*.toml or calibration_*.toml)
+            toml_files = glob.glob(os.path.join(self.calibrations_dir, "*calibration_*.toml"))
             toml_files.sort(reverse=True)  # Most recent first
             
             # Populate table
@@ -1408,13 +1448,31 @@ class LoadCellCalibrationGUI(QMainWindow):
                     self.calibration_history_table.insertRow(i)
                     self.calibration_history_table.setItem(i, 0, QTableWidgetItem(display_mars_id))
                     self.calibration_history_table.setItem(i, 1, QTableWidgetItem(display_time))
-                    self.calibration_history_table.setItem(i, 2, QTableWidgetItem(f"{loadcell_factor:.2f}"))
-                    self.calibration_history_table.setItem(i, 3, QTableWidgetItem(f"{imu_data.get('imu1_pitch', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 4, QTableWidgetItem(f"{imu_data.get('imu1_roll', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(f"{imu_data.get('imu2_pitch', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(f"{imu_data.get('imu2_roll', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 7, QTableWidgetItem(f"{imu_data.get('imu3_pitch', 0.0):.4f}"))
-                    self.calibration_history_table.setItem(i, 8, QTableWidgetItem(f"{imu_data.get('imu3_roll', 0.0):.4f}"))
+
+                    # Load cell factor
+                    if loadcell_factor != 0.0:
+                        self.calibration_history_table.setItem(i, 2, QTableWidgetItem(f"{loadcell_factor:.2f}"))
+                    else:
+                        self.calibration_history_table.setItem(i, 2, QTableWidgetItem("NA"))
+
+                    # IMU offsets - display NA if not available (0.0 means not calibrated)
+                    imu1_pitch = imu_data.get('imu1_pitch', 0.0)
+                    self.calibration_history_table.setItem(i, 3, QTableWidgetItem(f"{imu1_pitch:.4f}" if imu1_pitch != 0.0 else "NA"))
+
+                    imu1_roll = imu_data.get('imu1_roll', 0.0)
+                    self.calibration_history_table.setItem(i, 4, QTableWidgetItem(f"{imu1_roll:.4f}" if imu1_roll != 0.0 else "NA"))
+
+                    imu2_pitch = imu_data.get('imu2_pitch', 0.0)
+                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(f"{imu2_pitch:.4f}" if imu2_pitch != 0.0 else "NA"))
+
+                    imu2_roll = imu_data.get('imu2_roll', 0.0)
+                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(f"{imu2_roll:.4f}" if imu2_roll != 0.0 else "NA"))
+
+                    imu3_pitch = imu_data.get('imu3_pitch', 0.0)
+                    self.calibration_history_table.setItem(i, 7, QTableWidgetItem(f"{imu3_pitch:.4f}" if imu3_pitch != 0.0 else "NA"))
+
+                    imu3_roll = imu_data.get('imu3_roll', 0.0)
+                    self.calibration_history_table.setItem(i, 8, QTableWidgetItem(f"{imu3_roll:.4f}" if imu3_roll != 0.0 else "NA"))
                     
                     # Store filepath in row data for loading (now in Mars ID column)
                     self.calibration_history_table.item(i, 0).setData(Qt.UserRole, filepath)
