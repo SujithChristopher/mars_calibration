@@ -1,4 +1,12 @@
-/*
+"""
+Embedded firmware resources for Mars Calibration System.
+
+This module contains Arduino firmware code embedded as Python string constants,
+eliminating the need for file copying and ensuring the latest code is always used.
+"""
+
+# Mars Unified Calibration Firmware - Supports both Load Cell and IMU calibration
+CALIBRATION_INO_CONTENT = r"""/*
   Mars Unified Calibration Program
 
   This program provides unified calibration for both Load Cell and IMU sensors.
@@ -118,21 +126,21 @@ void setup() {
   #if defined(ARDUINO_ARCH_MBED_NANO) || defined(ARDUINO_ARCH_MBED)
     while (!Serial && millis() < 3000); // Wait up to 3 seconds for serial
   #endif
-  
+
   delay(1000);
-  
+
   Serial.println();
   Serial.println("=== Mars Unified Calibration System ===");
   Serial.println("Supports Load Cell + IMU Calibration");
   Serial.println();
-  
+
   // Initialize random seed
   #if defined(ARDUINO_ARCH_MBED_NANO) || defined(ARDUINO_ARCH_MBED)
     randomSeed(analogRead(A1)); // Use A1 for Nano 33 BLE
   #else
     randomSeed(analogRead(A0)); // Use A0 for other boards
   #endif
-  
+
   // Initialize system
   initializeSystem();
 
@@ -153,12 +161,12 @@ void setup() {
 void loop() {
   // Handle serial commands
   handleSerialCommands();
-  
+
   // Update active systems based on current mode
   if (system_status.current_mode == MODE_LOADCELL || system_status.current_mode == MODE_BOTH) {
     updateLoadCell();
   }
-  
+
   #ifdef IMU_SUPPORTED
   if (system_status.current_mode == MODE_IMU || system_status.current_mode == MODE_BOTH) {
     if (system_status.imu_available) {
@@ -166,7 +174,7 @@ void loop() {
     }
   }
   #endif
-  
+
   delay(10);
 }
 
@@ -206,7 +214,7 @@ void initializeSystem() {
   #else
   Serial.println("[ERROR] IMU not supported on this board");
   #endif
-  
+
   // Set default mode
   if (system_status.loadcell_available && system_status.imu_available) {
     system_status.current_mode = MODE_BOTH;
@@ -218,7 +226,7 @@ void initializeSystem() {
     system_status.current_mode = MODE_LOADCELL;
     Serial.println("Mode: Load Cell only");
   }
-  
+
   system_status.initialized = true;
   Serial.println("=== Initialization Complete ===");
   Serial.println();
@@ -227,65 +235,65 @@ void initializeSystem() {
 #ifdef IMU_SUPPORTED
 bool initializeIMU() {
   Serial.println("Trying to initialize IMU...");
-  
+
   // Try custom pins first (Teensy 4.1)
   #if defined(__IMXRT1062__)
   Wire.setSDA(SDA_PIN);
   Wire.setSCL(SCL_PIN);
   #endif
-  
+
   Wire.begin();
   Wire.setClock(100000); // 100kHz for better reliability
-  
+
   // Scan I2C bus
   bool deviceFound = scanI2C();
   if (!deviceFound) {
     return false;
   }
-  
+
   // Try to connect to MPU6050
   uint8_t addresses[] = {0x68, 0x69};
   for (int i = 0; i < 2; i++) {
     mpu.setAddress(addresses[i]);
     byte status = mpu.begin();
-    
+
     if (status == 0) {
       Serial.print("MPU6050 connected at address 0x");
       Serial.println(addresses[i], HEX);
-      
+
       // Calculate gyroscope offsets
       Serial.println("Calculating gyroscope offsets, keep device still...");
       delay(1000);
       mpu.calcOffsets();
-      
+
       // Initialize calibration data
       calibration.accel_offset_x = 0.0;
       calibration.accel_offset_y = 0.0;
       calibration.accel_offset_z = 0.0;
       calibration.valid = false;
-      
+
       imuConnected = true;
       return true;
     }
   }
-  
+
   return false;
 }
 
 bool scanI2C() {
   int deviceCount = 0;
-  
+
   for (uint8_t address = 1; address < 127; address++) {
     Wire.beginTransmission(address);
     uint8_t error = Wire.endTransmission();
-    
+
     if (error == 0) {
       if (address == 0x68 || address == 0x69) {
         deviceCount++;
       }
     }
   }
-  
+
   return deviceCount > 0;
 }
 #endif
@@ -317,35 +325,35 @@ void updateLoadCell() {
 #ifdef IMU_SUPPORTED
 void updateIMU() {
   if (!imuConnected) return;
-  
+
   // Update MPU6050 data
   mpu.update();
-  
+
   // Get raw accelerometer data (in g units)
   float ax = mpu.getAccX();
-  float ay = mpu.getAccY(); 
+  float ay = mpu.getAccY();
   float az = mpu.getAccZ();
-  
+
   // Apply low-pass filter for smoothing
   filteredAccel[0] = filterAlpha * filteredAccel[0] + (1 - filterAlpha) * ax;
   filteredAccel[1] = filterAlpha * filteredAccel[1] + (1 - filterAlpha) * ay;
   filteredAccel[2] = filterAlpha * filteredAccel[2] + (1 - filterAlpha) * az;
-  
+
   // Apply calibration offsets
   float calibrated_ax = filteredAccel[0] - calibration.accel_offset_x;
   float calibrated_ay = filteredAccel[1] - calibration.accel_offset_y;
   float calibrated_az = filteredAccel[2] - calibration.accel_offset_z;
-  
+
   // Calculate angles
   float roll = mpu.getAngleX();
-  float pitch = mpu.getAngleY(); 
+  float pitch = mpu.getAngleY();
   float yaw = mpu.getAngleZ();
-  
+
   // Handle IMU calibration process
   if (isIMUCalibrating) {
     processIMUCalibration(ax, ay, az);
   }
-  
+
   // Print IMU data at regular intervals
   if (millis() - lastIMUPrintTime >= imuPrintInterval) {
     if (system_status.current_mode == MODE_IMU) {
@@ -369,7 +377,7 @@ void updateIMU() {
       Serial.print(calibration.accel_offset_z, 4);
       Serial.println();
     }
-    
+
     lastIMUPrintTime = millis();
   }
 }
@@ -388,7 +396,7 @@ void handleSerialCommands() {
       // Handle command input
       String input = Serial.readString();
       input.trim();
-      
+
       if (input.length() == 1) {
         char command = input.charAt(0);
         processCommand(command);
@@ -409,15 +417,15 @@ void processCommand(char command) {
     case 'h':
       showHelp();
       break;
-      
+
     case 'i':
       initializeSystem();
       break;
-      
+
     case 's':
       showSystemStatus();
       break;
-      
+
     // Load Cell Commands
     case 't':
       if (system_status.loadcell_available) {
@@ -426,7 +434,7 @@ void processCommand(char command) {
         Serial.println("Load cell not available");
       }
       break;
-      
+
     case 'r':
       if (system_status.loadcell_available) {
         startLoadCellCalibration();
@@ -444,7 +452,7 @@ void processCommand(char command) {
         Serial.println("IMU not available");
       }
       break;
-      
+
     case 'x':
       if (system_status.imu_available) {
         resetIMUCalibration();
@@ -453,7 +461,7 @@ void processCommand(char command) {
       }
       break;
     #endif
-      
+
     default:
       Serial.println("Unknown command. Type 'h' for help.");
       break;
@@ -467,7 +475,7 @@ void showHelp() {
   Serial.println("  'i' - Initialize/re-detect hardware");
   Serial.println("  's' - Show system status");
   Serial.println();
-  
+
   if (system_status.loadcell_available) {
     Serial.println("Load Cell:");
     Serial.println("  't' - Tare the scale");
@@ -475,7 +483,7 @@ void showHelp() {
     Serial.println("  During calibration: Enter weight value (e.g., 100.0)");
     Serial.println();
   }
-  
+
   #ifdef IMU_SUPPORTED
   if (system_status.imu_available) {
     Serial.println("IMU:");
@@ -485,7 +493,7 @@ void showHelp() {
     Serial.println();
   }
   #endif
-  
+
   Serial.println("Current mode: " + getModeString());
   Serial.println("=====================================");
 }
@@ -494,7 +502,7 @@ void showSystemStatus() {
   Serial.println("=== System Status ===");
   Serial.println("Initialized: " + String(system_status.initialized ? "Yes" : "No"));
   Serial.println("Load Cell: " + String(system_status.loadcell_available ? "Available" : "Not Available"));
-  
+
   #ifdef IMU_SUPPORTED
   Serial.println("IMU: " + String(system_status.imu_available ? "Available" : "Not Available"));
   if (system_status.imu_available) {
@@ -503,7 +511,7 @@ void showSystemStatus() {
   #else
   Serial.println("IMU: Not Supported on this board");
   #endif
-  
+
   Serial.println("Current Mode: " + getModeString());
   Serial.println("===================");
 }
@@ -542,10 +550,10 @@ void startLoadCellCalibration() {
   Serial.println("Place the load cell on a level stable surface.");
   Serial.println("Remove any load applied to the load cell.");
   Serial.println("Send 't' to set the tare offset.");
-  
+
   isLoadCellCalibrating = true;
   knownMass = 0;
-  
+
   waitForTare();
 }
 
@@ -599,7 +607,7 @@ void startIMUCalibration() {
   Serial.println("Place the device on a flat, level surface and keep it still.");
   Serial.println("Calibration will take about 10 seconds...");
   Serial.println("Calibration started... Keep device perfectly still!");
-  
+
   isIMUCalibrating = true;
   calibrationSamples = 0;
   calibrationSum[0] = 0;
@@ -613,7 +621,7 @@ void processIMUCalibration(float ax, float ay, float az) {
     calibrationSum[1] += ay;
     calibrationSum[2] += az;
     calibrationSamples++;
-    
+
     // Show progress
     if (calibrationSamples % 20 == 0) {
       Serial.print("Calibration progress: ");
@@ -625,10 +633,10 @@ void processIMUCalibration(float ax, float ay, float az) {
     calibration.accel_offset_x = calibrationSum[0] / MAX_CALIBRATION_SAMPLES;
     calibration.accel_offset_y = calibrationSum[1] / MAX_CALIBRATION_SAMPLES;
     calibration.accel_offset_z = (calibrationSum[2] / MAX_CALIBRATION_SAMPLES) - 1.0;
-    
+
     calibration.valid = true;
     isIMUCalibrating = false;
-    
+
     Serial.println("*** IMU CALIBRATION COMPLETE ***");
     Serial.print("X offset: ");
     Serial.println(calibration.accel_offset_x, 6);
@@ -646,7 +654,7 @@ void resetIMUCalibration() {
   calibration.accel_offset_y = 0.0;
   calibration.accel_offset_z = 0.0;
   calibration.valid = false;
-  
+
   Serial.println("IMU calibration offsets reset to zero");
 }
 #endif
@@ -656,9 +664,9 @@ void handleSoftwareReset() {
   Serial.println("System will restart in 2 seconds...");
   Serial.println("Please wait for reconnection.");
   Serial.flush();
-  
+
   delay(2000);
-  
+
   // Board-specific reset
   #if defined(__IMXRT1062__)  // Teensy 4.x
     SCB_AIRCR = 0x05FA0004;  // Request system reset
@@ -670,3 +678,82 @@ void handleSoftwareReset() {
     resetFunc();
   #endif
 }
+"""
+
+
+def get_calibration_firmware():
+    """
+    Get the calibration firmware content as a string.
+
+    Returns:
+        str: The complete calibration.ino firmware code
+    """
+    return CALIBRATION_INO_CONTENT
+
+
+def write_calibration_firmware(target_path):
+    """
+    Write the embedded calibration firmware to a file.
+
+    Args:
+        target_path (str or Path): The destination file path for the firmware
+
+    Returns:
+        bool: True if successful, False otherwise
+    """
+    try:
+        from pathlib import Path
+        target_path = Path(target_path)
+
+        # Ensure parent directory exists
+        target_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Write the firmware content
+        with open(target_path, 'w') as f:
+            f.write(CALIBRATION_INO_CONTENT)
+
+        return True
+    except Exception as e:
+        print(f"Error writing calibration firmware: {e}")
+        return False
+
+
+def get_firmware_directory(app_data_dir):
+    """
+    Get or create the firmware directory and write embedded firmware files.
+
+    Args:
+        app_data_dir (Path): The application data directory path
+
+    Returns:
+        Path: The path to the firmware directory containing calibration.ino
+    """
+    try:
+        from pathlib import Path
+
+        firmware_dir = Path(app_data_dir) / 'arduino_sketches' / 'calibration'
+        firmware_dir.mkdir(parents=True, exist_ok=True)
+
+        # Write the embedded firmware
+        firmware_path = firmware_dir / 'calibration.ino'
+        if write_calibration_firmware(firmware_path):
+            return firmware_dir
+        else:
+            raise Exception("Failed to write firmware file")
+
+    except Exception as e:
+        print(f"Error creating firmware directory: {e}")
+        return None
+
+
+def create_firmware_file(output_path):
+    """
+    Create a calibration firmware file at the specified path.
+
+    Args:
+        output_path (str or Path): The destination file path
+
+    Returns:
+        bool: True if successful, False otherwise
+    """
+    return write_calibration_firmware(output_path)
