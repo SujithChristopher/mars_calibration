@@ -111,6 +111,7 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.logger.log(f"Calibration file path: {self.calibration_file}")
         self.logger.log(f"Firmware file path: {self.firmware_file}")
         self.logger.log(f"IMU file path: {self.imu_file}")
+        self.logger.log(f"Calibrations storage directory: {self.calibrations_dir}")
         
         # Connect signals to methods
         self.log_signal.connect(self.log_message_to_ui)
@@ -1420,30 +1421,33 @@ class LoadCellCalibrationGUI(QMainWindow):
             # Find all TOML calibration files (matches Mars_####_calibration_*.toml or calibration_*.toml)
             toml_files = glob.glob(os.path.join(self.calibrations_dir, "*calibration_*.toml"))
             toml_files.sort(reverse=True)  # Most recent first
-            
+
+            self.logger.log(f"Found {len(toml_files)} calibration files")
+
             # Populate table
             for i, filepath in enumerate(toml_files):
                 try:
                     with open(filepath, 'r') as f:
                         data = toml.load(f)
-                    
+
                     # Extract data
                     metadata = data.get("metadata", {})
                     timestamp = metadata.get("timestamp", "Unknown")
                     mars_id = metadata.get("mars_id", "Unknown")
                     loadcell_factor = data.get("load_cell", {}).get("calibration_factor", 0.0)
                     imu_data = data.get("imu_offsets", {})
-                    
+
                     # Format timestamp for display
                     try:
                         dt = datetime.fromisoformat(timestamp)
                         display_time = dt.strftime("%Y-%m-%d %H:%M:%S")
-                    except:
+                    except Exception as ts_err:
                         display_time = timestamp
-                    
+                        self.logger.log_error(f"Timestamp parse error: {str(ts_err)}")
+
                     # Format Mars ID for display
                     display_mars_id = str(mars_id) if mars_id != "Unknown" else "Unknown"
-                    
+
                     # Add row to table
                     self.calibration_history_table.insertRow(i)
                     self.calibration_history_table.setItem(i, 0, QTableWidgetItem(display_mars_id))
@@ -1451,39 +1455,54 @@ class LoadCellCalibrationGUI(QMainWindow):
 
                     # Load cell factor
                     if loadcell_factor != 0.0:
-                        self.calibration_history_table.setItem(i, 2, QTableWidgetItem(f"{loadcell_factor:.2f}"))
+                        cal_str = f"{loadcell_factor:.2f}"
                     else:
-                        self.calibration_history_table.setItem(i, 2, QTableWidgetItem("NA"))
+                        cal_str = "NA"
+                    self.calibration_history_table.setItem(i, 2, QTableWidgetItem(cal_str))
 
                     # IMU offsets - display NA if not available (0.0 means not calibrated)
                     imu1_pitch = imu_data.get('imu1_pitch', 0.0)
-                    self.calibration_history_table.setItem(i, 3, QTableWidgetItem(f"{imu1_pitch:.4f}" if imu1_pitch != 0.0 else "NA"))
+                    imu1_pitch_str = f"{imu1_pitch:.4f}" if imu1_pitch != 0.0 else "NA"
+                    self.calibration_history_table.setItem(i, 3, QTableWidgetItem(imu1_pitch_str))
 
                     imu1_roll = imu_data.get('imu1_roll', 0.0)
-                    self.calibration_history_table.setItem(i, 4, QTableWidgetItem(f"{imu1_roll:.4f}" if imu1_roll != 0.0 else "NA"))
+                    imu1_roll_str = f"{imu1_roll:.4f}" if imu1_roll != 0.0 else "NA"
+                    self.calibration_history_table.setItem(i, 4, QTableWidgetItem(imu1_roll_str))
 
                     imu2_pitch = imu_data.get('imu2_pitch', 0.0)
-                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(f"{imu2_pitch:.4f}" if imu2_pitch != 0.0 else "NA"))
+                    imu2_pitch_str = f"{imu2_pitch:.4f}" if imu2_pitch != 0.0 else "NA"
+                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(imu2_pitch_str))
 
                     imu2_roll = imu_data.get('imu2_roll', 0.0)
-                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(f"{imu2_roll:.4f}" if imu2_roll != 0.0 else "NA"))
+                    imu2_roll_str = f"{imu2_roll:.4f}" if imu2_roll != 0.0 else "NA"
+                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(imu2_roll_str))
 
                     imu3_pitch = imu_data.get('imu3_pitch', 0.0)
-                    self.calibration_history_table.setItem(i, 7, QTableWidgetItem(f"{imu3_pitch:.4f}" if imu3_pitch != 0.0 else "NA"))
+                    imu3_pitch_str = f"{imu3_pitch:.4f}" if imu3_pitch != 0.0 else "NA"
+                    self.calibration_history_table.setItem(i, 7, QTableWidgetItem(imu3_pitch_str))
 
                     imu3_roll = imu_data.get('imu3_roll', 0.0)
-                    self.calibration_history_table.setItem(i, 8, QTableWidgetItem(f"{imu3_roll:.4f}" if imu3_roll != 0.0 else "NA"))
-                    
+                    imu3_roll_str = f"{imu3_roll:.4f}" if imu3_roll != 0.0 else "NA"
+                    self.calibration_history_table.setItem(i, 8, QTableWidgetItem(imu3_roll_str))
+
                     # Store filepath in row data for loading (now in Mars ID column)
                     self.calibration_history_table.item(i, 0).setData(Qt.UserRole, filepath)
-                    
+
+                    self.logger.log(f"Loaded calibration row {i}: Mars ID={display_mars_id}, Load Factor={cal_str}")
+
                 except Exception as e:
-                    self.logger.log_error(f"Error reading {filepath}: {str(e)}")
+                    self.logger.log_error(f"Error reading {os.path.basename(filepath)}: {str(e)}")
+                    import traceback
+                    self.logger.log_error(f"Traceback: {traceback.format_exc()}")
                     continue
-                    
+
+            self.logger.log(f"Calibration history refresh complete: {len(toml_files)} files loaded")
+
         except Exception as e:
             error_msg = f"Failed to refresh calibration history: {str(e)}"
             self.logger.log_error(error_msg)
+            import traceback
+            self.logger.log_error(f"Traceback: {traceback.format_exc()}")
     
     def load_selected_calibration(self):
         """Load the selected calibration from the history table and display values"""
