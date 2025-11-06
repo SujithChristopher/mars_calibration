@@ -102,11 +102,21 @@ struct CalibrationData {
   bool valid;
 };
 
+// 4-Offset Formula-Based IMU Calibration
+struct IMUOffsets {
+  float imu1_pitch_offset;  // IMU1 Pitch
+  float imu1_roll_offset;   // IMU1 Roll
+  float imu2_roll_offset;   // IMU2 Roll (relative to IMU1)
+  float imu3_roll_offset;   // IMU3 Roll (relative to IMU1 and IMU2)
+  bool valid;
+};
+
 CalibrationData calibration;
+IMUOffsets imu_offsets = {0, 0, 0, 0, false};
 bool isIMUCalibrating = false;
 int calibrationSamples = 0;
 const int MAX_CALIBRATION_SAMPLES = 100;
-float calibrationSum[3] = {0, 0, 0};
+float calibrationSum[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // Sum for 3 IMUs (ax1, ay1, az1, ax2, ay2, az2, ax3, ay3, az3)
 unsigned long lastIMUPrintTime = 0;
 const unsigned long imuPrintInterval = 100; // Print every 100ms for IMU
 float filteredAccel[3] = {0, 0, 0};
@@ -348,7 +358,7 @@ void updateIMU() {
   
   // Print IMU data at regular intervals
   if (millis() - lastIMUPrintTime >= imuPrintInterval) {
-    if (system_status.current_mode == MODE_IMU) {
+    if (system_status.current_mode == MODE_IMU || system_status.current_mode == MODE_BOTH) {
       // Format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
       Serial.print(calibrated_ax, 4);
       Serial.print(",");
@@ -369,7 +379,7 @@ void updateIMU() {
       Serial.print(calibration.accel_offset_z, 4);
       Serial.println();
     }
-    
+
     lastIMUPrintTime = millis();
   }
 }
@@ -609,11 +619,13 @@ void startIMUCalibration() {
 
 void processIMUCalibration(float ax, float ay, float az) {
   if (calibrationSamples < MAX_CALIBRATION_SAMPLES) {
+    // For single IMU: store in slots 0-2
+    // In future, could extend to collect from multiple IMUs in slots 3-5, 6-8
     calibrationSum[0] += ax;
     calibrationSum[1] += ay;
     calibrationSum[2] += az;
     calibrationSamples++;
-    
+
     // Show progress
     if (calibrationSamples % 20 == 0) {
       Serial.print("Calibration progress: ");
@@ -621,24 +633,60 @@ void processIMUCalibration(float ax, float ay, float az) {
       Serial.println("%");
     }
   } else {
-    // Calculate average offsets
-    calibration.accel_offset_x = calibrationSum[0] / MAX_CALIBRATION_SAMPLES;
-    calibration.accel_offset_y = calibrationSum[1] / MAX_CALIBRATION_SAMPLES;
-    calibration.accel_offset_z = (calibrationSum[2] / MAX_CALIBRATION_SAMPLES) - 1.0;
-    
+    // Calculate average values from single IMU
+    float avg_ax = calibrationSum[0] / MAX_CALIBRATION_SAMPLES;
+    float avg_ay = calibrationSum[1] / MAX_CALIBRATION_SAMPLES;
+    float avg_az = calibrationSum[2] / MAX_CALIBRATION_SAMPLES;
+
+    // Calculate 4-offset using firmware formulas (assuming this is IMU1 for now)
+    // Device should be placed flat and level during calibration
+    calculateIMUOffsets(avg_ax, avg_ay, avg_az);
+
     calibration.valid = true;
     isIMUCalibrating = false;
-    
+
     Serial.println("*** IMU CALIBRATION COMPLETE ***");
-    Serial.print("X offset: ");
-    Serial.println(calibration.accel_offset_x, 6);
-    Serial.print("Y offset: ");
-    Serial.println(calibration.accel_offset_y, 6);
-    Serial.print("Z offset: ");
-    Serial.println(calibration.accel_offset_z, 6);
-    Serial.println("*** Use these offsets in your firmware ***");
+    Serial.println("Calculated 4-Offset Values (Formula-Based):");
+    Serial.print("IMU1 Pitch Offset: ");
+    Serial.println(imu_offsets.imu1_pitch_offset, 6);
+    Serial.print("IMU1 Roll Offset: ");
+    Serial.println(imu_offsets.imu1_roll_offset, 6);
+    Serial.print("IMU2 Roll Offset: ");
+    Serial.println(imu_offsets.imu2_roll_offset, 6);
+    Serial.print("IMU3 Roll Offset: ");
+    Serial.println(imu_offsets.imu3_roll_offset, 6);
+    Serial.println("*** Use these 4 offsets in your firmware (variable.h) ***");
     Serial.println();
   }
+}
+
+void calculateIMUOffsets(float ax, float ay, float az) {
+  // Calculate 4 IMU offsets using firmware formulas
+  // Device must be placed flat and level during calibration
+
+  // ===== IMU1 PITCH OFFSET =====
+  // Formula: Theta1 = atan2(ax, sqrt(ay^2 + az^2)) - IMU1PITCHOFFSET
+  // When flat: offset = atan2(ax, sqrt(ay^2 + az^2))
+  float norm = sqrt(ay * ay + az * az);
+  imu_offsets.imu1_pitch_offset = atan2(ax, norm);
+
+  // ===== IMU1 ROLL OFFSET =====
+  // Formula: Theta2 = atan2(-az/cos(Theta1), ay/cos(Theta1)) * -1 - IMU1ROLLOFFSET
+  // When flat: offset = atan2(-az/cos(Theta1), ay/cos(Theta1)) * -1
+  float cos_pitch = cos(imu_offsets.imu1_pitch_offset);
+  if (abs(cos_pitch) > 0.001) {
+    imu_offsets.imu1_roll_offset = atan2(-az / cos_pitch, ay / cos_pitch);
+  } else {
+    imu_offsets.imu1_roll_offset = 0.0;
+  }
+
+  // For now, set IMU2 and IMU3 offsets to 0
+  // In a multi-IMU system, these would be calculated from IMU2 and IMU3 data
+  // with adjustments for the relative subtractions in firmware
+  imu_offsets.imu2_roll_offset = 0.0;
+  imu_offsets.imu3_roll_offset = 0.0;
+
+  imu_offsets.valid = true;
 }
 
 void resetIMUCalibration() {

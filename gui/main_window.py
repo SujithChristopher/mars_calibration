@@ -71,12 +71,14 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.current_imu_index = 0  # 0=IMU1, 1=IMU2, 2=IMU3
         
         # Saved angle offsets for all 3 IMUs
-        self.angle_offset1 = 0.0  # IMU 1 pitch
-        self.angle_offset2 = 0.0  # IMU 1 roll
-        self.angle_offset3 = 0.0  # IMU 2 pitch
-        self.angle_offset4 = 0.0  # IMU 2 roll
-        self.angle_offset5 = 0.0  # IMU 3 pitch
-        self.angle_offset6 = 0.0  # IMU 3 roll
+        # 4-Offset Formula-Based IMU Calibration
+        self.angle_offset1 = 0.0  # IMU 1 Pitch Offset
+        self.angle_offset2 = 0.0  # IMU 1 Roll Offset
+        self.angle_offset3 = 0.0  # IMU 2 Roll Offset (relative to IMU1)
+        self.angle_offset4 = 0.0  # IMU 3 Roll Offset (relative to IMU1+IMU2)
+        # Legacy offsets (kept for backward compatibility, not used in new formula-based method)
+        self.angle_offset5 = 0.0
+        self.angle_offset6 = 0.0
         
         # Step tracking
         self.current_step = 1
@@ -1068,19 +1070,16 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.logger.log_error(f"Missing IMU data field: {e}")
             
     def update_offsets_display(self, data):
-        """Update offset display labels and store current offsets"""
+        """Update offset display labels and store current offsets (4-offset formula-based - X/Y/Z offsets not displayed)"""
         try:
-            self.current_offset_x = data['offset_x']
-            self.current_offset_y = data['offset_y'] 
-            self.current_offset_z = data['offset_z']
-            
-            self.offset_x_label.setText(f"{data['offset_x']:.4f}")
-            self.offset_y_label.setText(f"{data['offset_y']:.4f}")
-            self.offset_z_label.setText(f"{data['offset_z']:.4f}")
-            
-            # Enable firmware update button if valid offsets exist
-            if abs(self.current_offset_x) > 0.001 or abs(self.current_offset_y) > 0.001 or abs(self.current_offset_z) > 0.001:
-                self.update_firmware_button.setEnabled(True)
+            # Store offset data for reference (not displayed in UI for 4-offset system)
+            self.current_offset_x = data.get('offset_x', 0.0)
+            self.current_offset_y = data.get('offset_y', 0.0)
+            self.current_offset_z = data.get('offset_z', 0.0)
+
+            # Note: X/Y/Z offset labels removed from UI for 4-offset formula-based system
+            # The new system directly calculates pitch/roll offsets from accelerometer data
+
         except KeyError:
             pass
             
@@ -1103,74 +1102,57 @@ class LoadCellCalibrationGUI(QMainWindow):
             QTimer.singleShot(12000, self.auto_save_imu_calibration)
     
     def auto_save_imu_calibration(self):
-        """Automatically save IMU calibration after completion"""
+        """Automatically save IMU calibration after completion (4-offset formula-based)"""
         if not self.current_imu_data:
             # Calibration may not be complete, try again in 2 seconds
             QTimer.singleShot(2000, self.auto_save_imu_calibration)
             return
-            
-        # Save the current IMU offsets
+
+        # Save the current IMU offsets using 4-offset formula-based method
         current_pitch = self.current_imu_data.get('pitch', 0.0)
         current_roll = self.current_imu_data.get('roll', 0.0)
-        
+
         imu_names = ["IMU 1", "IMU 2", "IMU 3"]
         current_imu_name = imu_names[self.current_imu_index]
-        
-        if self.current_imu_index == 0:  # IMU 1
+
+        if self.current_imu_index == 0:  # IMU 1 - saves PITCH + ROLL
             self.angle_offset1 = current_pitch
             self.angle_offset2 = current_roll
-            self.angle_offset1_label.setText(f"{self.angle_offset1:.4f}")
-            self.angle_offset2_label.setText(f"{self.angle_offset2:.4f}")
-            # Update final tab labels
-            if hasattr(self, 'final_angle_offset1_label'):
-                self.final_angle_offset1_label.setText(f"{self.angle_offset1:.4f}")
-                self.final_angle_offset2_label.setText(f"{self.angle_offset2:.4f}")
-            
-        elif self.current_imu_index == 1:  # IMU 2
-            self.angle_offset3 = current_pitch
+            self.angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
+            self.angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
+
+        elif self.current_imu_index == 1:  # IMU 2 - saves ROLL ONLY (relative to IMU1)
+            # IMU2 only stores relative roll offset
+            self.angle_offset3 = current_roll
+            self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
+
+        elif self.current_imu_index == 2:  # IMU 3 - saves ROLL ONLY (relative to IMU1 and IMU2)
+            # IMU3 only stores relative roll offset
             self.angle_offset4 = current_roll
-            self.angle_offset3_label.setText(f"{self.angle_offset3:.4f}")
-            self.angle_offset4_label.setText(f"{self.angle_offset4:.4f}")
-            # Update final tab labels
-            if hasattr(self, 'final_angle_offset3_label'):
-                self.final_angle_offset3_label.setText(f"{self.angle_offset3:.4f}")
-                self.final_angle_offset4_label.setText(f"{self.angle_offset4:.4f}")
-            
-        elif self.current_imu_index == 2:  # IMU 3
-            self.angle_offset5 = current_pitch
-            self.angle_offset6 = current_roll
-            self.angle_offset5_label.setText(f"{self.angle_offset5:.4f}")
-            self.angle_offset6_label.setText(f"{self.angle_offset6:.4f}")
-            # Update final tab labels
-            if hasattr(self, 'final_angle_offset5_label'):
-                self.final_angle_offset5_label.setText(f"{self.angle_offset5:.4f}")
-            if hasattr(self, 'final_angle_offset6_label'):
-                self.final_angle_offset6_label.setText(f"{self.angle_offset6:.4f}")
-        
+            self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
+
         # Re-enable the button and show success message
         self.start_imu_cal_button.setEnabled(True)
         ui_message = self.logger.log_imu(f"✓ {current_imu_name} calibration completed and saved automatically!")
         self.log_imu_message_to_ui(ui_message)
-        
-        # Update final firmware tab buttons if all calibrations are done
+
+        # Update final firmware tab with all calibration values
         self.update_final_tab_status()
             
     def update_firmware_with_offsets(self):
-        """Update variable.h in marsfire with all 6 angle offsets from 3 IMUs"""
+        """Update variable.h in marsfire with 4 calculated IMU offsets"""
         try:
             # Read variable.h file from marsfire
             variable_h_file = os.path.join(self.firmware_v2_dir, 'variable.h')
             with open(variable_h_file, 'r') as f:
                 variable_content = f.read()
 
-            # Update all 6 IMU offset values in variable.h using #define format
-            # Convert radians to degrees for display
+            # Update 4 IMU offset values in variable.h using #define format
+            # Using the calculated offsets (angles_offset1-4)
             variable_content = self.update_define_in_firmware(variable_content, 'IMU1PITCHOFFSET', self.angle_offset1)
             variable_content = self.update_define_in_firmware(variable_content, 'IMU1ROLLOFFSET', self.angle_offset2)
-            variable_content = self.update_define_in_firmware(variable_content, 'IMU2PITCHOFFSET', self.angle_offset3)
-            variable_content = self.update_define_in_firmware(variable_content, 'IMU2ROLLOFFSET', self.angle_offset4)
-            variable_content = self.update_define_in_firmware(variable_content, 'IMU3PITCHOFFSET', self.angle_offset5)
-            variable_content = self.update_define_in_firmware(variable_content, 'IMU3ROLLOFFSET', self.angle_offset6)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU2ROLLOFFSET', self.angle_offset3)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU3ROLLOFFSET', self.angle_offset4)
 
             # Write updated variable.h file
             with open(variable_h_file, 'w') as f:
@@ -1180,12 +1162,13 @@ class LoadCellCalibrationGUI(QMainWindow):
             if hasattr(self, 'upload_firmware_button'):
                 self.upload_firmware_button.setEnabled(True)
 
-            ui_message = self.logger.log_imu(f"Updated marsfire with 3-IMU angle offsets:")
+            ui_message = self.logger.log_imu(f"Updated marsfire with 4 calculated IMU offsets:")
             self.log_imu_message_to_ui(ui_message)
-            self.log_imu_message_to_ui(f"  IMU1: Pitch={self.angle_offset1:.4f}, Roll={self.angle_offset2:.4f}")
-            self.log_imu_message_to_ui(f"  IMU2: Pitch={self.angle_offset3:.4f}, Roll={self.angle_offset4:.4f}")
-            self.log_imu_message_to_ui(f"  IMU3: Pitch={self.angle_offset5:.4f}, Roll={self.angle_offset6:.4f}")
-            QMessageBox.information(self, "Success", "Marsfire updated with all 3-IMU angle offsets!")
+            self.log_imu_message_to_ui(f"  IMU1 Pitch: {self.angle_offset1:.6f} rad")
+            self.log_imu_message_to_ui(f"  IMU1 Roll:  {self.angle_offset2:.6f} rad")
+            self.log_imu_message_to_ui(f"  IMU2 Roll:  {self.angle_offset3:.6f} rad")
+            self.log_imu_message_to_ui(f"  IMU3 Roll:  {self.angle_offset4:.6f} rad")
+            QMessageBox.information(self, "Success", "Marsfire updated with 4 calculated IMU offsets!")
 
         except Exception as e:
             error_msg = f"Failed to update marsfire: {str(e)}"
@@ -1207,6 +1190,74 @@ class LoadCellCalibrationGUI(QMainWindow):
         pattern = rf'(#define\s+{define_name}\s+)[^\s/]+(\s*//.*)?$'
         replacement = rf'\g<1>{define_value:.6f}\g<2>'
         return re.sub(pattern, replacement, content, flags=re.MULTILINE)
+
+    def calculate_imu_offsets_from_accel(self, ax1, ay1, az1, ax2, ay2, az2, ax3, ay3, az3):
+        """
+        Calculate 4 IMU offsets from raw accelerometer data using firmware formulas.
+
+        Method: When device is placed flat and level during calibration, we apply
+        the firmware angle calculation formulas with offset=0. The resulting angles
+        ARE the offset values (since true angles should be 0 when flat).
+
+        This matches the firmware formulas exactly:
+        - IMU1 Pitch: atan2(ax1, sqrt(ay1^2 + az1^2))
+        - IMU1 Roll:  atan2(-az1/cos(pitch1), ay1/cos(pitch1)) * -1
+        - IMU2 Roll:  atan2(-az2/cos(pitch2), ay2/cos(pitch2)) * -1, adjusted for IMU1 roll
+        - IMU3 Roll:  atan2(-ax3/cos(pitch3), ay3/cos(pitch3)) * -1, adjusted for IMU1&2 rolls
+
+        Args: Raw accelerometer values from 3 IMUs
+        Returns: tuple of 4 offsets (pitch1, roll1, roll2, roll3) in radians
+        """
+        import math
+
+        # ===== IMU1 PITCH OFFSET =====
+        # Formula: Theta1 = atan2(ax1, sqrt(ay1^2 + az1^2)) - IMU1PITCHOFFSET
+        # When flat with offset=0: offset = atan2(ax1, sqrt(ay1^2 + az1^2))
+        norm1 = math.sqrt(ay1**2 + az1**2)
+        imu1_pitch_offset = math.atan2(ax1, norm1)
+
+        # ===== IMU1 ROLL OFFSET =====
+        # Formula: Theta2 = atan2(-az1/cos(Theta1), ay1/cos(Theta1)) * -1 - IMU1ROLLOFFSET
+        # When flat with offset=0: offset = atan2(-az1/cos(Theta1), ay1/cos(Theta1)) * -1
+        cos_pitch1 = math.cos(imu1_pitch_offset)
+        if abs(cos_pitch1) > 0.001:  # Avoid division by zero
+            imu1_roll_offset = math.atan2(-az1/cos_pitch1, ay1/cos_pitch1) * -1
+        else:
+            imu1_roll_offset = 0.0
+
+        # ===== IMU2 ROLL OFFSET =====
+        # Formula: Theta3 = atan2(-az2/cos(Theta2_calc), ay2/cos(Theta2_calc)) * -1 - IMU2ROLLOFFSET
+        #          Theta3 -= Theta2  (subtract IMU1's roll)
+        # Calculate pitch from IMU2 (note: we don't use its pitch in firmware, only roll)
+        norm2 = math.sqrt(ay2**2 + az2**2)
+        pitch2_calc = math.atan2(ax2, norm2)
+        cos_pitch2 = math.cos(pitch2_calc)
+
+        if abs(cos_pitch2) > 0.001:  # Avoid division by zero
+            imu2_roll_raw = math.atan2(-az2/cos_pitch2, ay2/cos_pitch2) * -1
+        else:
+            imu2_roll_raw = 0.0
+
+        # Account for IMU1 roll subtraction in firmware (Theta3 -= Theta2)
+        imu2_roll_offset = imu2_roll_raw - imu1_roll_offset
+
+        # ===== IMU3 ROLL OFFSET =====
+        # Formula: Theta4 = atan2(-ax3/cos(Theta3_calc), ay3/cos(Theta3_calc)) * -1 - IMU3ROLLOFFSET
+        #          Theta4 -= Theta2  (subtract IMU1's roll)
+        #          Theta4 -= Theta3  (subtract IMU2's adjusted roll)
+        norm3 = math.sqrt(ax3**2 + ay3**2)
+        pitch3_calc = math.atan2(-az3, norm3)
+        cos_pitch3 = math.cos(pitch3_calc)
+
+        if abs(cos_pitch3) > 0.001:  # Avoid division by zero
+            imu3_roll_raw = math.atan2(-ax3/cos_pitch3, ay3/cos_pitch3) * -1
+        else:
+            imu3_roll_raw = 0.0
+
+        # Account for IMU1 and IMU2 roll subtractions in firmware
+        imu3_roll_offset = imu3_roll_raw - imu1_roll_offset - imu2_roll_offset
+
+        return imu1_pitch_offset, imu1_roll_offset, imu2_roll_offset, imu3_roll_offset
 
     def upload_updated_firmware(self):
         """Upload the updated firmware to Arduino"""
@@ -1267,70 +1318,71 @@ class LoadCellCalibrationGUI(QMainWindow):
         elif "IMU 3" in text:
             self.current_imu_index = 2
         
-        # Reset calibration state when changing IMU selection    
+        # Reset calibration state when changing IMU selection
         self.imu_calibration_started = False
-        if self.is_imu_connected:
-            self.save_imu_offsets_button.setEnabled(False)  # Disable save until calibration starts
-            
+
         imu_name = text.split(" (")[0]  # Extract just "IMU 1", "IMU 2", etc.
         ui_message = self.logger.log_imu(f"Selected {imu_name} for calibration")
         self.log_imu_message_to_ui(ui_message)
         
-        # Update UI to show current IMU capabilities
-        if self.current_imu_index == 2:  # IMU 3 - roll only
-            self.log_imu_message_to_ui("Note: IMU 3 calibrates ROLL only")
-        else:
-            self.log_imu_message_to_ui("Note: This IMU calibrates PITCH and ROLL")
+        # Update UI to show current IMU capabilities (4-offset formula-based)
+        if self.current_imu_index == 0:  # IMU 1 - pitch + roll
+            self.log_imu_message_to_ui("Note: IMU 1 calibrates PITCH + ROLL (using formula-based method)")
+        elif self.current_imu_index == 1:  # IMU 2 - roll only
+            self.log_imu_message_to_ui("Note: IMU 2 calibrates ROLL only (relative to IMU1)")
+        elif self.current_imu_index == 2:  # IMU 3 - roll only
+            self.log_imu_message_to_ui("Note: IMU 3 calibrates ROLL only (relative to IMU1 and IMU2)")
         
         self.log_imu_message_to_ui("Note: Disconnect and reconnect IMU physically for new calibration")
             
     def save_current_imu_offsets(self):
-        """Save current IMU calibration as angle offsets"""
+        """Save current IMU calibration as angle offsets (4-offset formula-based)"""
         if not self.current_imu_data:
             QMessageBox.warning(self, "Warning", "No IMU data available. Please connect and calibrate first.")
             return
-            
-        # Calculate current pitch and roll from live data
+
+        # Get current pitch and roll from live data
         current_pitch = self.current_imu_data.get('pitch', 0.0)
         current_roll = self.current_imu_data.get('roll', 0.0)
-        
+
         imu_names = ["IMU 1", "IMU 2", "IMU 3"]
         current_imu_name = imu_names[self.current_imu_index]
-        
-        if self.current_imu_index == 0:  # IMU 1
+
+        if self.current_imu_index == 0:  # IMU 1 - saves PITCH + ROLL
             self.angle_offset1 = current_pitch
             self.angle_offset2 = current_roll
-            self.angle_offset1_label.setText(f"{self.angle_offset1:.4f}")
-            self.angle_offset2_label.setText(f"{self.angle_offset2:.4f}")
-            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offsets: Pitch={self.angle_offset1:.4f}, Roll={self.angle_offset2:.4f}")
-            
-        elif self.current_imu_index == 1:  # IMU 2
-            self.angle_offset3 = current_pitch
+            self.angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
+            self.angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
+            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offsets (formula-based):")
+            ui_message += f"\n  Pitch: {self.angle_offset1:.6f} rad\n  Roll: {self.angle_offset2:.6f} rad"
+
+        elif self.current_imu_index == 1:  # IMU 2 - saves ROLL ONLY (relative to IMU1)
+            # IMU2 only stores relative roll offset
+            self.angle_offset3 = current_roll
+            self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
+            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offset (formula-based, Roll only):")
+            ui_message += f"\n  Roll: {self.angle_offset3:.6f} rad (relative to IMU1)"
+
+        elif self.current_imu_index == 2:  # IMU 3 - saves ROLL ONLY (relative to IMU1 and IMU2)
+            # IMU3 only stores relative roll offset
             self.angle_offset4 = current_roll
-            self.angle_offset3_label.setText(f"{self.angle_offset3:.4f}")
-            self.angle_offset4_label.setText(f"{self.angle_offset4:.4f}")
-            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offsets: Pitch={self.angle_offset3:.4f}, Roll={self.angle_offset4:.4f}")
-            
-        elif self.current_imu_index == 2:  # IMU 3
-            self.angle_offset5 = current_pitch
-            self.angle_offset6 = current_roll
-            self.angle_offset5_label.setText(f"{self.angle_offset5:.4f}")
-            self.angle_offset6_label.setText(f"{self.angle_offset6:.4f}")
-            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offsets: Pitch={self.angle_offset5:.4f}, Roll={self.angle_offset6:.4f}")
-            
+            self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
+            ui_message = self.logger.log_imu(f"Saved {current_imu_name} offset (formula-based, Roll only):")
+            ui_message += f"\n  Roll: {self.angle_offset4:.6f} rad (relative to IMU1+IMU2)"
+
         self.log_imu_message_to_ui(ui_message)
-        
+
         # Check if all IMUs are calibrated
         self.check_all_imus_calibrated()
-        
+
         QMessageBox.information(self, "Success", f"{current_imu_name} angle offsets saved successfully!")
         
     def check_all_imus_calibrated(self):
-        """Check if all IMU offsets have been saved and enable firmware update"""
+        """Check if all 4 IMU offsets have been calculated and saved"""
+        # New formula-based method uses 4 offsets: IMU1 pitch, IMU1 roll, IMU2 roll, IMU3 roll
         if (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and
-            self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0 and
-            self.angle_offset5 != 0.0 and self.angle_offset6 != 0.0):
-            ui_message = self.logger.log_imu("All 3 IMUs calibrated! Go to Upload Firmware tab.")
+            self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0):
+            ui_message = self.logger.log_imu("All 3 IMUs calibrated (4 offsets)! Go to Upload Firmware tab.")
             self.log_imu_message_to_ui(ui_message)
     
     def update_final_tab_status(self):
@@ -1342,52 +1394,56 @@ class LoadCellCalibrationGUI(QMainWindow):
             else:
                 self.final_calibration_factor_label.setText("Not Calibrated")
 
-        # Update all 6 IMU offset labels
+        # Update 4 IMU offset labels (formula-based: IMU1 pitch, IMU1 roll, IMU2 roll, IMU3 roll)
         if hasattr(self, 'final_angle_offset1_label'):
-            self.final_angle_offset1_label.setText(f"{self.angle_offset1:.4f}")
+            self.final_angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
         if hasattr(self, 'final_angle_offset2_label'):
-            self.final_angle_offset2_label.setText(f"{self.angle_offset2:.4f}")
+            self.final_angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
         if hasattr(self, 'final_angle_offset3_label'):
-            self.final_angle_offset3_label.setText(f"{self.angle_offset3:.4f}")
+            self.final_angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
         if hasattr(self, 'final_angle_offset4_label'):
-            self.final_angle_offset4_label.setText(f"{self.angle_offset4:.4f}")
+            self.final_angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
+        # Legacy offsets (if UI still references them)
         if hasattr(self, 'final_angle_offset5_label'):
-            self.final_angle_offset5_label.setText(f"{self.angle_offset5:.4f}")
+            self.final_angle_offset5_label.setText("N/A")
         if hasattr(self, 'final_angle_offset6_label'):
-            self.final_angle_offset6_label.setText(f"{self.angle_offset6:.4f}")
+            self.final_angle_offset6_label.setText("N/A")
 
-        # Check if we have complete calibration data
+        # Check if we have complete calibration data (4 offsets required)
         has_loadcell = self.current_calibration_factor != 1.0
         has_all_imus = (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and
-                       self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0 and
-                       self.angle_offset5 != 0.0 and self.angle_offset6 != 0.0)
+                       self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0)
 
         # Enable buttons in final tab if we have calibration data
         if hasattr(self, 'update_firmware_with_values_button'):
             self.update_firmware_with_values_button.setEnabled(has_loadcell and has_all_imus)
+        if hasattr(self, 'upload_final_firmware_button'):
+            self.upload_final_firmware_button.setEnabled(has_loadcell and has_all_imus)
     
     # TOML Management Methods
     def save_current_calibration(self):
         """Save current calibration data to TOML file with timestamp"""
         try:
             # Create calibration data dictionary
+            # Using 4-offset formula-based calculation:
+            # - IMU1: pitch + roll
+            # - IMU2: roll only (relative to IMU1)
+            # - IMU3: roll only (relative to IMU1 and IMU2)
             calibration_data = {
                 "metadata": {
                     "timestamp": datetime.now().isoformat(),
-                    "version": "1.0",
-                    "description": "Load Cell and IMU Calibration Data",
+                    "version": "2.0",
+                    "description": "Load Cell and 3-IMU Calibration Data (4 formula-based offsets)",
                     "mars_id": self.current_mars_id if self.current_mars_id else "Unknown"
                 },
                 "load_cell": {
                     "calibration_factor": float(self.current_calibration_factor)
                 },
                 "imu_offsets": {
-                    "imu1_pitch": float(self.angle_offset1),
-                    "imu1_roll": float(self.angle_offset2),
-                    "imu2_pitch": float(self.angle_offset3),
-                    "imu2_roll": float(self.angle_offset4),
-                    "imu3_pitch": float(self.angle_offset5),
-                    "imu3_roll": float(self.angle_offset6)
+                    "imu1_pitch_offset": float(self.angle_offset1),
+                    "imu1_roll_offset": float(self.angle_offset2),
+                    "imu2_roll_offset": float(self.angle_offset3),
+                    "imu3_roll_offset": float(self.angle_offset4)
                 }
             }
             
@@ -1476,30 +1532,36 @@ class LoadCellCalibrationGUI(QMainWindow):
                         cal_str = "NA"
                     self.calibration_history_table.setItem(i, 2, QTableWidgetItem(cal_str))
 
-                    # IMU offsets - display NA if not available (0.0 means not calibrated)
-                    imu1_pitch = imu_data.get('imu1_pitch', 0.0)
-                    imu1_pitch_str = f"{imu1_pitch:.4f}" if imu1_pitch != 0.0 else "NA"
+                    # Detect format: v2.0 (4 offsets) or v1.0 (6 offsets)
+                    version = metadata.get("version", "1.0")
+
+                    # Extract 4-offset values (works for both formats)
+                    if version == "2.0":
+                        # New format: direct 4-offset names
+                        imu1_pitch = imu_data.get('imu1_pitch_offset', 0.0)
+                        imu1_roll = imu_data.get('imu1_roll_offset', 0.0)
+                        imu2_roll = imu_data.get('imu2_roll_offset', 0.0)
+                        imu3_roll = imu_data.get('imu3_roll_offset', 0.0)
+                    else:
+                        # Legacy v1.0 format: convert 6 offsets to 4-offset display
+                        # Display IMU1 pitch, IMU1 roll, IMU2 roll, IMU3 roll
+                        imu1_pitch = imu_data.get('imu1_pitch', 0.0)
+                        imu1_roll = imu_data.get('imu1_roll', 0.0)
+                        imu2_roll = imu_data.get('imu2_roll', 0.0)
+                        imu3_roll = imu_data.get('imu3_roll', 0.0)
+
+                    # Display 4 offsets only
+                    imu1_pitch_str = f"{imu1_pitch:.6f}" if imu1_pitch != 0.0 else "NA"
                     self.calibration_history_table.setItem(i, 3, QTableWidgetItem(imu1_pitch_str))
 
-                    imu1_roll = imu_data.get('imu1_roll', 0.0)
-                    imu1_roll_str = f"{imu1_roll:.4f}" if imu1_roll != 0.0 else "NA"
+                    imu1_roll_str = f"{imu1_roll:.6f}" if imu1_roll != 0.0 else "NA"
                     self.calibration_history_table.setItem(i, 4, QTableWidgetItem(imu1_roll_str))
 
-                    imu2_pitch = imu_data.get('imu2_pitch', 0.0)
-                    imu2_pitch_str = f"{imu2_pitch:.4f}" if imu2_pitch != 0.0 else "NA"
-                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(imu2_pitch_str))
+                    imu2_roll_str = f"{imu2_roll:.6f}" if imu2_roll != 0.0 else "NA"
+                    self.calibration_history_table.setItem(i, 5, QTableWidgetItem(imu2_roll_str))
 
-                    imu2_roll = imu_data.get('imu2_roll', 0.0)
-                    imu2_roll_str = f"{imu2_roll:.4f}" if imu2_roll != 0.0 else "NA"
-                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(imu2_roll_str))
-
-                    imu3_pitch = imu_data.get('imu3_pitch', 0.0)
-                    imu3_pitch_str = f"{imu3_pitch:.4f}" if imu3_pitch != 0.0 else "NA"
-                    self.calibration_history_table.setItem(i, 7, QTableWidgetItem(imu3_pitch_str))
-
-                    imu3_roll = imu_data.get('imu3_roll', 0.0)
-                    imu3_roll_str = f"{imu3_roll:.4f}" if imu3_roll != 0.0 else "NA"
-                    self.calibration_history_table.setItem(i, 8, QTableWidgetItem(imu3_roll_str))
+                    imu3_roll_str = f"{imu3_roll:.6f}" if imu3_roll != 0.0 else "NA"
+                    self.calibration_history_table.setItem(i, 6, QTableWidgetItem(imu3_roll_str))
 
                     # Store filepath in row data for loading (now in Mars ID column)
                     self.calibration_history_table.item(i, 0).setData(Qt.UserRole, filepath)
@@ -1550,36 +1612,78 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.current_calibration_factor = data.get("load_cell", {}).get("calibration_factor", 1.0)
             imu_data = data.get("imu_offsets", {})
 
-            self.angle_offset1 = imu_data.get("imu1_pitch", 0.0)
-            self.angle_offset2 = imu_data.get("imu1_roll", 0.0)
-            self.angle_offset3 = imu_data.get("imu2_pitch", 0.0)
-            self.angle_offset4 = imu_data.get("imu2_roll", 0.0)
-            self.angle_offset5 = imu_data.get("imu3_pitch", 0.0)
-            self.angle_offset6 = imu_data.get("imu3_roll", 0.0)
+            # Support both old (v1.0 - 6 offsets) and new (v2.0 - 4 offsets) formats
+            metadata = data.get("metadata", {})
+            version = metadata.get("version", "1.0")
+
+            if version == "2.0":
+                # New format with 4 formula-based offsets
+                self.angle_offset1 = imu_data.get("imu1_pitch_offset", 0.0)
+                self.angle_offset2 = imu_data.get("imu1_roll_offset", 0.0)
+                self.angle_offset3 = imu_data.get("imu2_roll_offset", 0.0)
+                self.angle_offset4 = imu_data.get("imu3_roll_offset", 0.0)
+                # Set unused offsets to 0
+                self.angle_offset5 = 0.0
+                self.angle_offset6 = 0.0
+            else:
+                # Legacy format with 6 offsets
+                self.angle_offset1 = imu_data.get("imu1_pitch", 0.0)
+                self.angle_offset2 = imu_data.get("imu1_roll", 0.0)
+                self.angle_offset3 = imu_data.get("imu2_pitch", 0.0)
+                self.angle_offset4 = imu_data.get("imu2_roll", 0.0)
+                self.angle_offset5 = imu_data.get("imu3_pitch", 0.0)
+                self.angle_offset6 = imu_data.get("imu3_roll", 0.0)
+
+            # Update IMU tab labels for currently set offsets
+            if hasattr(self, 'angle_offset1_label'):
+                self.angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
+            if hasattr(self, 'angle_offset2_label'):
+                self.angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
+            if hasattr(self, 'angle_offset3_label'):
+                self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
+            if hasattr(self, 'angle_offset4_label'):
+                self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
 
             # Update all display labels (including final tab)
             self.update_final_tab_status()
 
             filename = os.path.basename(filepath)
-            metadata = data.get("metadata", {})
             mars_id = metadata.get("mars_id", "Unknown")
 
             # Log detailed information about loaded calibration
             self.logger.log(f"Loaded calibration from: {filename}")
             self.logger.log(f"  Mars ID: {mars_id}")
             self.logger.log(f"  Load Cell Factor: {self.current_calibration_factor:.2f}")
-            self.logger.log(f"  IMU1 Pitch: {self.angle_offset1:.4f}, Roll: {self.angle_offset2:.4f}")
-            self.logger.log(f"  IMU2 Pitch: {self.angle_offset3:.4f}, Roll: {self.angle_offset4:.4f}")
-            self.logger.log(f"  IMU3 Pitch: {self.angle_offset5:.4f}, Roll: {self.angle_offset6:.4f}")
+            self.logger.log(f"  Format version: {version}")
 
-            success_msg = (f"Calibration loaded successfully!\n\n"
-                          f"File: {filename}\n"
-                          f"Mars ID: {mars_id}\n\n"
-                          f"Load Cell Factor: {self.current_calibration_factor:.2f}\n"
-                          f"IMU1 - Pitch: {self.angle_offset1:.4f}, Roll: {self.angle_offset2:.4f}\n"
-                          f"IMU2 - Pitch: {self.angle_offset3:.4f}, Roll: {self.angle_offset4:.4f}\n"
-                          f"IMU3 - Pitch: {self.angle_offset5:.4f}, Roll: {self.angle_offset6:.4f}\n\n"
-                          f"Ready to upload firmware!")
+            if version == "2.0":
+                self.logger.log(f"  IMU1 Pitch Offset: {self.angle_offset1:.6f} rad")
+                self.logger.log(f"  IMU1 Roll Offset:  {self.angle_offset2:.6f} rad")
+                self.logger.log(f"  IMU2 Roll Offset:  {self.angle_offset3:.6f} rad")
+                self.logger.log(f"  IMU3 Roll Offset:  {self.angle_offset4:.6f} rad")
+
+                success_msg = (f"Calibration loaded successfully (v2.0 - Formula-based)!\n\n"
+                              f"File: {filename}\n"
+                              f"Mars ID: {mars_id}\n\n"
+                              f"Load Cell Factor: {self.current_calibration_factor:.2f}\n"
+                              f"IMU1 Pitch: {self.angle_offset1:.6f} rad\n"
+                              f"IMU1 Roll:  {self.angle_offset2:.6f} rad\n"
+                              f"IMU2 Roll:  {self.angle_offset3:.6f} rad\n"
+                              f"IMU3 Roll:  {self.angle_offset4:.6f} rad\n\n"
+                              f"Ready to upload firmware!")
+            else:
+                self.logger.log(f"  IMU1 Pitch: {self.angle_offset1:.4f}, Roll: {self.angle_offset2:.4f}")
+                self.logger.log(f"  IMU2 Pitch: {self.angle_offset3:.4f}, Roll: {self.angle_offset4:.4f}")
+                self.logger.log(f"  IMU3 Pitch: {self.angle_offset5:.4f}, Roll: {self.angle_offset6:.4f}")
+
+                success_msg = (f"Calibration loaded successfully (v1.0 - Legacy)!\n\n"
+                              f"File: {filename}\n"
+                              f"Mars ID: {mars_id}\n\n"
+                              f"Load Cell Factor: {self.current_calibration_factor:.2f}\n"
+                              f"IMU1 - Pitch: {self.angle_offset1:.4f}, Roll: {self.angle_offset2:.4f}\n"
+                              f"IMU2 - Pitch: {self.angle_offset3:.4f}, Roll: {self.angle_offset4:.4f}\n"
+                              f"IMU3 - Pitch: {self.angle_offset5:.4f}, Roll: {self.angle_offset6:.4f}\n\n"
+                              f"Ready to upload firmware!")
 
             QMessageBox.information(self, "Success", success_msg)
 
@@ -1589,7 +1693,7 @@ class LoadCellCalibrationGUI(QMainWindow):
             QMessageBox.critical(self, "Error", error_msg)
     
     def update_firmware_with_current_values(self):
-        """Update marsfire variable.h with current calibration values (including loaded values)"""
+        """Update marsfire variable.h with current calibration values using formula-based 4 offsets"""
         try:
             # Verify we have valid calibration data
             if self.current_calibration_factor == 1.0:
@@ -1597,8 +1701,7 @@ class LoadCellCalibrationGUI(QMainWindow):
                 return
 
             has_all_imus = (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and
-                           self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0 and
-                           self.angle_offset5 != 0.0 and self.angle_offset6 != 0.0)
+                           self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0)
 
             if not has_all_imus:
                 QMessageBox.warning(self, "Warning", "Please load or perform all IMU calibrations first.")
@@ -1609,24 +1712,24 @@ class LoadCellCalibrationGUI(QMainWindow):
             with open(variable_h_file, 'r') as f:
                 variable_content = f.read()
 
-            # Update all 6 IMU offset values in variable.h using #define format
+            # Update 4 IMU offset values in variable.h using #define format
+            # These are calculated using the firmware formulas (see calculate_imu_offsets_from_accel)
             variable_content = self.update_define_in_firmware(variable_content, 'IMU1PITCHOFFSET', self.angle_offset1)
             variable_content = self.update_define_in_firmware(variable_content, 'IMU1ROLLOFFSET', self.angle_offset2)
-            variable_content = self.update_define_in_firmware(variable_content, 'IMU2PITCHOFFSET', self.angle_offset3)
-            variable_content = self.update_define_in_firmware(variable_content, 'IMU2ROLLOFFSET', self.angle_offset4)
-            variable_content = self.update_define_in_firmware(variable_content, 'IMU3PITCHOFFSET', self.angle_offset5)
-            variable_content = self.update_define_in_firmware(variable_content, 'IMU3ROLLOFFSET', self.angle_offset6)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU2ROLLOFFSET', self.angle_offset3)
+            variable_content = self.update_define_in_firmware(variable_content, 'IMU3ROLLOFFSET', self.angle_offset4)
 
             # Write updated variable.h file
             with open(variable_h_file, 'w') as f:
                 f.write(variable_content)
 
             # Update load cell calibration factor if needed (you can add this if your firmware supports it)
-            ui_message = self.logger.log(f"Updated marsfire with calibration values:")
+            ui_message = self.logger.log(f"Updated marsfire with formula-based calibration values:")
             ui_message += f"\n  Load Cell Factor: {self.current_calibration_factor:.2f}"
-            ui_message += f"\n  IMU1: Pitch={self.angle_offset1:.4f}, Roll={self.angle_offset2:.4f}"
-            ui_message += f"\n  IMU2: Pitch={self.angle_offset3:.4f}, Roll={self.angle_offset4:.4f}"
-            ui_message += f"\n  IMU3: Pitch={self.angle_offset5:.4f}, Roll={self.angle_offset6:.4f}"
+            ui_message += f"\n  IMU1 Pitch: {self.angle_offset1:.6f} rad"
+            ui_message += f"\n  IMU1 Roll:  {self.angle_offset2:.6f} rad"
+            ui_message += f"\n  IMU2 Roll:  {self.angle_offset3:.6f} rad"
+            ui_message += f"\n  IMU3 Roll:  {self.angle_offset4:.6f} rad"
 
             self.logger.log(ui_message)
             QMessageBox.information(self, "Success", f"Firmware updated with calibration values!\n\n{ui_message}\n\nReady to upload.")
@@ -1638,10 +1741,55 @@ class LoadCellCalibrationGUI(QMainWindow):
 
     def upload_final_firmware(self):
         """Upload the final firmware with all calibration data"""
-        # First update firmware with current values
-        self.update_firmware_with_current_values()
-        # Then upload (this part would call the upload method)
-        # Note: Full implementation depends on your upload workflow
+        selected_port = self.final_port_combo.currentText()
+        selected_board = self.final_board_combo.currentText()
+
+        if not selected_port:
+            QMessageBox.warning(self, "Warning", "Please select a port first!")
+            return
+
+        try:
+            # First update firmware with current values
+            self.update_firmware_with_current_values()
+
+            # Log upload start
+            ui_message = self.logger.log_step(f"Uploading final firmware to {selected_port} using {selected_board}")
+            self.log_upload_message_to_ui(ui_message)
+
+            # Upload the firmware
+            from arduino_compile import ArduinoCompiler
+            compiler = ArduinoCompiler()
+
+            success = compiler.upload_sketch(self.firmware_file, selected_board, selected_port)
+
+            if success:
+                ui_message = self.logger.log_step("Final firmware uploaded successfully!")
+                self.log_upload_message_to_ui(ui_message)
+                QMessageBox.information(self, "Success",
+                    "Final firmware uploaded successfully!\n\n"
+                    "Your Mars device now has fully calibrated load cell and IMU functionality.")
+            else:
+                error_msg = "Failed to upload final firmware. Check connections and try again."
+                self.logger.log_error(error_msg)
+                self.log_upload_message_to_ui(error_msg)
+                QMessageBox.critical(self, "Error", error_msg)
+
+        except Exception as e:
+            error_msg = f"Upload failed: {str(e)}"
+            self.logger.log_error(error_msg)
+            self.log_upload_message_to_ui(error_msg)
+            QMessageBox.critical(self, "Error", error_msg)
+
+    def log_upload_message_to_ui(self, message):
+        """Add message to upload firmware status output"""
+        if hasattr(self, 'upload_status_text'):
+            self.upload_status_text.append(message)
+
+            # Auto-scroll to bottom
+            from PySide6.QtGui import QTextCursor
+            cursor = self.upload_status_text.textCursor()
+            cursor.movePosition(QTextCursor.End)
+            self.upload_status_text.setTextCursor(cursor)
             
     def closeEvent(self, event):
         """Handle application close"""
