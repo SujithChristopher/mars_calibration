@@ -14,8 +14,9 @@
 
   Commands:
   - 'h': Show help and available commands
-  - 'i': Initialize and detect available hardware
   - 's': Show current system status
+  - 'l': Switch to Load Cell mode
+  - 'i': Switch to IMU mode
 
   Load Cell Commands:
   - 't': Tare the load cell
@@ -25,7 +26,7 @@
   IMU Commands:
   - 'c': Start IMU calibration (place device flat and level)
   - 'x': Reset IMU offsets to zero
-  - 'RESET': Software reset for IMU switching
+  - 'RESET': Software reset
 
   Output Formats:
   - Load Cell: Raw weight values during operation
@@ -54,8 +55,7 @@
 enum CalibrationMode {
   MODE_INIT,
   MODE_LOADCELL,
-  MODE_IMU,
-  MODE_BOTH
+  MODE_IMU
 };
 
 struct SystemStatus {
@@ -163,20 +163,20 @@ void setup() {
 void loop() {
   // Handle serial commands
   handleSerialCommands();
-  
+
   // Update active systems based on current mode
-  if (system_status.current_mode == MODE_LOADCELL || system_status.current_mode == MODE_BOTH) {
+  if (system_status.current_mode == MODE_LOADCELL) {
     updateLoadCell();
   }
-  
+
   #ifdef IMU_SUPPORTED
-  if (system_status.current_mode == MODE_IMU || system_status.current_mode == MODE_BOTH) {
+  if (system_status.current_mode == MODE_IMU) {
     if (system_status.imu_available) {
       updateIMU();
     }
   }
   #endif
-  
+
   delay(10);
 }
 
@@ -217,10 +217,11 @@ void initializeSystem() {
   Serial.println("[ERROR] IMU not supported on this board");
   #endif
   
-  // Set default mode
+  // Set default mode (prioritize load cell mode if both available)
   if (system_status.loadcell_available && system_status.imu_available) {
-    system_status.current_mode = MODE_BOTH;
-    Serial.println("Mode: Both Load Cell and IMU available");
+    system_status.current_mode = MODE_LOADCELL;
+    Serial.println("Hardware: Both Load Cell and IMU detected");
+    Serial.println("Mode: Load Cell (use 'l' or 'i' to switch modes)");
   } else if (system_status.imu_available) {
     system_status.current_mode = MODE_IMU;
     Serial.println("Mode: IMU only");
@@ -356,9 +357,9 @@ void updateIMU() {
     processIMUCalibration(ax, ay, az);
   }
   
-  // Print IMU data at regular intervals
+  // Print IMU data at regular intervals (only in IMU mode)
   if (millis() - lastIMUPrintTime >= imuPrintInterval) {
-    if (system_status.current_mode == MODE_IMU || system_status.current_mode == MODE_BOTH) {
+    if (system_status.current_mode == MODE_IMU) {
       // Format: AX,AY,AZ,ROLL,PITCH,YAW,OFFSET_X,OFFSET_Y,OFFSET_Z
       Serial.print(calibrated_ax, 4);
       Serial.print(",");
@@ -419,15 +420,34 @@ void processCommand(char command) {
     case 'h':
       showHelp();
       break;
-      
-    case 'i':
-      initializeSystem();
-      break;
-      
+
     case 's':
       showSystemStatus();
       break;
-      
+
+    // Mode Switching
+    case 'l':
+      if (system_status.loadcell_available) {
+        system_status.current_mode = MODE_LOADCELL;
+        Serial.println(">>> Switched to Load Cell mode");
+      } else {
+        Serial.println("Load cell not available");
+      }
+      break;
+
+    case 'i':
+      #ifdef IMU_SUPPORTED
+      if (system_status.imu_available) {
+        system_status.current_mode = MODE_IMU;
+        Serial.println(">>> Switched to IMU mode");
+      } else {
+        Serial.println("IMU not available");
+      }
+      #else
+      Serial.println("IMU not supported on this board");
+      #endif
+      break;
+
     // Load Cell Commands
     case 't':
       if (system_status.loadcell_available) {
@@ -474,28 +494,34 @@ void showHelp() {
   Serial.println("=== Mars Unified Calibration Commands ===");
   Serial.println("General:");
   Serial.println("  'h' - Show this help");
-  Serial.println("  'i' - Initialize/re-detect hardware");
   Serial.println("  's' - Show system status");
   Serial.println();
-  
+
+  if (system_status.loadcell_available && system_status.imu_available) {
+    Serial.println("Mode Switching:");
+    Serial.println("  'l' - Switch to Load Cell mode");
+    Serial.println("  'i' - Switch to IMU mode");
+    Serial.println();
+  }
+
   if (system_status.loadcell_available) {
-    Serial.println("Load Cell:");
+    Serial.println("Load Cell Commands:");
     Serial.println("  't' - Tare the scale");
     Serial.println("  'r' - Start calibration");
     Serial.println("  During calibration: Enter weight value (e.g., 100.0)");
     Serial.println();
   }
-  
+
   #ifdef IMU_SUPPORTED
   if (system_status.imu_available) {
-    Serial.println("IMU:");
+    Serial.println("IMU Commands:");
     Serial.println("  'c' - Start calibration (place device flat and level)");
     Serial.println("  'x' - Reset offsets to zero");
-    Serial.println("  'RESET' - Software reset for IMU switching");
+    Serial.println("  'RESET' - Software reset");
     Serial.println();
   }
   #endif
-  
+
   Serial.println("Current mode: " + getModeString());
   Serial.println("=====================================");
 }
@@ -521,9 +547,8 @@ void showSystemStatus() {
 String getModeString() {
   switch (system_status.current_mode) {
     case MODE_INIT: return "Initializing";
-    case MODE_LOADCELL: return "Load Cell Only";
-    case MODE_IMU: return "IMU Only";
-    case MODE_BOTH: return "Load Cell + IMU";
+    case MODE_LOADCELL: return "Load Cell";
+    case MODE_IMU: return "IMU";
     default: return "Unknown";
   }
 }
