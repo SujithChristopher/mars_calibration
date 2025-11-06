@@ -79,7 +79,11 @@ class LoadCellCalibrationGUI(QMainWindow):
         # Legacy offsets (kept for backward compatibility, not used in new formula-based method)
         self.angle_offset5 = 0.0
         self.angle_offset6 = 0.0
-        
+
+        # Calibration completion flags (to track if calibration has been done, since 0.0 is a valid offset value)
+        self.has_loadcell_calibration = False
+        self.has_imu_calibration = False
+
         # Step tracking
         self.current_step = 1
         
@@ -762,6 +766,7 @@ class LoadCellCalibrationGUI(QMainWindow):
                 if len(parts) > 1:
                     cal_factor = float(parts[1].split(",")[0].strip())
                     self.current_calibration_factor = cal_factor
+                    self.has_loadcell_calibration = True  # Mark load cell calibration as complete
                     self.cal_factor_label.setText(f"Calibration Factor: {cal_factor:.2f}")
                     self.cal_factor_label.setStyleSheet("QLabel { background: #d4edda; padding: 10px; border: 1px solid #c3e6cb; color: #155724; }")
                     
@@ -1138,6 +1143,8 @@ class LoadCellCalibrationGUI(QMainWindow):
             # IMU3 only stores relative roll offset
             self.angle_offset4 = current_roll
             self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
+            # Mark IMU calibration as complete when all 3 IMUs are calibrated
+            self.has_imu_calibration = True
 
         # Re-enable the button and show success message
         self.start_imu_cal_button.setEnabled(True)
@@ -1417,16 +1424,14 @@ class LoadCellCalibrationGUI(QMainWindow):
         if hasattr(self, 'final_angle_offset6_label'):
             self.final_angle_offset6_label.setText("N/A")
 
-        # Check if we have complete calibration data (4 offsets required)
-        has_loadcell = self.current_calibration_factor != 1.0
-        has_all_imus = (self.angle_offset1 != 0.0 and self.angle_offset2 != 0.0 and
-                       self.angle_offset3 != 0.0 and self.angle_offset4 != 0.0)
+        # Check if we have complete calibration data using flags (not value checks, since 0.0 is valid)
+        has_complete_calibration = self.has_loadcell_calibration and self.has_imu_calibration
 
-        # Enable buttons in final tab if we have calibration data
+        # Enable buttons in final tab if we have complete calibration data
         if hasattr(self, 'update_firmware_with_values_button'):
-            self.update_firmware_with_values_button.setEnabled(has_loadcell and has_all_imus)
+            self.update_firmware_with_values_button.setEnabled(has_complete_calibration)
         if hasattr(self, 'upload_final_firmware_button'):
-            self.upload_final_firmware_button.setEnabled(has_loadcell and has_all_imus)
+            self.upload_final_firmware_button.setEnabled(has_complete_calibration)
     
     # TOML Management Methods
     def save_current_calibration(self):
@@ -1641,6 +1646,10 @@ class LoadCellCalibrationGUI(QMainWindow):
                 self.angle_offset4 = imu_data.get("imu2_roll", 0.0)
                 self.angle_offset5 = imu_data.get("imu3_pitch", 0.0)
                 self.angle_offset6 = imu_data.get("imu3_roll", 0.0)
+
+            # Set calibration completion flags (data was loaded from file)
+            self.has_loadcell_calibration = True
+            self.has_imu_calibration = True
 
             # Update IMU tab labels for currently set offsets
             if hasattr(self, 'angle_offset1_label'):
