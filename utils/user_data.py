@@ -41,12 +41,13 @@ class UserDataManager:
             documents_dir = Path(os.path.expanduser("~/Documents"))
 
         calibrations_dir = documents_dir / "HOMER" / "mars"
+        homer_dir = documents_dir / "HOMER"
 
         self.directories = {
             'root': self.app_data_dir,
             'logs': self.app_data_dir / 'logs',
             'calibrations': calibrations_dir,
-            'arduino_cli': self.app_data_dir / 'arduino-cli',
+            'arduino_cli': homer_dir / 'arduino-cli',  # Changed to Documents/HOMER/arduino-cli
             'temp': self.app_data_dir / 'temp',
             'compiled': self.app_data_dir / 'compiled_output'
         }

@@ -93,8 +93,8 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.logger = Logger(str(self.user_data.get_log_file_path()))
         self.logger.log_step("Application started")
         
-        # Initialize Arduino manager
-        self.arduino_manager = ArduinoManager(str(self.user_data.get_directory('root')))
+        # Initialize Arduino manager (using Documents/HOMER/arduino-cli)
+        self.arduino_manager = ArduinoManager(str(self.user_data.get_directory('arduino_cli')))
         
         # Setup Arduino sketches (copy from bundle if needed)
         sketches_dir = self.user_data.copy_arduino_sketches()
