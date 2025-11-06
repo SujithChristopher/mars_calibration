@@ -466,19 +466,15 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.log_signal.emit(self.logger.log_upload(f"  File: {sketch_path}"))
             self.log_signal.emit(self.logger.log_upload(f"  Board: {board}"))
             self.log_signal.emit(self.logger.log_upload(f"  Port: {port}"))
-            
-            # Use local arduino-cli.exe
-            base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            arduino_cli_path = os.path.join(base_path, "arduino-cli.exe")
-            
-            # Check if local arduino-cli.exe exists
+
+            # Use arduino-cli from ArduinoManager (Documents/HOMER/arduino-cli)
+            arduino_cli_path = self.arduino_manager.get_arduino_cli_command()
+
+            # Check if arduino-cli exists
             if not os.path.exists(arduino_cli_path):
-                self.log_signal.emit(self.logger.log_error("arduino-cli.exe not found in program directory!"))
-                # Emit signal to show download dialog (must be done from main thread)
-                self.log_signal.emit(self.logger.log_error("Checking for Arduino CLI download option..."))
-                # Call main thread to show dialog
-                from PySide6.QtCore import QTimer
-                QTimer.singleShot(0, lambda: self.show_arduino_cli_download_dialog())
+                self.log_signal.emit(self.logger.log_error("Arduino CLI not found!"))
+                self.log_signal.emit(self.logger.log_error(f"Expected location: {arduino_cli_path}"))
+                self.log_signal.emit(self.logger.log_error("Please run the setup process from File menu or restart the application."))
                 return
             
             # Install required cores if needed
@@ -568,37 +564,33 @@ class LoadCellCalibrationGUI(QMainWindow):
                 self.upload_firmware_button.setEnabled(True)
 
     def show_arduino_cli_download_dialog(self):
-        """Show dialog asking user to download Arduino CLI"""
-        import webbrowser
-
+        """Show setup dialog to download Arduino CLI"""
         reply = QMessageBox.question(
             self,
             "Arduino CLI Not Found",
-            "Arduino CLI (arduino-cli.exe) is required for uploading firmware.\n\n"
-            "Would you like to download it now?\n\n"
-            "Click 'Yes' to open the download page in your browser, or "
-            "'No' to close this dialog.",
+            "Arduino CLI is required for uploading firmware.\n\n"
+            "Would you like to download and install it now?\n\n"
+            "It will be installed to Documents/HOMER/arduino-cli",
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.Yes
         )
 
         if reply == QMessageBox.Yes:
-            # Open Arduino CLI download page
-            self.logger.log("Opening Arduino CLI download page...")
-            webbrowser.open("https://github.com/arduino/arduino-cli/releases")
+            # Show setup dialog
+            self.logger.log("Starting Arduino CLI setup...")
+            dialog = SetupDialog(self.arduino_manager, self)
+            result = dialog.exec()
 
-            # Show instructions dialog
-            QMessageBox.information(
-                self,
-                "Arduino CLI Download",
-                "A browser window has opened to the Arduino CLI download page.\n\n"
-                "INSTRUCTIONS:\n"
-                "1. Download the Windows version (arduino-cli_Windows_64bit.zip)\n"
-                "2. Extract the ZIP file\n"
-                "3. Copy 'arduino-cli.exe' to the same folder as this application\n"
-                "4. Restart this application and try uploading again\n\n"
-                f"Application folder: {os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}"
-            )
+            if result == QDialog.Accepted:
+                self.logger.log("Arduino CLI setup completed successfully")
+                QMessageBox.information(
+                    self,
+                    "Setup Complete",
+                    "Arduino CLI has been installed successfully!\n\n"
+                    "You can now upload firmware to your devices."
+                )
+            else:
+                self.logger.log("Arduino CLI setup was cancelled or failed")
         else:
             self.logger.log("User declined Arduino CLI download")
 
@@ -940,9 +932,9 @@ class LoadCellCalibrationGUI(QMainWindow):
     def detect_board_on_port(self, port):
         """Auto-detect board type on specified port"""
         try:
-            base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            arduino_cli_path = os.path.join(base_path, "arduino-cli.exe")
-            
+            # Use arduino-cli from ArduinoManager (Documents/HOMER/arduino-cli)
+            arduino_cli_path = self.arduino_manager.get_arduino_cli_command()
+
             # Run board list command and parse output
             result = subprocess.run(f'"{arduino_cli_path}" board list', shell=True, capture_output=True, text=True, timeout=10)
             
