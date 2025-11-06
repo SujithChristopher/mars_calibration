@@ -43,18 +43,18 @@ jobs:
 
     - name: Verify executable was created
       run: |
-        if (!(Test-Path "dist\MarsCalibration.exe")) {
-          Write-Error "Executable not found at dist\MarsCalibration.exe"
+        if (!(Test-Path "dist\MarsCalibration\MarsCalibration.exe")) {
+          Write-Error "Executable not found at dist\MarsCalibration\MarsCalibration.exe"
           exit 1
         }
-        $size = (Get-Item "dist\MarsCalibration.exe").Length / 1MB
+        $size = (Get-Item "dist\MarsCalibration\MarsCalibration.exe").Length / 1MB
         Write-Host "✓ Executable created successfully (${size:N2} MB)"
       shell: pwsh
 
     - name: Verify bundled firmware folders
       run: |
         Write-Host "Checking for bundled firmware folders in _internal..."
-        $internalPath = "dist\_internal"
+        $internalPath = "dist\MarsCalibration\_internal"
 
         # Check for calibration folder
         if (!(Test-Path "$internalPath\calibration\calibration.ino")) {
@@ -86,7 +86,7 @@ jobs:
     - name: Test executable startup (smoke test)
       run: |
         Write-Host "Testing executable startup..."
-        $process = Start-Process -FilePath "dist\MarsCalibration.exe" -PassThru
+        $process = Start-Process -FilePath "dist\MarsCalibration\MarsCalibration.exe" -PassThru
         Start-Sleep -Seconds 5
         if (!$process.HasExited) {
           Write-Host "✓ Executable started successfully"
@@ -102,7 +102,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: windows-test-build
-        path: dist/MarsCalibration.exe
+        path: dist/MarsCalibration/
         retention-days: 7
 
   test-build-macos:
@@ -139,11 +139,11 @@ jobs:
 
     - name: Verify executable was created
       run: |
-        if [ ! -f "dist/MarsCalibration" ]; then
-          echo "❌ Executable not found at dist/MarsCalibration"
+        if [ ! -f "dist/MarsCalibration/MarsCalibration" ]; then
+          echo "❌ Executable not found at dist/MarsCalibration/MarsCalibration"
           exit 1
         fi
-        size=$(du -h dist/MarsCalibration | cut -f1)
+        size=$(du -h dist/MarsCalibration/MarsCalibration | cut -f1)
         echo "✓ Executable created successfully ($size)"
 
     - name: Verify bundled firmware folders
@@ -151,20 +151,20 @@ jobs:
         echo "Checking for bundled firmware folders..."
 
         # Check for calibration folder
-        if [ ! -f "dist/_internal/calibration/calibration.ino" ]; then
+        if [ ! -f "dist/MarsCalibration/_internal/calibration/calibration.ino" ]; then
           echo "❌ Missing bundled calibration firmware"
           exit 1
         fi
         echo "✓ Found calibration/calibration.ino"
 
         # Check for marsfire folder
-        if [ ! -f "dist/_internal/marsfire/marsfire.ino" ]; then
+        if [ ! -f "dist/MarsCalibration/_internal/marsfire/marsfire.ino" ]; then
           echo "❌ Missing bundled marsfire/marsfire.ino"
           exit 1
         fi
         echo "✓ Found marsfire/marsfire.ino"
 
-        if [ ! -f "dist/_internal/marsfire/variable.h" ]; then
+        if [ ! -f "dist/MarsCalibration/_internal/marsfire/variable.h" ]; then
           echo "❌ Missing bundled marsfire/variable.h"
           exit 1
         fi
@@ -173,7 +173,7 @@ jobs:
         # List all marsfire files
         echo ""
         echo "Marsfire folder contents:"
-        ls -la dist/_internal/marsfire/
+        ls -la dist/MarsCalibration/_internal/marsfire/
 
         echo ""
         echo "✅ All required firmware files are bundled correctly!"
@@ -182,7 +182,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: macos-test-build
-        path: dist/MarsCalibration
+        path: dist/MarsCalibration/
         retention-days: 7
 
   summary:
