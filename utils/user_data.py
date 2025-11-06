@@ -111,7 +111,7 @@ class UserDataManager:
             calibration_resources.write_calibration_firmware(calibration_firmware_path)
 
             # Copy other sketch directories from project (legacy support)
-            other_sketch_dirs = ['loadcell_calibration', 'firmware', 'firmware_v2', 'imu_program', 'imu_program_teensy']
+            other_sketch_dirs = ['loadcell_calibration', 'firmware', 'marsfire', 'imu_program', 'imu_program_teensy']
 
             for sketch_dir in other_sketch_dirs:
                 source_sketch = source_dir / sketch_dir

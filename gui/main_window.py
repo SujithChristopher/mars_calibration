@@ -100,8 +100,8 @@ class LoadCellCalibrationGUI(QMainWindow):
         # Arduino sketch file paths
         self.unified_calibration_file = str(sketches_dir / "calibration" / "calibration.ino")
         self.calibration_file = str(sketches_dir / "loadcell_calibration" / "loadcell_calibration.ino")  # Legacy support
-        self.firmware_file = str(sketches_dir / "firmware_v2" / "firmware_v2.ino")  # New primary firmware
-        self.firmware_v2_dir = str(sketches_dir / "firmware_v2")  # Directory containing all firmware_v2 files
+        self.firmware_file = str(sketches_dir / "marsfire" / "marsfire.ino")  # New primary firmware
+        self.firmware_v2_dir = str(sketches_dir / "marsfire")  # Directory containing all marsfire files
         self.imu_file = str(sketches_dir / "imu_program_teensy" / "imu_program_teensy.ino")  # Legacy support
         self.calibrations_dir = str(self.user_data.get_directory('calibrations'))
         
@@ -1156,9 +1156,9 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.update_final_tab_status()
             
     def update_firmware_with_offsets(self):
-        """Update variable.h in firmware_v2 with all 6 angle offsets from 3 IMUs"""
+        """Update variable.h in marsfire with all 6 angle offsets from 3 IMUs"""
         try:
-            # Read variable.h file from firmware_v2
+            # Read variable.h file from marsfire
             variable_h_file = os.path.join(self.firmware_v2_dir, 'variable.h')
             with open(variable_h_file, 'r') as f:
                 variable_content = f.read()
@@ -1180,15 +1180,15 @@ class LoadCellCalibrationGUI(QMainWindow):
             if hasattr(self, 'upload_firmware_button'):
                 self.upload_firmware_button.setEnabled(True)
 
-            ui_message = self.logger.log_imu(f"Updated firmware_v2 with 3-IMU angle offsets:")
+            ui_message = self.logger.log_imu(f"Updated marsfire with 3-IMU angle offsets:")
             self.log_imu_message_to_ui(ui_message)
             self.log_imu_message_to_ui(f"  IMU1: Pitch={self.angle_offset1:.4f}, Roll={self.angle_offset2:.4f}")
             self.log_imu_message_to_ui(f"  IMU2: Pitch={self.angle_offset3:.4f}, Roll={self.angle_offset4:.4f}")
             self.log_imu_message_to_ui(f"  IMU3: Pitch={self.angle_offset5:.4f}, Roll={self.angle_offset6:.4f}")
-            QMessageBox.information(self, "Success", "Firmware_v2 updated with all 3-IMU angle offsets!")
+            QMessageBox.information(self, "Success", "Marsfire updated with all 3-IMU angle offsets!")
 
         except Exception as e:
-            error_msg = f"Failed to update firmware_v2: {str(e)}"
+            error_msg = f"Failed to update marsfire: {str(e)}"
             self.logger.log_error(error_msg)
             self.log_imu_message_to_ui(error_msg)
             QMessageBox.critical(self, "Error", error_msg)
@@ -1589,7 +1589,7 @@ class LoadCellCalibrationGUI(QMainWindow):
             QMessageBox.critical(self, "Error", error_msg)
     
     def update_firmware_with_current_values(self):
-        """Update firmware_v2 variable.h with current calibration values (including loaded values)"""
+        """Update marsfire variable.h with current calibration values (including loaded values)"""
         try:
             # Verify we have valid calibration data
             if self.current_calibration_factor == 1.0:
@@ -1604,7 +1604,7 @@ class LoadCellCalibrationGUI(QMainWindow):
                 QMessageBox.warning(self, "Warning", "Please load or perform all IMU calibrations first.")
                 return
 
-            # Read variable.h file from firmware_v2
+            # Read variable.h file from marsfire
             variable_h_file = os.path.join(self.firmware_v2_dir, 'variable.h')
             with open(variable_h_file, 'r') as f:
                 variable_content = f.read()
@@ -1622,7 +1622,7 @@ class LoadCellCalibrationGUI(QMainWindow):
                 f.write(variable_content)
 
             # Update load cell calibration factor if needed (you can add this if your firmware supports it)
-            ui_message = self.logger.log(f"Updated firmware_v2 with calibration values:")
+            ui_message = self.logger.log(f"Updated marsfire with calibration values:")
             ui_message += f"\n  Load Cell Factor: {self.current_calibration_factor:.2f}"
             ui_message += f"\n  IMU1: Pitch={self.angle_offset1:.4f}, Roll={self.angle_offset2:.4f}"
             ui_message += f"\n  IMU2: Pitch={self.angle_offset3:.4f}, Roll={self.angle_offset4:.4f}"
