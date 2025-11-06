@@ -14,7 +14,7 @@ from datetime import datetime
 import toml
 import glob
 
-from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget, QMessageBox, QLabel, QDialog
+from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget, QMessageBox, QLabel, QDialog, QTableWidgetItem
 from PySide6.QtCore import QTimer, Signal, QThread, QObject, Qt
 from PySide6.QtGui import QFont, QTextCursor
 
