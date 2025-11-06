@@ -95,15 +95,15 @@ def setup_load_cell_tab(main_window):
     board_layout.addWidget(QLabel("Board:"))
     main_window.board_combo = QComboBox()
     main_window.board_combo.addItems([
-        "arduino:avr:uno", 
-        "arduino:avr:nano", 
+        "teensy:avr:teensy41",
+        "arduino:avr:uno",
+        "arduino:avr:nano",
         "arduino:mbed_nano:nano33ble",
         "arduino:mbed_nano:nanorp2040connect",
-        "teensy:avr:teensy41",
         "esp32:esp32:esp32"
     ])
-    # Set Nano 33 BLE as default for IMU compatibility
-    main_window.board_combo.setCurrentText("arduino:mbed_nano:nano33ble")
+    # Set Teensy 4.1 as default
+    main_window.board_combo.setCurrentText("teensy:avr:teensy41")
     board_layout.addWidget(main_window.board_combo)
     connection_layout.addLayout(board_layout)
     

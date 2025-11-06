@@ -30,7 +30,14 @@
       "Bash(conda activate:*)",
       "Bash(call conda activate py12)",
       "Bash(conda info:*)",
-      "Bash(C:/Users/Pintu/miniconda3/envs/py12/python main.py)"
+      "Bash(C:/Users/Pintu/miniconda3/envs/py12/python main.py)",
+      "Bash(cat:*)",
+      "Bash(source activate C:UsersPintuminiconda3envspy13)",
+      "Bash(pip install:*)",
+      "Bash(C:UsersPintuminiconda3envspy13Scriptspip install toml -q)",
+      "Bash(C:UsersPintuminiconda3envspy13python -c \"import toml; print(''toml module successfully installed in py13'')\")",
+      "Bash(/c/Users/Pintu/miniconda3/envs/py13/Scripts/pip install:*)",
+      "Bash(/c/Users/Pintu/miniconda3/envs/py13/python:*)"
     ],
     "deny": []
   }
