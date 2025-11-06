@@ -1142,9 +1142,9 @@ class LoadCellCalibrationGUI(QMainWindow):
     def update_firmware_with_offsets(self):
         """Update variable.h in marsfire with 4 calculated IMU offsets"""
         try:
-            # Read variable.h file from marsfire
+            # Read variable.h file from marsfire (with UTF-8 encoding to prevent Unicode errors)
             variable_h_file = os.path.join(self.firmware_v2_dir, 'variable.h')
-            with open(variable_h_file, 'r') as f:
+            with open(variable_h_file, 'r', encoding='utf-8') as f:
                 variable_content = f.read()
 
             # Update 4 IMU offset values in variable.h using #define format
@@ -1154,8 +1154,8 @@ class LoadCellCalibrationGUI(QMainWindow):
             variable_content = self.update_define_in_firmware(variable_content, 'IMU2ROLLOFFSET', self.angle_offset3)
             variable_content = self.update_define_in_firmware(variable_content, 'IMU3ROLLOFFSET', self.angle_offset4)
 
-            # Write updated variable.h file
-            with open(variable_h_file, 'w') as f:
+            # Write updated variable.h file (with UTF-8 encoding to prevent Unicode errors)
+            with open(variable_h_file, 'w', encoding='utf-8') as f:
                 f.write(variable_content)
 
             # Enable upload button if it exists
@@ -1707,24 +1707,31 @@ class LoadCellCalibrationGUI(QMainWindow):
                 QMessageBox.warning(self, "Warning", "Please load or perform all IMU calibrations first.")
                 return
 
-            # Read variable.h file from marsfire
+            # Read variable.h file from marsfire (with UTF-8 encoding to prevent Unicode errors)
             variable_h_file = os.path.join(self.firmware_v2_dir, 'variable.h')
-            with open(variable_h_file, 'r') as f:
+            with open(variable_h_file, 'r', encoding='utf-8') as f:
                 variable_content = f.read()
+
+            # Update load cell calibration factor
+            variable_content = self.update_define_in_firmware(variable_content, 'LOACELL_CALIB_FACTOR', self.current_calibration_factor)
 
             # Update 4 IMU offset values in variable.h using #define format
             # These are calculated using the firmware formulas (see calculate_imu_offsets_from_accel)
             variable_content = self.update_define_in_firmware(variable_content, 'IMU1PITCHOFFSET', self.angle_offset1)
             variable_content = self.update_define_in_firmware(variable_content, 'IMU1ROLLOFFSET', self.angle_offset2)
+            # Note: marsfire still has IMU2PITCHOFFSET/IMU2ROLLOFFSET/IMU3PITCHOFFSET/IMU3ROLLOFFSET
+            # We're using the new 4-offset system, so we update only the roll offsets for IMU2 and IMU3
+            # IMU2PITCHOFFSET stays 0.00, we only use IMU2ROLLOFFSET
             variable_content = self.update_define_in_firmware(variable_content, 'IMU2ROLLOFFSET', self.angle_offset3)
+            # IMU3PITCHOFFSET stays 0.00, we only use IMU3ROLLOFFSET
             variable_content = self.update_define_in_firmware(variable_content, 'IMU3ROLLOFFSET', self.angle_offset4)
 
-            # Write updated variable.h file
-            with open(variable_h_file, 'w') as f:
+            # Write updated variable.h file (with UTF-8 encoding to prevent Unicode errors)
+            with open(variable_h_file, 'w', encoding='utf-8') as f:
                 f.write(variable_content)
 
-            # Update load cell calibration factor if needed (you can add this if your firmware supports it)
-            ui_message = self.logger.log(f"Updated marsfire with formula-based calibration values:")
+            # Success message with all updated values
+            ui_message = self.logger.log(f"✓ Updated marsfire variable.h with all calibration values:")
             ui_message += f"\n  Load Cell Factor: {self.current_calibration_factor:.2f}"
             ui_message += f"\n  IMU1 Pitch: {self.angle_offset1:.6f} rad"
             ui_message += f"\n  IMU1 Roll:  {self.angle_offset2:.6f} rad"
@@ -1732,7 +1739,15 @@ class LoadCellCalibrationGUI(QMainWindow):
             ui_message += f"\n  IMU3 Roll:  {self.angle_offset4:.6f} rad"
 
             self.logger.log(ui_message)
-            QMessageBox.information(self, "Success", f"Firmware updated with calibration values!\n\n{ui_message}\n\nReady to upload.")
+            QMessageBox.information(self, "Success",
+                f"Marsfire variable.h updated successfully!\n\n"
+                f"Updated Values:\n"
+                f"• Load Cell Factor: {self.current_calibration_factor:.2f}\n"
+                f"• IMU1 Pitch: {self.angle_offset1:.6f} rad\n"
+                f"• IMU1 Roll:  {self.angle_offset2:.6f} rad\n"
+                f"• IMU2 Roll:  {self.angle_offset3:.6f} rad\n"
+                f"• IMU3 Roll:  {self.angle_offset4:.6f} rad\n\n"
+                f"Ready to upload marsfire firmware!")
 
         except Exception as e:
             error_msg = f"Failed to update firmware: {str(e)}"
