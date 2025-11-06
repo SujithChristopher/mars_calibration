@@ -110,19 +110,16 @@ class UserDataManager:
             calibration_firmware_path = calibration_dir / 'calibration.ino'
             calibration_resources.write_calibration_firmware(calibration_firmware_path)
 
-            # Copy other sketch directories from project (legacy support)
-            other_sketch_dirs = ['loadcell_calibration', 'firmware', 'marsfire', 'imu_program', 'imu_program_teensy']
+            # Copy marsfire production firmware (entire folder with variable.h and all dependencies)
+            marsfire_source = source_dir / 'marsfire'
+            marsfire_target = target_dir / 'marsfire'
 
-            for sketch_dir in other_sketch_dirs:
-                source_sketch = source_dir / sketch_dir
-                target_sketch = target_dir / sketch_dir
-
-                if source_sketch.exists():
-                    # Remove old copy if it exists to ensure we get the latest version
-                    if target_sketch.exists():
-                        shutil.rmtree(target_sketch)
-                    # Copy the sketch directory
-                    shutil.copytree(source_sketch, target_sketch)
+            if marsfire_source.exists():
+                # Remove old copy if it exists to ensure we get the latest version
+                if marsfire_target.exists():
+                    shutil.rmtree(marsfire_target)
+                # Copy the entire marsfire directory
+                shutil.copytree(marsfire_source, marsfire_target)
 
             return target_dir
 

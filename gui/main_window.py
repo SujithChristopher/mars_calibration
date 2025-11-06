@@ -100,20 +100,18 @@ class LoadCellCalibrationGUI(QMainWindow):
         sketches_dir = self.user_data.copy_arduino_sketches()
         
         # Arduino sketch file paths
-        self.unified_calibration_file = str(sketches_dir / "calibration" / "calibration.ino")
-        self.calibration_file = str(sketches_dir / "loadcell_calibration" / "loadcell_calibration.ino")  # Legacy support
-        self.firmware_file = str(sketches_dir / "marsfire" / "marsfire.ino")  # New primary firmware
-        self.firmware_v2_dir = str(sketches_dir / "marsfire")  # Directory containing all marsfire files
-        self.imu_file = str(sketches_dir / "imu_program_teensy" / "imu_program_teensy.ino")  # Legacy support
+        self.unified_calibration_file = str(sketches_dir / "calibration" / "calibration.ino")  # Unified calibration program
+        self.firmware_file = str(sketches_dir / "marsfire" / "marsfire.ino")  # Production firmware
+        self.firmware_v2_dir = str(sketches_dir / "marsfire")  # Directory containing all marsfire files (variable.h, etc.)
         self.calibrations_dir = str(self.user_data.get_directory('calibrations'))
-        
+
         # Show setup dialog on first run
         self.show_setup_dialog_if_needed()
-        
-        self.logger.log(f"Calibration file path: {self.calibration_file}")
-        self.logger.log(f"Firmware file path: {self.firmware_file}")
-        self.logger.log(f"IMU file path: {self.imu_file}")
-        self.logger.log(f"Calibrations storage directory: {self.calibrations_dir}")
+
+        self.logger.log(f"Unified calibration file: {self.unified_calibration_file}")
+        self.logger.log(f"Production firmware file: {self.firmware_file}")
+        self.logger.log(f"Marsfire directory: {self.firmware_v2_dir}")
+        self.logger.log(f"Calibrations storage: {self.calibrations_dir}")
         
         # Connect signals to methods
         self.log_signal.connect(self.log_message_to_ui)
