@@ -1422,13 +1422,18 @@ class LoadCellCalibrationGUI(QMainWindow):
             toml_files = glob.glob(os.path.join(self.calibrations_dir, "*calibration_*.toml"))
             toml_files.sort(reverse=True)  # Most recent first
 
+            print(f"\n[CALIBRATION HISTORY] Found {len(toml_files)} calibration files")
+            print(f"[CALIBRATION HISTORY] Looking in: {self.calibrations_dir}")
             self.logger.log(f"Found {len(toml_files)} calibration files")
 
             # Populate table
             for i, filepath in enumerate(toml_files):
+                print(f"[CALIBRATION HISTORY] Processing file {i}: {os.path.basename(filepath)}")
                 try:
+                    print(f"[CALIBRATION HISTORY] Opening file for reading...")
                     with open(filepath, 'r', encoding='utf-8') as f:
                         data = toml.load(f)
+                    print(f"[CALIBRATION HISTORY] Successfully parsed TOML file")
 
                     # Extract data
                     metadata = data.get("metadata", {})
@@ -1436,6 +1441,12 @@ class LoadCellCalibrationGUI(QMainWindow):
                     mars_id = metadata.get("mars_id", "Unknown")
                     loadcell_factor = data.get("load_cell", {}).get("calibration_factor", 0.0)
                     imu_data = data.get("imu_offsets", {})
+
+                    print(f"[CALIBRATION HISTORY] Extracted data:")
+                    print(f"  Mars ID: {mars_id}")
+                    print(f"  Timestamp: {timestamp}")
+                    print(f"  Load Factor: {loadcell_factor}")
+                    print(f"  IMU Data Keys: {list(imu_data.keys())}")
 
                     # Format timestamp for display
                     try:
@@ -1449,8 +1460,13 @@ class LoadCellCalibrationGUI(QMainWindow):
                     display_mars_id = str(mars_id) if mars_id != "Unknown" else "Unknown"
 
                     # Add row to table
+                    print(f"[CALIBRATION HISTORY] Inserting row {i} into table")
                     self.calibration_history_table.insertRow(i)
+
+                    print(f"[CALIBRATION HISTORY] Setting column 0 (Mars ID): {display_mars_id}")
                     self.calibration_history_table.setItem(i, 0, QTableWidgetItem(display_mars_id))
+
+                    print(f"[CALIBRATION HISTORY] Setting column 1 (Date/Time): {display_time}")
                     self.calibration_history_table.setItem(i, 1, QTableWidgetItem(display_time))
 
                     # Load cell factor
@@ -1491,17 +1507,22 @@ class LoadCellCalibrationGUI(QMainWindow):
                     self.logger.log(f"Loaded calibration row {i}: Mars ID={display_mars_id}, Load Factor={cal_str}")
 
                 except Exception as e:
-                    self.logger.log_error(f"Error reading {os.path.basename(filepath)}: {str(e)}")
+                    print(f"[CALIBRATION HISTORY] ERROR in file loop: {str(e)}")
                     import traceback
+                    print(f"[CALIBRATION HISTORY] Traceback: {traceback.format_exc()}")
+                    self.logger.log_error(f"Error reading {os.path.basename(filepath)}: {str(e)}")
                     self.logger.log_error(f"Traceback: {traceback.format_exc()}")
                     continue
 
+            print(f"[CALIBRATION HISTORY] Refresh complete: {len(toml_files)} files loaded")
             self.logger.log(f"Calibration history refresh complete: {len(toml_files)} files loaded")
 
         except Exception as e:
+            print(f"[CALIBRATION HISTORY] ERROR in outer try: {str(e)}")
+            import traceback
+            print(f"[CALIBRATION HISTORY] Traceback: {traceback.format_exc()}")
             error_msg = f"Failed to refresh calibration history: {str(e)}"
             self.logger.log_error(error_msg)
-            import traceback
             self.logger.log_error(f"Traceback: {traceback.format_exc()}")
     
     def load_selected_calibration(self):

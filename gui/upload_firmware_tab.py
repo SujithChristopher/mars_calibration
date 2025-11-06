@@ -155,7 +155,11 @@ def setup_upload_firmware_tab(main_window):
     # Make table fill the width
     header = main_window.calibration_history_table.horizontalHeader()
     header.setSectionResizeMode(QHeaderView.Stretch)
-    
+
+    # Make table read-only (no editing)
+    from PySide6.QtWidgets import QAbstractItemView
+    main_window.calibration_history_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
     main_window.calibration_history_table.setSelectionBehavior(QTableWidget.SelectRows)
     main_window.calibration_history_table.itemSelectionChanged.connect(
         lambda: main_window.load_calibration_button.setEnabled(
