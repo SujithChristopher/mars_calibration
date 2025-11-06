@@ -18,7 +18,34 @@ def setup_upload_firmware_tab(main_window):
     # Main layout
     main_layout = QVBoxLayout(upload_tab)
     
-    # Top section - Load Cell Calibration Status
+    # Mars ID Section
+    mars_id_group = QGroupBox("Mars Device Information")
+    mars_id_layout = QGridLayout(mars_id_group)
+    
+    mars_id_layout.addWidget(QLabel("Mars ID:"), 0, 0)
+    main_window.firmware_mars_id_label = QLabel("Not Set")
+    main_window.firmware_mars_id_label.setStyleSheet("""
+    QLabel {
+        background: palette(base);
+        color: palette(text);
+        padding: 8px;
+        border: 2px solid palette(mid);
+        border-radius: 4px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 11pt;
+        font-weight: bold;
+        min-width: 120px;
+    }
+    """)
+    mars_id_layout.addWidget(main_window.firmware_mars_id_label, 0, 1)
+    
+    mars_id_note = QLabel("💡 Mars ID is automatically included in all filenames and calibration data")
+    mars_id_note.setStyleSheet("QLabel { color: #666; font-size: 10px; }")
+    mars_id_layout.addWidget(mars_id_note, 1, 0, 1, 2)
+    
+    main_layout.addWidget(mars_id_group)
+    
+    # Load Cell Calibration Status
     loadcell_group = QGroupBox("Load Cell Calibration Status")
     loadcell_layout = QGridLayout(loadcell_group)
     
@@ -60,33 +87,33 @@ def setup_upload_firmware_tab(main_window):
     }
     """
     
+    # 4-Offset Formula-Based IMU Calibration Display
     # IMU 1
     imu_layout.addWidget(QLabel("IMU 1 Pitch:"), 0, 0)
     main_window.final_angle_offset1_label = QLabel("Not Set")
     main_window.final_angle_offset1_label.setStyleSheet(imu_offset_style)
     imu_layout.addWidget(main_window.final_angle_offset1_label, 0, 1)
-    
+
     imu_layout.addWidget(QLabel("IMU 1 Roll:"), 0, 2)
     main_window.final_angle_offset2_label = QLabel("Not Set")
     main_window.final_angle_offset2_label.setStyleSheet(imu_offset_style)
     imu_layout.addWidget(main_window.final_angle_offset2_label, 0, 3)
-    
-    # IMU 2
-    imu_layout.addWidget(QLabel("IMU 2 Pitch:"), 1, 0)
+
+    # IMU 2 Roll
+    imu_layout.addWidget(QLabel("IMU 2 Roll:"), 1, 0)
     main_window.final_angle_offset3_label = QLabel("Not Set")
     main_window.final_angle_offset3_label.setStyleSheet(imu_offset_style)
     imu_layout.addWidget(main_window.final_angle_offset3_label, 1, 1)
-    
-    imu_layout.addWidget(QLabel("IMU 2 Roll:"), 1, 2)
+
+    # IMU 3 Roll
+    imu_layout.addWidget(QLabel("IMU 3 Roll:"), 1, 2)
     main_window.final_angle_offset4_label = QLabel("Not Set")
     main_window.final_angle_offset4_label.setStyleSheet(imu_offset_style)
     imu_layout.addWidget(main_window.final_angle_offset4_label, 1, 3)
-    
-    # IMU 3
-    imu_layout.addWidget(QLabel("IMU 3 Roll:"), 2, 0)
-    main_window.final_angle_offset5_label = QLabel("Not Set")
-    main_window.final_angle_offset5_label.setStyleSheet(imu_offset_style)
-    imu_layout.addWidget(main_window.final_angle_offset5_label, 2, 1)
+
+    # Legacy offsets (keep for backward compatibility but don't display)
+    main_window.final_angle_offset5_label = QLabel("N/A")
+    main_window.final_angle_offset6_label = QLabel("N/A")
     
     main_layout.addWidget(imu_group)
     
@@ -113,17 +140,21 @@ def setup_upload_firmware_tab(main_window):
     
     history_layout.addLayout(history_buttons_layout)
     
-    # Calibration history table
+    # Calibration history table (7 columns: Mars ID, Date/Time, Load Factor, + 4 IMU offsets)
     main_window.calibration_history_table = QTableWidget()
     main_window.calibration_history_table.setColumnCount(7)
     main_window.calibration_history_table.setHorizontalHeaderLabels([
-        "Date/Time", "Load Factor", "IMU1 P", "IMU1 R", "IMU2 P", "IMU2 R", "IMU3 R"
+        "Mars ID", "Date/Time", "Load Factor", "IMU1 Pitch", "IMU1 Roll", "IMU2 Roll", "IMU3 Roll"
     ])
     
     # Make table fill the width
     header = main_window.calibration_history_table.horizontalHeader()
     header.setSectionResizeMode(QHeaderView.Stretch)
-    
+
+    # Make table read-only (no editing)
+    from PySide6.QtWidgets import QAbstractItemView
+    main_window.calibration_history_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
     main_window.calibration_history_table.setSelectionBehavior(QTableWidget.SelectRows)
     main_window.calibration_history_table.itemSelectionChanged.connect(
         lambda: main_window.load_calibration_button.setEnabled(

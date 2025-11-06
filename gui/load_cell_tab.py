@@ -4,9 +4,9 @@ Load Cell calibration tab UI components.
 
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QSplitter, 
                                QGroupBox, QLabel, QPushButton, QComboBox, 
-                               QSpinBox, QDoubleSpinBox, QTextEdit, QProgressBar)
+                               QSpinBox, QDoubleSpinBox, QTextEdit, QProgressBar, QLineEdit)
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QIntValidator
 
 from gui.widgets.step_indicator import StepIndicator
 
@@ -30,13 +30,51 @@ def setup_load_cell_tab(main_window):
     steps_group = QGroupBox("Progress")
     steps_layout = QVBoxLayout(steps_group)
     
-    main_window.step1 = StepIndicator(1, "Upload Calibration Code", "Upload loadcell_calibration.ino to Arduino")
+    main_window.step1 = StepIndicator(1, "Upload Unified Calibration", "Upload calibration.ino (supports both Load Cell & IMU)")
     main_window.step2 = StepIndicator(2, "Calibrate & Save", "Run calibration process and save factor")
     
     steps_layout.addWidget(main_window.step1)
     steps_layout.addWidget(main_window.step2)
     
     left_layout.addWidget(steps_group)
+    
+    # Mars ID Settings
+    mars_id_group = QGroupBox("Mars Device ID")
+    mars_id_layout = QVBoxLayout(mars_id_group)
+    
+    mars_id_input_layout = QHBoxLayout()
+    mars_id_input_layout.addWidget(QLabel("Mars ID:"))
+    main_window.mars_id_input = QLineEdit()
+    main_window.mars_id_input.setPlaceholderText("Enter Mars device ID (e.g., 1, 42, 123)")
+    
+    # Set integer validator for non-negative integers
+    int_validator = QIntValidator(0, 9999)
+    main_window.mars_id_input.setValidator(int_validator)
+    main_window.mars_id_input.setMaxLength(4)
+    
+    def on_mars_id_changed():
+        mars_id = main_window.mars_id_input.text().strip()
+        if mars_id:
+            is_valid, error_msg = main_window.validate_mars_id(mars_id)
+            if is_valid:
+                main_window.set_mars_id(mars_id)
+                main_window.mars_id_input.setStyleSheet("QLineEdit { background: #e8f5e8; }")
+            else:
+                main_window.mars_id_input.setStyleSheet("QLineEdit { background: #ffe8e8; }")
+                main_window.mars_id_input.setToolTip(error_msg)
+        else:
+            main_window.mars_id_input.setStyleSheet("")
+            main_window.mars_id_input.setToolTip("")
+    
+    main_window.mars_id_input.textChanged.connect(on_mars_id_changed)
+    mars_id_input_layout.addWidget(main_window.mars_id_input)
+    mars_id_layout.addLayout(mars_id_input_layout)
+    
+    mars_id_info = QLabel("💡 This ID will be used in all tabs and saved with calibration data")
+    mars_id_info.setStyleSheet("QLabel { color: #666; font-size: 10px; }")
+    mars_id_layout.addWidget(mars_id_info)
+    
+    left_layout.addWidget(mars_id_group)
     
     # Connection Settings
     connection_group = QGroupBox("Connection Settings")
@@ -57,15 +95,15 @@ def setup_load_cell_tab(main_window):
     board_layout.addWidget(QLabel("Board:"))
     main_window.board_combo = QComboBox()
     main_window.board_combo.addItems([
-        "arduino:avr:uno", 
-        "arduino:avr:nano", 
+        "teensy:avr:teensy41",
+        "arduino:avr:uno",
+        "arduino:avr:nano",
         "arduino:mbed_nano:nano33ble",
         "arduino:mbed_nano:nanorp2040connect",
-        "teensy:avr:teensy41",
         "esp32:esp32:esp32"
     ])
-    # Set Nano 33 BLE as default for IMU compatibility
-    main_window.board_combo.setCurrentText("arduino:mbed_nano:nano33ble")
+    # Set Teensy 4.1 as default
+    main_window.board_combo.setCurrentText("teensy:avr:teensy41")
     board_layout.addWidget(main_window.board_combo)
     connection_layout.addLayout(board_layout)
     
@@ -80,19 +118,19 @@ def setup_load_cell_tab(main_window):
     
     left_layout.addWidget(connection_group)
     
-    # Step 1: Upload Calibration
-    main_window.step1_group = QGroupBox("Step 1: Upload Calibration Code")
+    # Step 1: Upload Unified Calibration
+    main_window.step1_group = QGroupBox("Step 1: Upload Unified Calibration Program")
     step1_layout = QVBoxLayout(main_window.step1_group)
     
     # File display
     cal_file_layout = QHBoxLayout()
     cal_file_layout.addWidget(QLabel("File:"))
-    main_window.cal_file_label = QLabel(main_window.calibration_file)
+    main_window.cal_file_label = QLabel("calibration.ino (Load Cell + IMU)")
     main_window.cal_file_label.setStyleSheet("QLabel { background: #f0f0f0; padding: 5px; border: 1px solid #ccc; }")
     cal_file_layout.addWidget(main_window.cal_file_label)
     step1_layout.addLayout(cal_file_layout)
     
-    main_window.upload_cal_button = QPushButton("Upload Calibration Code")
+    main_window.upload_cal_button = QPushButton("Upload Unified Calibration")
     main_window.upload_cal_button.setStyleSheet("QPushButton { background: #2196F3; color: white; padding: 10px; font-weight: bold; }")
     main_window.upload_cal_button.clicked.connect(main_window.upload_calibration_code)
     step1_layout.addWidget(main_window.upload_cal_button)

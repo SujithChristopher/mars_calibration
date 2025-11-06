@@ -4,9 +4,9 @@ IMU calibration tab UI components.
 
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QSplitter, 
                                QGroupBox, QLabel, QPushButton, QComboBox, 
-                               QTextEdit, QGridLayout, QLCDNumber)
+                               QTextEdit, QGridLayout, QLCDNumber, QLineEdit)
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont, QColor
+from PySide6.QtGui import QFont, QColor, QIntValidator
 
 from gui.widgets.angle_indicator import AngleIndicator
 from gui.widgets.attitude_indicator import AttitudeIndicator
@@ -26,6 +26,44 @@ def setup_imu_tab(main_window):
     # Left panel - Controls and Connection
     left_panel = QWidget()
     left_layout = QVBoxLayout(left_panel)
+    
+    # Mars ID Settings (synchronized with Load Cell tab)
+    imu_mars_id_group = QGroupBox("Mars Device ID")
+    imu_mars_id_layout = QVBoxLayout(imu_mars_id_group)
+    
+    imu_mars_id_input_layout = QHBoxLayout()
+    imu_mars_id_input_layout.addWidget(QLabel("Mars ID:"))
+    main_window.imu_mars_id_input = QLineEdit()
+    main_window.imu_mars_id_input.setPlaceholderText("Enter Mars device ID (e.g., 1, 42, 123)")
+    
+    # Set integer validator for non-negative integers
+    imu_int_validator = QIntValidator(0, 9999)
+    main_window.imu_mars_id_input.setValidator(imu_int_validator)
+    main_window.imu_mars_id_input.setMaxLength(4)
+    
+    def on_imu_mars_id_changed():
+        mars_id = main_window.imu_mars_id_input.text().strip()
+        if mars_id:
+            is_valid, error_msg = main_window.validate_mars_id(mars_id)
+            if is_valid:
+                main_window.set_mars_id(mars_id)
+                main_window.imu_mars_id_input.setStyleSheet("QLineEdit { background: #e8f5e8; }")
+            else:
+                main_window.imu_mars_id_input.setStyleSheet("QLineEdit { background: #ffe8e8; }")
+                main_window.imu_mars_id_input.setToolTip(error_msg)
+        else:
+            main_window.imu_mars_id_input.setStyleSheet("")
+            main_window.imu_mars_id_input.setToolTip("")
+    
+    main_window.imu_mars_id_input.textChanged.connect(on_imu_mars_id_changed)
+    imu_mars_id_input_layout.addWidget(main_window.imu_mars_id_input)
+    imu_mars_id_layout.addLayout(imu_mars_id_input_layout)
+    
+    imu_mars_id_info = QLabel("💡 Synchronized with Load Cell tab - same Mars ID applies to both")
+    imu_mars_id_info.setStyleSheet("QLabel { color: #666; font-size: 10px; }")
+    imu_mars_id_layout.addWidget(imu_mars_id_info)
+    
+    left_layout.addWidget(imu_mars_id_group)
     
     # IMU Connection Settings
     imu_connection_group = QGroupBox("IMU Connection Settings")
@@ -61,14 +99,14 @@ def setup_imu_tab(main_window):
     
     left_layout.addWidget(imu_connection_group)
     
-    # IMU Upload Section
-    imu_upload_group = QGroupBox("Upload IMU Program")
+    # Unified Calibration Upload Section
+    imu_upload_group = QGroupBox("Upload Unified Calibration Program")
     imu_upload_layout = QVBoxLayout(imu_upload_group)
     
-    # IMU File display
+    # Unified Calibration File display
     imu_file_layout = QHBoxLayout()
     imu_file_layout.addWidget(QLabel("File:"))
-    main_window.imu_file_label = QLabel("imu_program_teensy.ino (MPU6050 + Library)")
+    main_window.imu_file_label = QLabel("calibration.ino (Load Cell + IMU)")
     main_window.imu_file_label.setStyleSheet("""
     QLabel { 
         background: palette(base); 
@@ -83,7 +121,7 @@ def setup_imu_tab(main_window):
     imu_file_layout.addWidget(main_window.imu_file_label)
     imu_upload_layout.addLayout(imu_file_layout)
     
-    main_window.upload_imu_button = QPushButton("Upload IMU Program")
+    main_window.upload_imu_button = QPushButton("Upload Unified Calibration")
     main_window.upload_imu_button.setStyleSheet("QPushButton { background: #FF9800; color: white; padding: 10px; font-weight: bold; }")
     main_window.upload_imu_button.clicked.connect(main_window.upload_imu_code)
     imu_upload_layout.addWidget(main_window.upload_imu_button)
@@ -91,14 +129,24 @@ def setup_imu_tab(main_window):
     left_layout.addWidget(imu_upload_group)
     
     # IMU Control Section
-    imu_control_group = QGroupBox("Sequential IMU Calibration Controls")
+    imu_control_group = QGroupBox("Sequential IMU Calibration Controls (4-Offset Formula-Based)")
     imu_control_layout = QVBoxLayout(imu_control_group)
+
+    # Formula-based calibration info
+    formula_info = QLabel(
+        "Formula-Based Method: Place device FLAT and LEVEL, then calibrate.\n"
+        "Offsets calculated using firmware angle formulas.\n"
+        "IMU1: Pitch+Roll | IMU2: Roll only | IMU3: Roll only"
+    )
+    formula_info.setStyleSheet("QLabel { color: #0066cc; font-size: 9px; font-style: italic; padding: 5px; }")
+    imu_control_layout.addWidget(formula_info)
     
     # IMU Selection
     imu_selection_layout = QHBoxLayout()
     imu_selection_layout.addWidget(QLabel("Current IMU:"))
     main_window.current_imu_combo = QComboBox()
-    main_window.current_imu_combo.addItems(["IMU 1 (Pitch+Roll)", "IMU 2 (Pitch+Roll)", "IMU 3 (Roll only)"])
+    # 4-Offset formula-based: IMU1 has pitch+roll, IMU2&3 have roll only
+    main_window.current_imu_combo.addItems(["IMU 1 (Pitch+Roll)", "IMU 2 (Roll Only)", "IMU 3 (Roll Only)"])
     main_window.current_imu_combo.currentTextChanged.connect(main_window.on_imu_selection_changed)
     imu_selection_layout.addWidget(main_window.current_imu_combo)
     imu_control_layout.addLayout(imu_selection_layout)
@@ -118,47 +166,11 @@ def setup_imu_tab(main_window):
     imu_buttons_layout.addWidget(main_window.start_imu_cal_button, 0, 0, 1, 2)  # Span 2 columns
     
     imu_control_layout.addLayout(imu_buttons_layout)
-    
-    # Current IMU offsets display
-    current_offsets_group = QGroupBox("Current IMU Live Offsets")
-    current_offsets_layout = QGridLayout(current_offsets_group)
-    
-    # Theme-adaptive styling for offset labels
-    offset_style = """
-    QLabel {
-        background: palette(base);
-        color: palette(text);
-        padding: 8px;
-        border: 2px solid palette(mid);
-        border-radius: 4px;
-        font-family: 'Consolas', 'Monaco', monospace;
-        font-size: 11pt;
-        font-weight: bold;
-        min-width: 80px;
-    }
-    """
-    
-    current_offsets_layout.addWidget(QLabel("X Offset:"), 0, 0)
-    main_window.offset_x_label = QLabel("0.0000")
-    main_window.offset_x_label.setStyleSheet(offset_style)
-    current_offsets_layout.addWidget(main_window.offset_x_label, 0, 1)
-    
-    current_offsets_layout.addWidget(QLabel("Y Offset:"), 1, 0)
-    main_window.offset_y_label = QLabel("0.0000")
-    main_window.offset_y_label.setStyleSheet(offset_style)
-    current_offsets_layout.addWidget(main_window.offset_y_label, 1, 1)
-    
-    current_offsets_layout.addWidget(QLabel("Z Offset:"), 2, 0)
-    main_window.offset_z_label = QLabel("0.0000")
-    main_window.offset_z_label.setStyleSheet(offset_style)
-    current_offsets_layout.addWidget(main_window.offset_z_label, 2, 1)
-    
-    imu_control_layout.addWidget(current_offsets_group)
-    
-    # Saved IMU offsets display
-    saved_offsets_group = QGroupBox("Saved IMU Angle Offsets")
+
+    # Saved IMU offsets display (4-Offset Formula-Based)
+    saved_offsets_group = QGroupBox("Saved IMU Angle Offsets (4-Offset Formula-Based)")
     saved_offsets_layout = QGridLayout(saved_offsets_group)
-    
+
     # Theme-adaptive styling for different IMUs with distinct colors
     imu1_style = """
     QLabel {
@@ -173,7 +185,7 @@ def setup_imu_tab(main_window):
         min-width: 80px;
     }
     """
-    
+
     imu2_style = """
     QLabel {
         background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 palette(button), stop:1 palette(base));
@@ -187,7 +199,7 @@ def setup_imu_tab(main_window):
         min-width: 80px;
     }
     """
-    
+
     imu3_style = """
     QLabel {
         background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 palette(mid), stop:1 palette(base));
@@ -201,34 +213,33 @@ def setup_imu_tab(main_window):
         min-width: 80px;
     }
     """
-    
-    # IMU 1 (angle_offset1, angle_offset2)
+
+    # 4-Offset Formula-Based Display
+    # Row 0: IMU 1 Pitch + IMU 1 Roll
     saved_offsets_layout.addWidget(QLabel("IMU 1 Pitch:"), 0, 0)
-    main_window.angle_offset1_label = QLabel("0.0000")
+    main_window.angle_offset1_label = QLabel("0.000000")
     main_window.angle_offset1_label.setStyleSheet(imu1_style)
     saved_offsets_layout.addWidget(main_window.angle_offset1_label, 0, 1)
-    
+
     saved_offsets_layout.addWidget(QLabel("IMU 1 Roll:"), 0, 2)
-    main_window.angle_offset2_label = QLabel("0.0000")
+    main_window.angle_offset2_label = QLabel("0.000000")
     main_window.angle_offset2_label.setStyleSheet(imu1_style)
     saved_offsets_layout.addWidget(main_window.angle_offset2_label, 0, 3)
-    
-    # IMU 2 (angle_offset3, angle_offset4)
-    saved_offsets_layout.addWidget(QLabel("IMU 2 Pitch:"), 1, 0)
-    main_window.angle_offset3_label = QLabel("0.0000")
+
+    # Row 1: IMU 2 Roll + IMU 3 Roll (no pitch, only roll offsets)
+    saved_offsets_layout.addWidget(QLabel("IMU 2 Roll:"), 1, 0)
+    main_window.angle_offset3_label = QLabel("0.000000")
     main_window.angle_offset3_label.setStyleSheet(imu2_style)
     saved_offsets_layout.addWidget(main_window.angle_offset3_label, 1, 1)
-    
-    saved_offsets_layout.addWidget(QLabel("IMU 2 Roll:"), 1, 2)
-    main_window.angle_offset4_label = QLabel("0.0000")
-    main_window.angle_offset4_label.setStyleSheet(imu2_style)
+
+    saved_offsets_layout.addWidget(QLabel("IMU 3 Roll:"), 1, 2)
+    main_window.angle_offset4_label = QLabel("0.000000")
+    main_window.angle_offset4_label.setStyleSheet(imu3_style)
     saved_offsets_layout.addWidget(main_window.angle_offset4_label, 1, 3)
-    
-    # IMU 3 (angle_offset5 - roll only)
-    saved_offsets_layout.addWidget(QLabel("IMU 3 Roll:"), 2, 0)
-    main_window.angle_offset5_label = QLabel("0.0000")
-    main_window.angle_offset5_label.setStyleSheet(imu3_style)
-    saved_offsets_layout.addWidget(main_window.angle_offset5_label, 2, 1)
+
+    # Legacy offset labels (kept for backward compatibility in code but not displayed)
+    main_window.angle_offset5_label = QLabel("N/A")
+    main_window.angle_offset6_label = QLabel("N/A")
     
     imu_control_layout.addWidget(saved_offsets_group)
     

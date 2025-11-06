@@ -9,10 +9,9 @@ project_root = Path.cwd()
 # Define data files to include
 added_files = [
     # Arduino sketches
-    (str(project_root / 'loadcell_calibration'), 'loadcell_calibration'),
-    (str(project_root / 'firmware'), 'firmware'), 
-    (str(project_root / 'imu_program_teensy'), 'imu_program_teensy'),
-    
+    (str(project_root / 'calibration'), 'calibration'),  # Unified calibration program
+    (str(project_root / 'marsfire'), 'marsfire'),        # Production firmware (entire folder with variable.h, .cpp, .h files)
+
     # Any additional data files
     (str(project_root / 'README.md'), '.'),
 ]
@@ -65,10 +64,8 @@ pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
     [],
+    exclude_binaries=True,  # Use onedir mode instead of onefile
     name='MarsCalibration',
     debug=False,
     bootloader_ignore_signals=False,
@@ -84,4 +81,16 @@ exe = EXE(
     entitlements_file=None,
     icon=None,  # Add path to .ico file if you have one
     version_file=None,  # Add version info file if needed
+)
+
+# COLLECT all binaries and data files into a folder (onedir mode)
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='MarsCalibration',
 )

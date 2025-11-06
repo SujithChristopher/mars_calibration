@@ -65,7 +65,7 @@ class SetupDialog(QDialog):
         desc_label = QLabel(
             "This application requires Arduino CLI and specific libraries to function properly.\n"
             "The setup process will:\n\n"
-            "• Download Arduino CLI if not present (~50MB)\n"
+            "• Download Arduino CLI to Documents/HOMER/arduino-cli (~50MB)\n"
             "• Install required board packages (Teensy, Arduino)\n"
             "• Install required libraries (LSM9DS1, HX711)\n\n"
             "This is a one-time setup process."
