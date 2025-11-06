@@ -1398,7 +1398,7 @@ class LoadCellCalibrationGUI(QMainWindow):
             filepath = os.path.join(self.calibrations_dir, filename)
             
             # Save to TOML file
-            with open(filepath, 'w') as f:
+            with open(filepath, 'w', encoding='utf-8') as f:
                 toml.dump(calibration_data, f)
             
             self.logger.log(f"Calibration saved to: {filename}")
@@ -1427,7 +1427,7 @@ class LoadCellCalibrationGUI(QMainWindow):
             # Populate table
             for i, filepath in enumerate(toml_files):
                 try:
-                    with open(filepath, 'r') as f:
+                    with open(filepath, 'r', encoding='utf-8') as f:
                         data = toml.load(f)
 
                     # Extract data
@@ -1522,7 +1522,7 @@ class LoadCellCalibrationGUI(QMainWindow):
                 return
 
             # Load TOML data
-            with open(filepath, 'r') as f:
+            with open(filepath, 'r', encoding='utf-8') as f:
                 data = toml.load(f)
 
             # Update current calibration values
