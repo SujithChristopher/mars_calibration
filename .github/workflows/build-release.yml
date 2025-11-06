@@ -32,21 +32,50 @@ jobs:
     - name: Build executable with PyInstaller
       run: |
         pyinstaller mars_calibration.spec
-    
+
+    - name: Verify build (onedir mode)
+      run: |
+        if (!(Test-Path "dist\MarsCalibration\MarsCalibration.exe")) {
+          Write-Error "Build failed - executable not found"
+          exit 1
+        }
+        if (!(Test-Path "dist\MarsCalibration\_internal\calibration\calibration.ino")) {
+          Write-Error "Build failed - calibration firmware not bundled"
+          exit 1
+        }
+        if (!(Test-Path "dist\MarsCalibration\_internal\marsfire\marsfire.ino")) {
+          Write-Error "Build failed - marsfire firmware not bundled"
+          exit 1
+        }
+        Write-Host "✓ Build verification passed"
+      shell: pwsh
+
     - name: Test executable (basic smoke test)
       run: |
-        # Basic test to ensure the executable runs without crashing
-        timeout 10 ./dist/MarsCalibration.exe --help || echo "App started successfully"
-      shell: cmd
+        Write-Host "Testing executable startup..."
+        $process = Start-Process -FilePath "dist\MarsCalibration\MarsCalibration.exe" -PassThru
+        Start-Sleep -Seconds 5
+        if (!$process.HasExited) {
+          Write-Host "✓ Executable started successfully"
+          Stop-Process -Id $process.Id -Force
+        } else {
+          Write-Warning "Executable exited during smoke test"
+        }
+      shell: pwsh
       continue-on-error: true
-    
+
     - name: Create release archive
       run: |
-        mkdir release
-        copy dist\MarsCalibration.exe release\
-        copy README.md release\
-        copy requirements.txt release\
-        powershell Compress-Archive -Path release\* -DestinationPath MarsCalibration-Windows-x64.zip
+        # Copy entire MarsCalibration folder (onedir mode)
+        Copy-Item -Path "dist\MarsCalibration" -Destination "MarsCalibration-Windows" -Recurse
+
+        # Add README and requirements to the package
+        Copy-Item "README.md" -Destination "MarsCalibration-Windows\"
+        Copy-Item "requirements.txt" -Destination "MarsCalibration-Windows\"
+
+        # Create ZIP archive
+        Compress-Archive -Path "MarsCalibration-Windows" -DestinationPath "MarsCalibration-Windows-x64.zip"
+      shell: pwsh
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
@@ -76,14 +105,34 @@ jobs:
     - name: Build executable with PyInstaller
       run: |
         pyinstaller mars_calibration.spec
-    
+
+    - name: Verify build (onedir mode)
+      run: |
+        if [ ! -f "dist/MarsCalibration/MarsCalibration" ]; then
+          echo "❌ Build failed - executable not found"
+          exit 1
+        fi
+        if [ ! -f "dist/MarsCalibration/_internal/calibration/calibration.ino" ]; then
+          echo "❌ Build failed - calibration firmware not bundled"
+          exit 1
+        fi
+        if [ ! -f "dist/MarsCalibration/_internal/marsfire/marsfire.ino" ]; then
+          echo "❌ Build failed - marsfire firmware not bundled"
+          exit 1
+        fi
+        echo "✓ Build verification passed"
+
     - name: Create release archive
       run: |
-        mkdir release
-        cp dist/MarsCalibration release/
-        cp README.md release/
-        cp requirements.txt release/
-        tar -czf MarsCalibration-macOS-x64.tar.gz -C release .
+        # Copy entire MarsCalibration folder (onedir mode)
+        cp -r dist/MarsCalibration MarsCalibration-macOS
+
+        # Add README and requirements to the package
+        cp README.md MarsCalibration-macOS/
+        cp requirements.txt MarsCalibration-macOS/
+
+        # Create tar.gz archive
+        tar -czf MarsCalibration-macOS-x64.tar.gz MarsCalibration-macOS
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
