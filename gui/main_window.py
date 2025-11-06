@@ -708,7 +708,7 @@ class LoadCellCalibrationGUI(QMainWindow):
             
             # Start thread
             self.serial_thread.start()
-            
+
             # Update UI
             self.is_connected = True
             self.connect_button.setText("Disconnect from Serial")
@@ -716,10 +716,13 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.tare_button.setEnabled(True)
             self.calibrate_button.setEnabled(True)
             self.send_mass_button.setEnabled(True)
-            
+
             success_msg = f"Connected to {selected_port}"
             ui_message = self.logger.log_success(success_msg)
             self.log_message_to_ui(ui_message)
+
+            # Auto-switch to Load Cell mode after short delay
+            QTimer.singleShot(1000, self.auto_switch_to_loadcell_mode)
             
         except Exception as e:
             error_msg = f"Connection failed: {str(e)}"
@@ -820,7 +823,19 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.serial_worker.send_data(f"{mass}\n")
             ui_message = self.logger.log_serial(f"{mass}", "TX")
             self.log_message_to_ui(f"Sent: {mass} (known mass)")
-            
+
+    def auto_switch_to_loadcell_mode(self):
+        """Auto-switch to Load Cell mode when connecting from Load Cell tab"""
+        if self.serial_worker and self.is_connected:
+            self.serial_worker.send_data("l")
+            self.log_message_to_ui(">>> Switched to Load Cell mode")
+
+    def auto_switch_to_imu_mode(self):
+        """Auto-switch to IMU mode when connecting from IMU tab"""
+        if self.imu_worker and self.is_imu_connected:
+            self.imu_worker.send_data("i")
+            self.log_imu_message_to_ui(">>> Switched to IMU mode")
+
     def log_message_to_ui(self, message):
         """Add message to serial output (UI only)"""
         self.serial_output.append(message)
@@ -987,16 +1002,19 @@ class LoadCellCalibrationGUI(QMainWindow):
             
             # Start thread
             self.imu_thread.start()
-            
+
             # Update UI
             self.is_imu_connected = True
             self.imu_connect_button.setText("Disconnect IMU")
             self.imu_connect_button.setStyleSheet("QPushButton { background: #f44336; color: white; }")
             self.start_imu_cal_button.setEnabled(True)
-            
+
             success_msg = f"Connected to IMU at {selected_port}"
             ui_message = self.logger.log_success(success_msg)
             self.log_imu_message_to_ui(ui_message)
+
+            # Auto-switch to IMU mode after short delay
+            QTimer.singleShot(1000, self.auto_switch_to_imu_mode)
             
         except Exception as e:
             error_msg = f"IMU connection failed: {str(e)}"
