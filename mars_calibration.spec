@@ -64,10 +64,8 @@ pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
     [],
+    exclude_binaries=True,  # Use onedir mode instead of onefile
     name='MarsCalibration',
     debug=False,
     bootloader_ignore_signals=False,
@@ -83,4 +81,16 @@ exe = EXE(
     entitlements_file=None,
     icon=None,  # Add path to .ico file if you have one
     version_file=None,  # Add version info file if needed
+)
+
+# COLLECT all binaries and data files into a folder (onedir mode)
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='MarsCalibration',
 )
