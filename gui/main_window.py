@@ -1105,21 +1105,24 @@ class LoadCellCalibrationGUI(QMainWindow):
         # Route calculated offsets ONLY for currently selected IMU
         # Arduino calculates all offsets but we only use the relevant ones
         # based on which physical IMU is currently connected and selected
+        import math
 
         if "calibrated_pitch_offset" in data:
             # Pitch is only for IMU1
             if self.current_imu_index == 0:
-                self.angle_offset1 = data["calibrated_pitch_offset"]
-                self.angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
-                ui_message = self.logger.log_imu(f"Received IMU1 Pitch Offset: {self.angle_offset1:.6f} rad")
+                self.angle_offset1 = data["calibrated_pitch_offset"]  # Store in radians
+                offset_deg = math.degrees(self.angle_offset1)  # Convert to degrees for display
+                self.angle_offset1_label.setText(f"{offset_deg:.4f}°")
+                ui_message = self.logger.log_imu(f"Received IMU1 Pitch Offset: {self.angle_offset1:.6f} rad ({offset_deg:.4f}°)")
                 self.log_imu_message_to_ui(ui_message)
 
         if "calibrated_roll_offset" in data:
             # Route roll offset ONLY for currently selected IMU
             if self.current_imu_index == 0:  # IMU1
-                self.angle_offset2 = data["calibrated_roll_offset"]
-                self.angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
-                ui_message = self.logger.log_imu(f"Received IMU1 Roll Offset: {self.angle_offset2:.6f} rad")
+                self.angle_offset2 = data["calibrated_roll_offset"]  # Store in radians
+                offset_deg = math.degrees(self.angle_offset2)  # Convert to degrees for display
+                self.angle_offset2_label.setText(f"{offset_deg:.4f}°")
+                ui_message = self.logger.log_imu(f"Received IMU1 Roll Offset: {self.angle_offset2:.6f} rad ({offset_deg:.4f}°)")
                 self.log_imu_message_to_ui(ui_message)
                 self.has_imu_calibration = True
             # For IMU2 and IMU3, ignore IMU1 roll offset - they have their own explicit outputs
@@ -1127,17 +1130,19 @@ class LoadCellCalibrationGUI(QMainWindow):
         # Only accept IMU2 offset when IMU2 is selected
         if "calibrated_imu2_roll_offset" in data:
             if self.current_imu_index == 1:  # Only update if IMU2 is selected
-                self.angle_offset3 = data["calibrated_imu2_roll_offset"]
-                self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
-                ui_message = self.logger.log_imu(f"Received IMU2 Roll Offset: {self.angle_offset3:.6f} rad")
+                self.angle_offset3 = data["calibrated_imu2_roll_offset"]  # Store in radians
+                offset_deg = math.degrees(self.angle_offset3)  # Convert to degrees for display
+                self.angle_offset3_label.setText(f"{offset_deg:.4f}°")
+                ui_message = self.logger.log_imu(f"Received IMU2 Roll Offset: {self.angle_offset3:.6f} rad ({offset_deg:.4f}°)")
                 self.log_imu_message_to_ui(ui_message)
 
         # Only accept IMU3 offset when IMU3 is selected
         if "calibrated_imu3_roll_offset" in data:
             if self.current_imu_index == 2:  # Only update if IMU3 is selected
-                self.angle_offset4 = data["calibrated_imu3_roll_offset"]
-                self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
-                ui_message = self.logger.log_imu(f"Received IMU3 Roll Offset: {self.angle_offset4:.6f} rad")
+                self.angle_offset4 = data["calibrated_imu3_roll_offset"]  # Store in radians
+                offset_deg = math.degrees(self.angle_offset4)  # Convert to degrees for display
+                self.angle_offset4_label.setText(f"{offset_deg:.4f}°")
+                ui_message = self.logger.log_imu(f"Received IMU3 Roll Offset: {self.angle_offset4:.6f} rad ({offset_deg:.4f}°)")
                 self.log_imu_message_to_ui(ui_message)
 
         # Update final tab with calibration values
@@ -1435,14 +1440,16 @@ class LoadCellCalibrationGUI(QMainWindow):
                 self.final_calibration_factor_label.setText("Not Calibrated")
 
         # Update 4 IMU offset labels (formula-based: IMU1 pitch, IMU1 roll, IMU2 roll, IMU3 roll)
+        # Display in degrees, but store in radians
+        import math
         if hasattr(self, 'final_angle_offset1_label'):
-            self.final_angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
+            self.final_angle_offset1_label.setText(f"{math.degrees(self.angle_offset1):.4f}°")
         if hasattr(self, 'final_angle_offset2_label'):
-            self.final_angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
+            self.final_angle_offset2_label.setText(f"{math.degrees(self.angle_offset2):.4f}°")
         if hasattr(self, 'final_angle_offset3_label'):
-            self.final_angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
+            self.final_angle_offset3_label.setText(f"{math.degrees(self.angle_offset3):.4f}°")
         if hasattr(self, 'final_angle_offset4_label'):
-            self.final_angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
+            self.final_angle_offset4_label.setText(f"{math.degrees(self.angle_offset4):.4f}°")
         # Legacy offsets (if UI still references them)
         if hasattr(self, 'final_angle_offset5_label'):
             self.final_angle_offset5_label.setText("N/A")
@@ -1677,14 +1684,16 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.has_imu_calibration = True
 
             # Update IMU tab labels for currently set offsets
+            # Display in degrees, but store in radians
+            import math
             if hasattr(self, 'angle_offset1_label'):
-                self.angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
+                self.angle_offset1_label.setText(f"{math.degrees(self.angle_offset1):.4f}°")
             if hasattr(self, 'angle_offset2_label'):
-                self.angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
+                self.angle_offset2_label.setText(f"{math.degrees(self.angle_offset2):.4f}°")
             if hasattr(self, 'angle_offset3_label'):
-                self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
+                self.angle_offset3_label.setText(f"{math.degrees(self.angle_offset3):.4f}°")
             if hasattr(self, 'angle_offset4_label'):
-                self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
+                self.angle_offset4_label.setText(f"{math.degrees(self.angle_offset4):.4f}°")
 
             # Update all display labels (including final tab)
             self.update_final_tab_status()
