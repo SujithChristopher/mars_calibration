@@ -686,31 +686,50 @@ void processIMUCalibration(float ax, float ay, float az) {
 }
 
 void calculateIMUOffsets(float ax, float ay, float az) {
-  // Calculate 4 IMU offsets using firmware formulas
+  // Calculate 4 IMU offsets using EXACT production firmware formulas
   // Device must be placed flat and level during calibration
+  // Reference: marsfire/misc.ino - computeImuAnglesRight()
 
   // ===== IMU1 PITCH OFFSET =====
-  // Formula: Theta1 = atan2(ax, sqrt(ay^2 + az^2)) - IMU1PITCHOFFSET
-  // When flat: offset = atan2(ax, sqrt(ay^2 + az^2))
+  // Production: theta1 = atan2(ax1, sqrt(ay1^2 + az1^2)) - IMU1PITCHOFFSET
+  // When flat: IMU1PITCHOFFSET = atan2(ax1, sqrt(ay1^2 + az1^2))
   float norm = sqrt(ay * ay + az * az);
   imu_offsets.imu1_pitch_offset = atan2(ax, norm);
 
   // ===== IMU1 ROLL OFFSET =====
-  // Formula: Theta2 = atan2(-az/cos(Theta1), ay/cos(Theta1)) * -1 - IMU1ROLLOFFSET
-  // When flat: offset = atan2(-az/cos(Theta1), ay/cos(Theta1)) * -1
+  // Production: theta2 = atan2(-az1/cos(theta1), ay1/cos(theta1)) - IMU1ROLLOFFSET
+  // When flat: IMU1ROLLOFFSET = atan2(-az1/cos(theta1), ay1/cos(theta1))
   float cos_pitch = cos(imu_offsets.imu1_pitch_offset);
-  imu_offsets.imu1_roll_offset = atan2(-az / cos_pitch, ay / cos_pitch) * -1;
-  // if (abs(cos_pitch) > 0.001) {
-  //   imu_offsets.imu1_roll_offset = atan2(-az / cos_pitch, ay / cos_pitch);
-  // } else {
-  //   imu_offsets.imu1_roll_offset = 0.0;
-  // }
+  if (abs(cos_pitch) > 0.001) {
+    imu_offsets.imu1_roll_offset = atan2(-az / cos_pitch, ay / cos_pitch);
+  } else {
+    imu_offsets.imu1_roll_offset = 0.0;
+  }
 
-  // For now, set IMU2 and IMU3 offsets to 0
-  // In a multi-IMU system, these would be calculated from IMU2 and IMU3 data
-  // with adjustments for the relative subtractions in firmware
-  imu_offsets.imu2_roll_offset = 0.0;
-  imu_offsets.imu3_roll_offset = 0.0;
+  // ===== IMU2 ROLL OFFSET =====
+  // Production: norm = sqrt(ay2^2 + az2^2), _cosp = cos(atan2(ax2, norm))
+  //             theta3 = atan2(-az2/_cosp, ay2/_cosp) - theta2 - IMU2ROLLOFFSET
+  // When flat and sequential (theta2 = 0): IMU2ROLLOFFSET = atan2(-az2/_cosp, ay2/_cosp)
+  norm = sqrt(ay * ay + az * az);
+  cos_pitch = cos(atan2(ax, norm));
+  if (abs(cos_pitch) > 0.001) {
+    imu_offsets.imu2_roll_offset = atan2(-az / cos_pitch, ay / cos_pitch);
+  } else {
+    imu_offsets.imu2_roll_offset = 0.0;
+  }
+
+  // ===== IMU3 ROLL OFFSET =====
+  // Production: norm = sqrt(ax3^2 + ay3^2), _cosp = cos(atan2(-az3, norm))
+  //             theta4 = atan2(-ax3/_cosp, ay3/_cosp) - theta2 - theta3 - IMU3ROLLOFFSET
+  // When flat and sequential (theta2 = theta3 = 0): IMU3ROLLOFFSET = atan2(-ax3/_cosp, ay3/_cosp)
+  // NOTE: IMU3 uses DIFFERENT formula - ax and ay for norm, -az3 for pitch calculation
+  norm = sqrt(ax * ax + ay * ay);  // Different: ax and ay, not ay and az
+  cos_pitch = cos(atan2(-az, norm));  // Different: -az
+  if (abs(cos_pitch) > 0.001) {
+    imu_offsets.imu3_roll_offset = atan2(-ax / cos_pitch, ay / cos_pitch);
+  } else {
+    imu_offsets.imu3_roll_offset = 0.0;
+  }
 
   imu_offsets.valid = true;
 }

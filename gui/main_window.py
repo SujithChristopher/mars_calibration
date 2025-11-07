@@ -1102,9 +1102,9 @@ class LoadCellCalibrationGUI(QMainWindow):
             
     def handle_calculated_offsets(self, data):
         """Handle calculated offset values from Arduino calibration"""
-        # Route calculated offsets based on current IMU selection
-        # Arduino always outputs "IMU1 Pitch/Roll Offset" regardless of selected IMU
-        # We route these values to the appropriate IMU based on current selection
+        # Route calculated offsets ONLY for currently selected IMU
+        # Arduino calculates all offsets but we only use the relevant ones
+        # based on which physical IMU is currently connected and selected
 
         if "calibrated_pitch_offset" in data:
             # Pitch is only for IMU1
@@ -1115,36 +1115,30 @@ class LoadCellCalibrationGUI(QMainWindow):
                 self.log_imu_message_to_ui(ui_message)
 
         if "calibrated_roll_offset" in data:
-            # Route roll offset based on currently selected IMU
+            # Route roll offset ONLY for currently selected IMU
             if self.current_imu_index == 0:  # IMU1
                 self.angle_offset2 = data["calibrated_roll_offset"]
                 self.angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
                 ui_message = self.logger.log_imu(f"Received IMU1 Roll Offset: {self.angle_offset2:.6f} rad")
                 self.log_imu_message_to_ui(ui_message)
                 self.has_imu_calibration = True
-            elif self.current_imu_index == 1:  # IMU2 (Roll only)
-                self.angle_offset3 = data["calibrated_roll_offset"]
+            # For IMU2 and IMU3, ignore IMU1 roll offset - they have their own explicit outputs
+
+        # Only accept IMU2 offset when IMU2 is selected
+        if "calibrated_imu2_roll_offset" in data:
+            if self.current_imu_index == 1:  # Only update if IMU2 is selected
+                self.angle_offset3 = data["calibrated_imu2_roll_offset"]
                 self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
                 ui_message = self.logger.log_imu(f"Received IMU2 Roll Offset: {self.angle_offset3:.6f} rad")
                 self.log_imu_message_to_ui(ui_message)
-            elif self.current_imu_index == 2:  # IMU3 (Roll only)
-                self.angle_offset4 = data["calibrated_roll_offset"]
+
+        # Only accept IMU3 offset when IMU3 is selected
+        if "calibrated_imu3_roll_offset" in data:
+            if self.current_imu_index == 2:  # Only update if IMU3 is selected
+                self.angle_offset4 = data["calibrated_imu3_roll_offset"]
                 self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
                 ui_message = self.logger.log_imu(f"Received IMU3 Roll Offset: {self.angle_offset4:.6f} rad")
                 self.log_imu_message_to_ui(ui_message)
-
-        # These are only used if Arduino explicitly outputs IMU2/IMU3 offsets
-        if "calibrated_imu2_roll_offset" in data:
-            self.angle_offset3 = data["calibrated_imu2_roll_offset"]
-            self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
-            ui_message = self.logger.log_imu(f"Received IMU2 Roll Offset (explicit): {self.angle_offset3:.6f} rad")
-            self.log_imu_message_to_ui(ui_message)
-
-        if "calibrated_imu3_roll_offset" in data:
-            self.angle_offset4 = data["calibrated_imu3_roll_offset"]
-            self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
-            ui_message = self.logger.log_imu(f"Received IMU3 Roll Offset (explicit): {self.angle_offset4:.6f} rad")
-            self.log_imu_message_to_ui(ui_message)
 
         # Update final tab with calibration values
         self.update_final_tab_status()
