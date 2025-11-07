@@ -259,8 +259,7 @@ bool initializeIMU() {
   for (int i = 0; i < 2; i++) {
     mpu.setAddress(addresses[i]);
     byte status = mpu.begin();
-    mpu.calcOffsets(true, false);
-    
+
     if (status == 0) {
       Serial.print("MPU6050 connected at address 0x");
       Serial.println(addresses[i], HEX);
@@ -700,7 +699,7 @@ void calculateIMUOffsets(float ax, float ay, float az) {
   // Formula: Theta2 = atan2(-az/cos(Theta1), ay/cos(Theta1)) * -1 - IMU1ROLLOFFSET
   // When flat: offset = atan2(-az/cos(Theta1), ay/cos(Theta1)) * -1
   float cos_pitch = cos(imu_offsets.imu1_pitch_offset);
-  imu_offsets.imu1_roll_offset = atan2(-az / cos_pitch, ay / cos_pitch);
+  imu_offsets.imu1_roll_offset = atan2(-az / cos_pitch, ay / cos_pitch) * -1;
   // if (abs(cos_pitch) > 0.001) {
   //   imu_offsets.imu1_roll_offset = atan2(-az / cos_pitch, ay / cos_pitch);
   // } else {

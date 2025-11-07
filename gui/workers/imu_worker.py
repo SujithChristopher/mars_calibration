@@ -34,12 +34,18 @@ class IMUDataWorker(QObject):
                 if self.serial_connection.in_waiting:
                     line = self.serial_connection.readline().decode('utf-8').strip()
                     if line:
-                        parsed_data = self.parse_imu_data(line)
-                        if parsed_data:
-                            self.data_received.emit(parsed_data)
+                        # Check for calculated offset values first
+                        parsed_offset = self.parse_offset_line(line)
+                        if parsed_offset:
+                            self.data_received.emit(parsed_offset)
                         else:
-                            # Send raw message for display
-                            self.data_received.emit({"raw_message": line})
+                            # Try parsing CSV data
+                            parsed_data = self.parse_imu_data(line)
+                            if parsed_data:
+                                self.data_received.emit(parsed_data)
+                            else:
+                                # Send raw message for display
+                                self.data_received.emit({"raw_message": line})
             except Exception as e:
                 self.connection_lost.emit()
                 break
@@ -61,6 +67,33 @@ class IMUDataWorker(QObject):
                         'offset_y': float(parts[7]),
                         'offset_z': float(parts[8])
                     }
+        except (ValueError, IndexError):
+            pass
+        return None
+
+    def parse_offset_line(self, line):
+        """Parse calculated offset lines from Arduino calibration output"""
+        try:
+            # Parse "IMU1 Pitch Offset: -0.025858" format
+            if "IMU1 Pitch Offset:" in line or "IMU1PITCHOFFSET:" in line:
+                value = float(line.split(":")[-1].strip())
+                return {"calibrated_pitch_offset": value}
+
+            # Parse "IMU1 Roll Offset: -0.087844" format
+            elif "IMU1 Roll Offset:" in line or "IMU1ROLLOFFSET:" in line:
+                value = float(line.split(":")[-1].strip())
+                return {"calibrated_roll_offset": value}
+
+            # Parse "IMU2 Roll Offset: 0.000000" format
+            elif "IMU2 Roll Offset:" in line or "IMU2ROLLOFFSET:" in line:
+                value = float(line.split(":")[-1].strip())
+                return {"calibrated_imu2_roll_offset": value}
+
+            # Parse "IMU3 Roll Offset: 0.000000" format
+            elif "IMU3 Roll Offset:" in line or "IMU3ROLLOFFSET:" in line:
+                value = float(line.split(":")[-1].strip())
+                return {"calibrated_imu3_roll_offset": value}
+
         except (ValueError, IndexError):
             pass
         return None

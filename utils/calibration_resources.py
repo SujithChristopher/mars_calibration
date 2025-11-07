@@ -267,7 +267,7 @@ bool initializeIMU() {
   for (int i = 0; i < 2; i++) {
     mpu.setAddress(addresses[i]);
     byte status = mpu.begin();
-    mpu.calcOffsets(true, false);
+
     if (status == 0) {
       Serial.print("MPU6050 connected at address 0x");
       Serial.println(addresses[i], HEX);

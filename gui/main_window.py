@@ -1053,13 +1053,17 @@ class LoadCellCalibrationGUI(QMainWindow):
         elif "raw_message" in data:
             ui_message = self.logger.log_imu(data["raw_message"])
             self.log_imu_message_to_ui(f"Arduino: {data['raw_message']}")
+        elif "calibrated_pitch_offset" in data or "calibrated_roll_offset" in data or \
+             "calibrated_imu2_roll_offset" in data or "calibrated_imu3_roll_offset" in data:
+            # Handle calculated offset values from Arduino
+            self.handle_calculated_offsets(data)
         else:
             # Update current IMU data
             self.current_imu_data = data
-            
+
             # Update visualizations
             self.update_imu_visualizations(data)
-            
+
             # Update offsets display
             self.update_offsets_display(data)
             
@@ -1096,6 +1100,55 @@ class LoadCellCalibrationGUI(QMainWindow):
         except KeyError:
             pass
             
+    def handle_calculated_offsets(self, data):
+        """Handle calculated offset values from Arduino calibration"""
+        # Route calculated offsets based on current IMU selection
+        # Arduino always outputs "IMU1 Pitch/Roll Offset" regardless of selected IMU
+        # We route these values to the appropriate IMU based on current selection
+
+        if "calibrated_pitch_offset" in data:
+            # Pitch is only for IMU1
+            if self.current_imu_index == 0:
+                self.angle_offset1 = data["calibrated_pitch_offset"]
+                self.angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
+                ui_message = self.logger.log_imu(f"Received IMU1 Pitch Offset: {self.angle_offset1:.6f} rad")
+                self.log_imu_message_to_ui(ui_message)
+
+        if "calibrated_roll_offset" in data:
+            # Route roll offset based on currently selected IMU
+            if self.current_imu_index == 0:  # IMU1
+                self.angle_offset2 = data["calibrated_roll_offset"]
+                self.angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
+                ui_message = self.logger.log_imu(f"Received IMU1 Roll Offset: {self.angle_offset2:.6f} rad")
+                self.log_imu_message_to_ui(ui_message)
+                self.has_imu_calibration = True
+            elif self.current_imu_index == 1:  # IMU2 (Roll only)
+                self.angle_offset3 = data["calibrated_roll_offset"]
+                self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
+                ui_message = self.logger.log_imu(f"Received IMU2 Roll Offset: {self.angle_offset3:.6f} rad")
+                self.log_imu_message_to_ui(ui_message)
+            elif self.current_imu_index == 2:  # IMU3 (Roll only)
+                self.angle_offset4 = data["calibrated_roll_offset"]
+                self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
+                ui_message = self.logger.log_imu(f"Received IMU3 Roll Offset: {self.angle_offset4:.6f} rad")
+                self.log_imu_message_to_ui(ui_message)
+
+        # These are only used if Arduino explicitly outputs IMU2/IMU3 offsets
+        if "calibrated_imu2_roll_offset" in data:
+            self.angle_offset3 = data["calibrated_imu2_roll_offset"]
+            self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
+            ui_message = self.logger.log_imu(f"Received IMU2 Roll Offset (explicit): {self.angle_offset3:.6f} rad")
+            self.log_imu_message_to_ui(ui_message)
+
+        if "calibrated_imu3_roll_offset" in data:
+            self.angle_offset4 = data["calibrated_imu3_roll_offset"]
+            self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
+            ui_message = self.logger.log_imu(f"Received IMU3 Roll Offset (explicit): {self.angle_offset4:.6f} rad")
+            self.log_imu_message_to_ui(ui_message)
+
+        # Update final tab with calibration values
+        self.update_final_tab_status()
+
     def handle_imu_connection_lost(self):
         """Handle lost IMU connection"""
         self.logger.log_error("IMU connection lost")
@@ -1115,41 +1168,19 @@ class LoadCellCalibrationGUI(QMainWindow):
             QTimer.singleShot(12000, self.auto_save_imu_calibration)
     
     def auto_save_imu_calibration(self):
-        """Automatically save IMU calibration after completion (4-offset formula-based)"""
-        if not self.current_imu_data:
-            # Calibration may not be complete, try again in 2 seconds
-            QTimer.singleShot(2000, self.auto_save_imu_calibration)
-            return
-
-        # Save the current IMU offsets using 4-offset formula-based method
-        current_pitch = self.current_imu_data.get('pitch', 0.0)
-        current_roll = self.current_imu_data.get('roll', 0.0)
+        """Re-enable calibration button after calibration completes"""
+        # Note: Offset values are now automatically captured via handle_calculated_offsets()
+        # when Arduino prints "IMU1 Pitch Offset:" and "IMU1 Roll Offset:" lines
 
         imu_names = ["IMU 1", "IMU 2", "IMU 3"]
         current_imu_name = imu_names[self.current_imu_index]
 
-        if self.current_imu_index == 0:  # IMU 1 - saves PITCH + ROLL
-            self.angle_offset1 = current_pitch
-            self.angle_offset2 = current_roll
-            self.angle_offset1_label.setText(f"{self.angle_offset1:.6f}")
-            self.angle_offset2_label.setText(f"{self.angle_offset2:.6f}")
-
-        elif self.current_imu_index == 1:  # IMU 2 - saves ROLL ONLY (relative to IMU1)
-            # IMU2 only stores relative roll offset
-            self.angle_offset3 = current_roll
-            self.angle_offset3_label.setText(f"{self.angle_offset3:.6f}")
-
-        elif self.current_imu_index == 2:  # IMU 3 - saves ROLL ONLY (relative to IMU1 and IMU2)
-            # IMU3 only stores relative roll offset
-            self.angle_offset4 = current_roll
-            self.angle_offset4_label.setText(f"{self.angle_offset4:.6f}")
-            # Mark IMU calibration as complete when all 3 IMUs are calibrated
-            self.has_imu_calibration = True
-
         # Re-enable the button and show success message
         self.start_imu_cal_button.setEnabled(True)
-        ui_message = self.logger.log_imu(f"✓ {current_imu_name} calibration completed and saved automatically!")
+        ui_message = self.logger.log_imu(f"✓ {current_imu_name} calibration completed!")
         self.log_imu_message_to_ui(ui_message)
+
+        self.imu_calibration_started = False
 
         # Update final firmware tab with all calibration values
         self.update_final_tab_status()
