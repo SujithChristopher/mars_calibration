@@ -604,6 +604,8 @@ class LoadCellCalibrationGUI(QMainWindow):
         self.port_combo.clear()
         if hasattr(self, 'imu_port_combo'):
             self.imu_port_combo.clear()
+        if hasattr(self, 'final_port_combo'):
+            self.final_port_combo.clear()
         ports = serial.tools.list_ports.comports()
         
         # Add debug information
@@ -638,6 +640,8 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.port_combo.addItem(port.device)
             if hasattr(self, 'imu_port_combo'):
                 self.imu_port_combo.addItem(port.device)
+            if hasattr(self, 'final_port_combo'):
+                self.final_port_combo.addItem(port.device)
             
             if is_teensy:
                 port_log = f"  {port_info} [TEENSY DETECTED]"
@@ -655,6 +659,8 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.port_combo.setCurrentText(selected_port)
             if hasattr(self, 'imu_port_combo'):
                 self.imu_port_combo.setCurrentText(selected_port)
+            if hasattr(self, 'final_port_combo'):
+                self.final_port_combo.setCurrentText(selected_port)
             ui_message = self.logger.log_success(f"Auto-selected Nano 33 BLE port: {selected_port}")
             self.log_message_to_ui(ui_message)
         elif teensy_ports:
@@ -662,6 +668,8 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.port_combo.setCurrentText(selected_port)
             if hasattr(self, 'imu_port_combo'):
                 self.imu_port_combo.setCurrentText(selected_port)
+            if hasattr(self, 'final_port_combo'):
+                self.final_port_combo.setCurrentText(selected_port)
             ui_message = self.logger.log_success(f"Auto-selected Teensy port: {selected_port}")
             self.log_message_to_ui(ui_message)
         # Otherwise auto-select COM10 if available
@@ -669,6 +677,8 @@ class LoadCellCalibrationGUI(QMainWindow):
             self.port_combo.setCurrentText("COM10")
             if hasattr(self, 'imu_port_combo'):
                 self.imu_port_combo.setCurrentText("COM10")
+            if hasattr(self, 'final_port_combo'):
+                self.final_port_combo.setCurrentText("COM10")
             ui_message = self.logger.log("Auto-selected COM10")
             self.log_message_to_ui(ui_message)
         
