@@ -37,7 +37,8 @@
       "Bash(C:UsersPintuminiconda3envspy13Scriptspip install toml -q)",
       "Bash(C:UsersPintuminiconda3envspy13python -c \"import toml; print(''toml module successfully installed in py13'')\")",
       "Bash(/c/Users/Pintu/miniconda3/envs/py13/Scripts/pip install:*)",
-      "Bash(/c/Users/Pintu/miniconda3/envs/py13/python:*)"
+      "Bash(/c/Users/Pintu/miniconda3/envs/py13/python:*)",
+      "Bash(git show:*)"
     ],
     "deny": []
   }
