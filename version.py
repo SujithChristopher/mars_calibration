@@ -2,7 +2,7 @@
 Version information for Mars Calibration application.
 """
 
-__version__ = "0.1.9"
+__version__ = "0.1.10"
 __build_date__ = "2025-07-30"
 __build_commit__ = "main"
 
