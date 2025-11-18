@@ -34,6 +34,7 @@ from version import get_version_string
 class LoadCellCalibrationGUI(QMainWindow):
     # Add signals for thread-safe logging and step updates
     log_signal = Signal(str)
+    upload_log_signal = Signal(str)  # For Upload Firmware tab
     step_update_signal = Signal(int, str)  # step number, message
     
     def __init__(self):
@@ -119,6 +120,7 @@ class LoadCellCalibrationGUI(QMainWindow):
         
         # Connect signals to methods
         self.log_signal.connect(self.log_message_to_ui)
+        self.upload_log_signal.connect(self.log_upload_message_to_ui)
         self.step_update_signal.connect(self.handle_step_update)
         
         # Setup UI
@@ -465,55 +467,59 @@ class LoadCellCalibrationGUI(QMainWindow):
             
     def _upload_thread(self, sketch_path, board, port, upload_type):
         """Upload thread function"""
+        # Determine which signal to use based on upload_type
+        log_emit = self.upload_log_signal.emit if upload_type == "final_firmware" else self.log_signal.emit
+
         try:
-            self.log_signal.emit(self.logger.log_upload(f"{upload_type.title()} Upload parameters:"))
-            self.log_signal.emit(self.logger.log_upload(f"  File: {sketch_path}"))
-            self.log_signal.emit(self.logger.log_upload(f"  Board: {board}"))
-            self.log_signal.emit(self.logger.log_upload(f"  Port: {port}"))
+
+            log_emit(self.logger.log_upload(f"{upload_type.title()} Upload parameters:"))
+            log_emit(self.logger.log_upload(f"  File: {sketch_path}"))
+            log_emit(self.logger.log_upload(f"  Board: {board}"))
+            log_emit(self.logger.log_upload(f"  Port: {port}"))
 
             # Use arduino-cli from ArduinoManager (Documents/HOMER/arduino-cli)
             arduino_cli_path = self.arduino_manager.get_arduino_cli_command()
 
             # Check if arduino-cli exists
             if not os.path.exists(arduino_cli_path):
-                self.log_signal.emit(self.logger.log_error("Arduino CLI not found!"))
-                self.log_signal.emit(self.logger.log_error(f"Expected location: {arduino_cli_path}"))
-                self.log_signal.emit(self.logger.log_error("Please run the setup process from File menu or restart the application."))
+                log_emit(self.logger.log_error("Arduino CLI not found!"))
+                log_emit(self.logger.log_error(f"Expected location: {arduino_cli_path}"))
+                log_emit(self.logger.log_error("Please run the setup process from File menu or restart the application."))
                 return
             
             # Install required cores if needed
             if "mbed_nano" in board:
-                self.log_signal.emit(self.logger.log_upload("Checking Arduino Nano core installation..."))
-                self.log_signal.emit(self.logger.log_upload("This may take several minutes on first run - please wait..."))
+                log_emit(self.logger.log_upload("Checking Arduino Nano core installation..."))
+                log_emit(self.logger.log_upload("This may take several minutes on first run - please wait..."))
                 core_install_cmd = f'"{arduino_cli_path}" core install arduino:mbed_nano'
                 try:
                     result = subprocess.run(core_install_cmd, shell=True, capture_output=True, text=True, timeout=300)  # 5 minute timeout
                     if result.returncode == 0:
-                        self.log_signal.emit(self.logger.log_upload("Arduino Nano core installation check complete"))
+                        log_emit(self.logger.log_upload("Arduino Nano core installation check complete"))
                     else:
-                        self.log_signal.emit(self.logger.log_warning(f"Arduino Nano core install result: {result.stderr}"))
+                        log_emit(self.logger.log_warning(f"Arduino Nano core install result: {result.stderr}"))
                 except subprocess.TimeoutExpired:
-                    self.log_signal.emit(self.logger.log_error("Core installation timed out after 5 minutes. Please check your internet connection and try again."))
+                    log_emit(self.logger.log_error("Core installation timed out after 5 minutes. Please check your internet connection and try again."))
             elif "teensy" in board:
-                self.log_signal.emit(self.logger.log_upload("Checking Teensy core installation..."))
-                self.log_signal.emit(self.logger.log_upload("This may take several minutes on first run - please wait..."))
+                log_emit(self.logger.log_upload("Checking Teensy core installation..."))
+                log_emit(self.logger.log_upload("This may take several minutes on first run - please wait..."))
                 core_install_cmd = f'"{arduino_cli_path}" core install teensy:avr'
                 try:
                     result = subprocess.run(core_install_cmd, shell=True, capture_output=True, text=True, timeout=300)  # 5 minute timeout
                     if result.returncode == 0:
-                        self.log_signal.emit(self.logger.log_upload("Teensy core installation check complete"))
+                        log_emit(self.logger.log_upload("Teensy core installation check complete"))
                     else:
-                        self.log_signal.emit(self.logger.log_warning(f"Teensy core install result: {result.stderr}"))
+                        log_emit(self.logger.log_warning(f"Teensy core install result: {result.stderr}"))
                         # Try alternative Teensy installation
-                        self.log_signal.emit(self.logger.log_upload("Trying alternative Teensy core installation..."))
+                        log_emit(self.logger.log_upload("Trying alternative Teensy core installation..."))
                         alt_core_cmd = f'"{arduino_cli_path}" core install arduino:teensy'
                         alt_result = subprocess.run(alt_core_cmd, shell=True, capture_output=True, text=True, timeout=300)
                         if alt_result.returncode == 0:
-                            self.log_signal.emit(self.logger.log_success("Alternative Teensy core installation successful"))
+                            log_emit(self.logger.log_success("Alternative Teensy core installation successful"))
                         else:
-                            self.log_signal.emit(self.logger.log_error("Teensy core installation failed. Please install Teensyduino manually."))
+                            log_emit(self.logger.log_error("Teensy core installation failed. Please install Teensyduino manually."))
                 except subprocess.TimeoutExpired:
-                    self.log_signal.emit(self.logger.log_error("Core installation timed out after 5 minutes. Please check your internet connection and try again."))
+                    log_emit(self.logger.log_error("Core installation timed out after 5 minutes. Please check your internet connection and try again."))
             
             # Compile command
             compile_cmd = f'"{arduino_cli_path}" compile --fqbn {board} "{sketch_path}"'
@@ -522,18 +528,18 @@ class LoadCellCalibrationGUI(QMainWindow):
             upload_cmd = f'"{arduino_cli_path}" upload -p {port} --fqbn {board} "{sketch_path}"'
             
             # Execute commands
-            self.log_signal.emit(self.logger.log_upload(f"Compiling {upload_type} sketch..."))
+            log_emit(self.logger.log_upload(f"Compiling {upload_type} sketch..."))
             try:
                 result = subprocess.run(compile_cmd, shell=True, capture_output=True, text=True, timeout=120)  # 2 minute timeout
-                
+
                 if result.returncode == 0:
-                    self.log_signal.emit(self.logger.log_success(f"{upload_type.title()} compilation successful!"))
-                    self.log_signal.emit(self.logger.log_upload(f"Uploading {upload_type} to {port}..."))
-                    
+                    log_emit(self.logger.log_success(f"{upload_type.title()} compilation successful!"))
+                    log_emit(self.logger.log_upload(f"Uploading {upload_type} to {port}..."))
+
                     result = subprocess.run(upload_cmd, shell=True, capture_output=True, text=True, timeout=60)  # 1 minute timeout
-                    
+
                     if result.returncode == 0:
-                        self.log_signal.emit(self.logger.log_success(f"{upload_type.title()} upload successful!"))
+                        log_emit(self.logger.log_success(f"{upload_type.title()} upload successful!"))
 
                         # Update step progress using signal (only for Load Cell tab, not IMU tab)
                         if upload_type in ["calibration", "unified_calibration"]:
@@ -541,22 +547,22 @@ class LoadCellCalibrationGUI(QMainWindow):
                         elif upload_type == "firmware":
                             self.step_update_signal.emit(4, "✓ All steps completed! Load cell is ready to use.")
                         # Note: unified_calibration_imu upload doesn't trigger step updates (IMU tab has no steps)
-                        
+
                     else:
-                        self.log_signal.emit(self.logger.log_error(f"{upload_type.title()} upload failed: {result.stderr}"))
+                        log_emit(self.logger.log_error(f"{upload_type.title()} upload failed: {result.stderr}"))
                         if "mbed_nano" in board:
-                            self.log_signal.emit(self.logger.log_warning("Note: Make sure to double-press the reset button on Nano 33 BLE to enter bootloader mode"))
+                            log_emit(self.logger.log_warning("Note: Make sure to double-press the reset button on Nano 33 BLE to enter bootloader mode"))
                         elif "teensy" in board:
-                            self.log_signal.emit(self.logger.log_warning("Note: Make sure Teensy is in programming mode. Press the program button on Teensy if needed"))
-                            self.log_signal.emit(self.logger.log_warning("Tip: Try using Teensy Loader application if upload continues to fail"))
+                            log_emit(self.logger.log_warning("Note: Make sure Teensy is in programming mode. Press the program button on Teensy if needed"))
+                            log_emit(self.logger.log_warning("Tip: Try using Teensy Loader application if upload continues to fail"))
                 else:
-                    self.log_signal.emit(self.logger.log_error(f"{upload_type.title()} compilation failed: {result.stderr}"))
-                    
+                    log_emit(self.logger.log_error(f"{upload_type.title()} compilation failed: {result.stderr}"))
+
             except subprocess.TimeoutExpired:
-                self.log_signal.emit(self.logger.log_error(f"{upload_type.title()} operation timed out. Please check connections and try again."))
-                
+                log_emit(self.logger.log_error(f"{upload_type.title()} operation timed out. Please check connections and try again."))
+
         except Exception as e:
-            self.log_signal.emit(self.logger.log_error(f"{upload_type.title()} upload error: {str(e)}"))
+            log_emit(self.logger.log_error(f"{upload_type.title()} upload error: {str(e)}"))
         finally:
             # Hide progress bar and re-enable button
             self.progress_bar.setVisible(False)
@@ -1315,34 +1321,22 @@ class LoadCellCalibrationGUI(QMainWindow):
         return imu1_pitch_offset, imu1_roll_offset, imu2_roll_offset, imu3_roll_offset
 
     def upload_updated_firmware(self):
-        """Upload the updated firmware to Arduino"""
+        """Upload the updated firmware to Arduino (Legacy method - consider using upload_final_firmware instead)"""
         selected_port = self.imu_port_combo.currentText()  # Use same port as IMU
         selected_board = self.imu_board_combo.currentText()
-        
+
         if not selected_port:
             QMessageBox.warning(self, "Warning", "Please select a port first!")
             return
-            
+
         try:
             ui_message = self.logger.log_step(f"Uploading updated firmware to {selected_port} using {selected_board}")
             self.log_imu_message_to_ui(ui_message)
-            
-            # Use same upload process as other Arduino uploads
-            from arduino_compile import ArduinoCompiler
-            compiler = ArduinoCompiler()
-            
-            success = compiler.upload_sketch(self.firmware_file, selected_board, selected_port)
-            
-            if success:
-                ui_message = self.logger.log_step("Updated firmware uploaded successfully!")
-                self.log_imu_message_to_ui(ui_message)
-                QMessageBox.information(self, "Success", "Updated firmware uploaded successfully!\n\nYour Arduino now has both load cell and IMU functionality with calibrated offsets.")
-            else:
-                error_msg = "Failed to upload updated firmware. Check connections and try again."
-                self.logger.log_error(error_msg)
-                self.log_imu_message_to_ui(error_msg)
-                QMessageBox.critical(self, "Error", error_msg)
-                
+
+            # Use _upload_thread for background upload
+            import threading
+            threading.Thread(target=self._upload_thread, args=(self.firmware_file, selected_board, selected_port, "unified_calibration_imu"), daemon=True).start()
+
         except Exception as e:
             error_msg = f"Upload failed: {str(e)}"
             self.logger.log_error(error_msg)
@@ -1832,23 +1826,9 @@ class LoadCellCalibrationGUI(QMainWindow):
             ui_message = self.logger.log_step(f"Uploading final firmware to {selected_port} using {selected_board}")
             self.log_upload_message_to_ui(ui_message)
 
-            # Upload the firmware
-            from arduino_compile import ArduinoCompiler
-            compiler = ArduinoCompiler()
-
-            success = compiler.upload_sketch(self.firmware_file, selected_board, selected_port)
-
-            if success:
-                ui_message = self.logger.log_step("Final firmware uploaded successfully!")
-                self.log_upload_message_to_ui(ui_message)
-                QMessageBox.information(self, "Success",
-                    "Final firmware uploaded successfully!\n\n"
-                    "Your Mars device now has fully calibrated load cell and IMU functionality.")
-            else:
-                error_msg = "Failed to upload final firmware. Check connections and try again."
-                self.logger.log_error(error_msg)
-                self.log_upload_message_to_ui(error_msg)
-                QMessageBox.critical(self, "Error", error_msg)
+            # Upload the firmware using _upload_thread in background
+            import threading
+            threading.Thread(target=self._upload_thread, args=(self.firmware_file, selected_board, selected_port, "final_firmware"), daemon=True).start()
 
         except Exception as e:
             error_msg = f"Upload failed: {str(e)}"
