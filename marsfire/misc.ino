@@ -23,10 +23,10 @@ void deviceSetUp() {
 
   // 3. Set up the two loadcells
   scale1.begin();
-  scale1.start(1, true);
+  scale1.start(500, true);
   scale1.setCalFactor(LOACELL_CALIB_FACTOR);
   scale2.begin();
-  scale2.start(1, true);
+  scale2.start(500, true);
   scale2.setCalFactor(LOACELL_CALIB_FACTOR);
 
   // 4. Motor setup
